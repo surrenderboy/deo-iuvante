@@ -1,0 +1,51 @@
+.authorization-form {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.label {
+    text-transform: uppercase;
+    display: block;
+    color: #18a0e2;
+    font-size: 14px;
+}
+.login-input,
+.password-input {
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding-left: 5px;
+    line-height: 2;
+    border: none;
+    border-top: 2px solid #f3f3f3;
+    border-bottom: 2px solid #f3f3f3;
+    color: #00bff3;
+}
+.login-input:focus,
+.password-input:focus,
+.button-sign-in:focus{
+    outline: none;
+}
+.login-input::placeholder,
+.password-input::placeholder {
+    color: #f3f3f3;
+}
+.button-sign-in {
+    border: 1px solid #00bff3;
+    background-color: #00bff3;
+    color: #fff;
+    width: 174px;
+    font-size: 16px;
+    line-height: 2;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.button-sign-up {
+    color: #18a0e2;
+    border: none;
+    background-color: transparent;
+
+
+}
+
