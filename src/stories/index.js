@@ -6,23 +6,30 @@ import { action } from '@storybook/addon-actions';
 import { withInfo, setDefaults } from '@storybook/addon-info';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
-import { Button } from '@storybook/react/demo';
+import Avatar from '../components/Avatar/Avatar';
 
 // default behavior for component info
 setDefaults({
     inline: true
 });
 
-storiesOf('Button', module)
+storiesOf('Avatar', module)
     .addDecorator(withKnobs)
-    .add('with text', withInfo(`
-        Default button info
-    `)(() => (
-        <Button onClick={action('clicked')}>{text('Button text', 'Hello world')}</Button>
-    )))
-    .add('with some emoji', withInfo(`
-        Emoji button info
-    `)(() => (
-        <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>
-    )));
-
+    .add('default', withInfo(`
+        Default avatar
+    `)(() =>
+      [
+        <Avatar size="s" />,
+        <Avatar size="m" />,
+        <Avatar size="l" />
+      ]
+    ))
+    .add('with count', withInfo(`
+        Avatar with count icon
+    `)(() =>
+      [
+        <Avatar size="s" count={number('Count', 1)}/>,
+        <Avatar size="m" count={number('Count', 1)}/>,
+        <Avatar size="l" count={number('Count', 1)}/>
+      ]
+    ))
