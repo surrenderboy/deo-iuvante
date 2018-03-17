@@ -1,0 +1,33 @@
+.header {
+    background-color: rgba(0,191,243,.9);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 10vh;
+}
+
+.header > * {
+    margin: auto 1.5vw;
+}
+
+.left_slot, .right_slot {
+    cursor: pointer;
+}
+
+.right_slot {
+
+}
+
+.left_slot {
+
+}
+
+.text {
+    color: #fff;
+    font-weight: 500;
+    font-size: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

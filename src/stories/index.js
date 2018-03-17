@@ -9,6 +9,8 @@ import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 import Avatar from '../components/Avatar/Avatar';
 import List from '../components/List/List';
 import ListItem from '../components/ListItem/ListItem';
+import Header from '../components/Header/Header';
+import Bubble from '../components/Bubble/Bubble';
 
 // default behavior for component info
 setDefaults({
@@ -35,6 +37,7 @@ storiesOf('Avatar', module)
         <Avatar size="l" count={number('Count', 1)}/>
       ]
     ))
+
 storiesOf('Lists', module)
     .addDecorator(withKnobs)
     .add('List & ListItem', withInfo(`
@@ -48,3 +51,53 @@ storiesOf('Lists', module)
             }
         </List>
     )));
+
+storiesOf('Header', module)
+  .addDecorator(withKnobs)
+  .add('with action buttons', withInfo(`
+        Справа и слева кнопки/текст
+    `)(() =>
+    [
+      <Header left="лев.слот" right="пр.слот">Текст хидера</Header>
+    ]
+  ))
+  .add('w/o action buttons', withInfo(`
+        Если действия на Header не нужны
+    `)(() =>
+    [
+      <Header>Текст хидера</Header>
+    ]
+  ));
+
+storiesOf('Bubble', module)
+    .addDecorator(withKnobs)
+    .add('Владелец', withInfo(`
+        Сообщение владельца, не прочитано
+    `)(() => (
+        <Bubble message='My long and interesting message' isOwner={true} />
+    )))
+    .add('Не владелец', withInfo(`
+        Сообщение другого пользователя, не прочитано
+    `)(() => (
+        <Bubble message='My long and interesting message' isOwner={false} />
+    )))
+    .add('Владелец, прочитано', withInfo(`
+        Сообщение владельца, не прочитано
+    `)(() => (
+        <Bubble message='My long and interesting message' isOwner={true} isReaded={true}  />
+    )))
+    .add('Не владелец, прочитано', withInfo(`
+        Сообщение другого пользователя, не прочитано
+    `)(() => (
+        <Bubble message='My long and interesting message' isOwner={false} isReaded={true}  />
+    )))
+    .add('Несколько разных сообщений', withInfo(`
+        Пример чата
+    `)(() => ([
+        <Bubble message='My long and interesting message1' isOwner={false} isReaded={true} />,
+        <Bubble message='My long and interesting message2' isOwner={true} isReaded={true}  />,
+        <Bubble message='My long and interesting message3' isOwner={false} isReaded={true}  />,
+        <Bubble message='My long and interesting message4' isOwner={true} isReaded={true}  />,
+        <Bubble message='My long and interesting message5' isOwner={true} />,
+        <Bubble message='My long and interesting message6' isOwner={false} />
+    ])));
