@@ -1,23 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import testAvatar from './test-avatar.jpg';
 import './Avatar.css';
 
 function Avatar(props) {
-  let size = props.size;
-  if (['s', 'm', 'l'].indexOf(size) === -1) {
-    size = 'm';
-  }
-  let sizeModifier = `avatar_size_${size}`;
-
-  let src = props.src || testAvatar;
-  let alt = props.alt || 'avatar';
+  let sizeModifier = `avatar_size_${props.size}`;
 
   let withCount = props.count && props.count > 0;
 
   return (
     <div className={`avatar ${sizeModifier}`}>
-      <img src={src} className="avatar__image" alt={alt} />
+      <img src={props.src} className="avatar__image" alt={props.alt} />
 
       {
         withCount &&
@@ -25,6 +19,18 @@ function Avatar(props) {
       }
     </div>
   );
+}
+
+Avatar.defaultProps = {
+  src: testAvatar,
+  alt: 'avatar'
+}
+
+Avatar.propTypes = {
+  size: PropTypes.oneOf(['s', 'm', 'l']).isRequired,
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  count: PropTypes.number
 }
 
 export default Avatar;
