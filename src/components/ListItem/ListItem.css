@@ -1,0 +1,5 @@
+.list__item {
+    height: 100px;
+    margin: 10px 0;
+    display: flex;
+}
