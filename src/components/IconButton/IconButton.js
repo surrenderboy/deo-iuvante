@@ -34,7 +34,7 @@ IconButton.propTypes = {
     glyph: PropTypes.string,
     onClick: PropTypes.func,
     /** Custom component for button */
-    component: PropTypes.element,
+    component: PropTypes.node,
     href: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
