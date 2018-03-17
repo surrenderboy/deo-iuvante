@@ -1,0 +1,34 @@
+.Bubble {
+	padding: 1rem;
+	font-size: 14px; 
+}
+.Bubble div{
+	display: flex;
+	flex-direction: row;
+}
+.Bubble__message {
+	padding: 10px;
+	background-color: #f4f4f4;
+	border-radius: 5px;
+}
+.Bubble .Bubble_owner_yes {
+	flex-direction: row-reverse;
+}
+.Bubble_readed_yes{
+	position: relative;
+	width: 20px;
+}
+.Bubble_readed_yes::after {
+	content: '';
+	width: 10px;
+	height: 10px;
+	background: url(arrows.png) no-repeat center;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	right: 5px;
+}
+.Bubble_owner_yes .Bubble__message{
+	background-color: #00bef3;
+	color: #fff;
+}
