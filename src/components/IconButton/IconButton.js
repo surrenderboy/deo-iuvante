@@ -11,10 +11,15 @@ class IconButton extends Component {
         const CustomComponent = this.props.component || 'button';
         this.children = this.props.children
             ? this.props.children
-            : <i className='material-icons icon-button__icon' style={{color: this.props.color}}>{this.props.glyph}</i>;
+            : <i 
+                className='material-icons icon-button__icon' 
+                style={{color: this.props.disabled ? '#aaa' : this.props.color}}
+            >
+                {this.props.glyph}
+            </i>;
         return (
             <CustomComponent 
-                className={`icon-button ${this.props.className}`} 
+                className={`icon-button ${this.props.className} ${this.props.disabled ? 'icon-button_disabled' : ''}`} 
                 onClick={this.props.onClick}
             >
                 {this.children}
@@ -30,7 +35,8 @@ IconButton.propTypes = {
     href: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
-    color: PropTypes.string
+    color: PropTypes.string,
+    disabled: PropTypes.bool
 };
  
 export default IconButton;
