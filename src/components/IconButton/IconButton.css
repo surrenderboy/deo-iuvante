@@ -1,0 +1,16 @@
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+.icon-button {
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    transition: all .2s;
+    border-radius: 50%;
+}
+
+.icon-button__icon {
+    max-height: 24px;
+}
