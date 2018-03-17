@@ -13,6 +13,8 @@ import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
 import MessageInput from '../components/MessageInput/MessageInput';
 
+import IconButton from '../components/IconButton/IconButton';
+
 // default behavior for component info
 setDefaults({
     inline: true
@@ -112,3 +114,15 @@ storiesOf('MessageInput', module)
       <MessageInput sendMessage={(msg) => alert(msg)}/>
     </div>
   ));
+storiesOf('IconButton')
+    .addDecorator(withKnobs)
+    .add('default', withInfo('')(
+        () => (
+            <IconButton
+                disabled={boolean('Disabled', false)}
+                onClick={action('clicked')}
+                glyph={text('Icon glyph', 'favorite')}
+                color={text('Icon color', 'red')}
+            />
+        )
+    ));
