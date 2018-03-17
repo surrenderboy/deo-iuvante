@@ -29,12 +29,15 @@ class IconButton extends Component {
 }
 
 IconButton.propTypes = {
+    /** Glyph icon name according to Material Icons library */
     glyph: PropTypes.string,
     onClick: PropTypes.func,
+    /** Custom component for button */
     component: PropTypes.element,
     href: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
+    /** Glyph color */
     color: PropTypes.string,
     disabled: PropTypes.bool
 };
