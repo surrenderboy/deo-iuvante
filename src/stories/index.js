@@ -7,6 +7,8 @@ import { withInfo, setDefaults } from '@storybook/addon-info';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import Avatar from '../components/Avatar/Avatar';
+import List from '../components/List/List';
+import ListItem from '../components/ListItem/ListItem';
 
 // default behavior for component info
 setDefaults({
@@ -33,3 +35,16 @@ storiesOf('Avatar', module)
         <Avatar size="l" count={number('Count', 1)}/>
       ]
     ))
+storiesOf('Lists', module)
+    .addDecorator(withKnobs)
+    .add('List & ListItem', withInfo(`
+        Default button info
+    `)(() => (
+        <List>
+            {
+                ['red', 'orange', 'yellow', 'green', 'blue', 'violet'].map(backgroundColor => (
+                    <ListItem key={backgroundColor} style={{backgroundColor}} />
+                ))
+            }
+        </List>
+    )));
