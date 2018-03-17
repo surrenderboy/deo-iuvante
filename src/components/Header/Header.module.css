@@ -4,21 +4,26 @@
     justify-content: space-between;
     flex-wrap: nowrap;
     align-items: center;
-    padding: 10px;
     height: 10vh;
 }
 
-.header__right-slot {
+.header > * {
+    margin: auto 1.5vw;
+}
+
+.right_slot {
 
 }
 
-.header__left-slot {
+.left_slot {
 
 }
 
-.header__text {
-    font-family: Arial sans-serif;
+.text {
     color: #fff;
     font-weight: 500;
     font-size: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
