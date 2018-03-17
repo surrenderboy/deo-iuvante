@@ -15,8 +15,6 @@ import MessageInput from '../components/MessageInput/MessageInput';
 
 import IconButton from '../components/IconButton/IconButton';
 
-import IconButton from '../components/IconButton/IconButton';
-
 // default behavior for component info
 setDefaults({
     inline: true
