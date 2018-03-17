@@ -11,6 +11,7 @@ import List from '../components/List/List';
 import ListItem from '../components/ListItem/ListItem';
 import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
+import MessageInput from '../components/MessageInput/MessageInput';
 
 // default behavior for component info
 setDefaults({
@@ -101,3 +102,13 @@ storiesOf('Bubble', module)
         <Bubble message='My long and interesting message5' isOwner={true} />,
         <Bubble message='My long and interesting message6' isOwner={false} />
     ])));
+
+storiesOf('MessageInput', module)
+  .addDecorator(withKnobs)
+  .add('default', withInfo(`
+    Message input
+  `)(() =>
+    <div style={{width: text('Width', '200px'), height: text('Height', '20px')}}>
+      <MessageInput sendMessage={(msg) => alert(msg)}/>
+    </div>
+  ));

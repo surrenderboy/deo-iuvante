@@ -1,0 +1,23 @@
+.message-input {
+  height: 100%;
+  width: 100%;
+}
+
+.message-input input {
+  outline: none;
+
+  height: inherit;
+  width: inherit;
+
+  padding: 5px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  }
+
+.message-input input::placeholder {
+  opacity: 0.5;
+}
