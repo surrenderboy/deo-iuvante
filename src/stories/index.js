@@ -114,7 +114,7 @@ storiesOf('MessageInput', module)
       <MessageInput sendMessage={(msg) => alert(msg)}/>
     </div>
   ));
-storiesOf('IconButton')
+storiesOf('IconButton', module)
     .addDecorator(withKnobs)
     .add('default', withInfo('')(
         () => (
