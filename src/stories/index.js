@@ -22,7 +22,6 @@ setDefaults({
     inline: true
 });
 
-<<<<<<< HEAD
 storiesOf('Avatar', module)
     .addDecorator(withKnobs)
     .add('default', withInfo(`
@@ -119,10 +118,6 @@ storiesOf('MessageInput', module)
   ));
 storiesOf('IconButton', module)
     .addDecorator(withKnobs)
-=======
-storiesOf('IconButton')
-    .addDecorator(withKnobs)
->>>>>>> 8e12c6848cc973317b35b0e9127010ecd18ee24d
     .add('default', withInfo('')(
         () => (
             <IconButton

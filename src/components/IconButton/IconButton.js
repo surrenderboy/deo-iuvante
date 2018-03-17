@@ -9,21 +9,10 @@ class IconButton extends Component {
 
     render() {
         const CustomComponent = this.props.component || 'button';
-<<<<<<< HEAD
         this.children = this.props.children || <i 
                 className='material-icons icon-button__icon' 
                 style={{color: this.props.disabled ? '#aaa' : this.props.color}}
             >{this.props.glyph}</i>;
-=======
-        this.children = this.props.children
-            ? this.props.children
-            : <i 
-                className='material-icons icon-button__icon' 
-                style={{color: this.props.disabled ? '#aaa' : this.props.color}}
-            >
-                {this.props.glyph}
-            </i>;
->>>>>>> 8e12c6848cc973317b35b0e9127010ecd18ee24d
         return (
             <CustomComponent             
                 role='button'
@@ -50,8 +39,4 @@ IconButton.propTypes = {
     disabled: PropTypes.bool
 };
  
-<<<<<<< HEAD
 export default IconButton;
-=======
-export default IconButton;
->>>>>>> 8e12c6848cc973317b35b0e9127010ecd18ee24d
