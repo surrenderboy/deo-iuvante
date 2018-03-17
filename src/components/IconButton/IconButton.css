@@ -14,3 +14,7 @@
 .icon-button__icon {
     max-height: 24px;
 }
+
+.icon-button_disabled {
+    pointer-events:none;
+}
