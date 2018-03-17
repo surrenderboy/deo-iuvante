@@ -11,9 +11,10 @@ function Avatar(props) {
   let modifier = `avatar_size_${size}`;
 
   let src = props.src || testAvatar;
+  let alt = props.alt || 'avatar';
 
   return (
-    <img src={src} className={`avatar ${modifier}`} alt="avatar" />
+    <img src={src} className={`avatar ${modifier}`} alt={alt} />
   )
 }
 
