@@ -8,21 +8,22 @@ import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import { Button } from '@storybook/react/demo';
 
+import IconButton from '../components/IconButton/IconButton';
+
 // default behavior for component info
 setDefaults({
     inline: true
 });
 
-storiesOf('Button', module)
+storiesOf('IconButton')
     .addDecorator(withKnobs)
-    .add('with text', withInfo(`
-        Default button info
-    `)(() => (
-        <Button onClick={action('clicked')}>{text('Button text', 'Hello world')}</Button>
-    )))
-    .add('with some emoji', withInfo(`
-        Emoji button info
-    `)(() => (
-        <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>
-    )));
-
+    .add('default', withInfo('')(
+        () => (
+            <IconButton
+                disabled={boolean('Disabled', false)}
+                onClick={action('clicked')}
+                glyph={text('Icon glyph', 'favorite')}
+                color={text('Icon color', 'red')}
+            />
+        )
+    ));
