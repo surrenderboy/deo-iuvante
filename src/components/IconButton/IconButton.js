@@ -18,7 +18,8 @@ class IconButton extends Component {
                 {this.props.glyph}
             </i>;
         return (
-            <CustomComponent 
+            <CustomComponent             
+                role='button'
                 className={`icon-button ${this.props.className} ${this.props.disabled ? 'icon-button_disabled' : ''}`} 
                 onClick={this.props.onClick}
             >
