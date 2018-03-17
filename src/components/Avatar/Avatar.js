@@ -8,14 +8,23 @@ function Avatar(props) {
   if (['s', 'm', 'l'].indexOf(size) === -1) {
     size = 'm';
   }
-  let modifier = `avatar_size_${size}`;
+  let sizeModifier = `avatar_size_${size}`;
 
   let src = props.src || testAvatar;
   let alt = props.alt || 'avatar';
 
+  let withCount = props.count && props.count > 0;
+
   return (
-    <img src={src} className={`avatar ${modifier}`} alt={alt} />
-  )
+    <div className={`avatar ${sizeModifier}`}>
+      <img src={src} className="avatar__image" alt={alt} />
+
+      {
+        withCount &&
+          <div className="avatar__count">{props.count}</div>
+      }
+    </div>
+  );
 }
 
 export default Avatar;
