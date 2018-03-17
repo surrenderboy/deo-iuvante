@@ -37,9 +37,6 @@ class Header extends Component {
   }
 }
 
-Header.defaultProps = {
-  text: ''
-};
 
 Header.propTypes = {
   left: PropTypes.string,
