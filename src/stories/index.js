@@ -7,6 +7,7 @@ import { withInfo, setDefaults } from '@storybook/addon-info';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import Avatar from '../components/Avatar/Avatar';
+import Header from '../components/Header/Header';
 
 // default behavior for component info
 setDefaults({
@@ -33,3 +34,20 @@ storiesOf('Avatar', module)
         <Avatar size="l" count={number('Count', 1)}/>
       ]
     ))
+
+storiesOf('Header', module)
+  .addDecorator(withKnobs)
+  .add('with action buttons', withInfo(`
+        Справа и слева кнопки/текст
+    `)(() =>
+    [
+      <Header left="лев.слот" right="пр.слот">Текст хидера</Header>
+    ]
+  ))
+  .add('w/o action buttons', withInfo(`
+        Если действия на Header не нужны
+    `)(() =>
+    [
+      <Header>Текст хидера</Header>
+    ]
+  ));
