@@ -8,20 +8,27 @@ class IconButton extends Component {
     }
 
     render() {
-        const CustomComponent = this.props.href ? 'a' : this.props.component;        
+        const {
+            component,
+            disabled,
+            children,
+            color,
+            ...validProps
+        } = this.props;
+        const CustomComponent = this.props.href ? 'a' : component; 
         return (
             <CustomComponent             
                 role='button'
-                {...this.props}
-                className={`icon-button ${this.props.className || ''} ${this.props.disabled ? 'icon-button_disabled' : ''}`}
+                {...validProps}
+                className={`icon-button ${this.props.className || ''} ${disabled ? 'icon-button_disabled' : ''}`}
             >
                 {
-                    typeof this.props.children === 'string'
+                    typeof children === 'string'
                     ? <i 
                         className='material-icons icon-button__icon' 
-                        style={{color: this.props.disabled ? '#aaa' : this.props.color}}
-                    >{this.props.children}</i>
-                    : <div className='icon-button__icon' >{this.props.children}</div>
+                        style={{color: disabled ? '#aaa' : color}}
+                    >{children}</i>
+                    : <span className='icon-button__icon' >{children}</span>
                 }
             </CustomComponent>
         );
