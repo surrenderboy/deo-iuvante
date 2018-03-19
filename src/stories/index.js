@@ -116,13 +116,20 @@ storiesOf('MessageInput', module)
   ));
 storiesOf('IconButton', module)
     .addDecorator(withKnobs)
-    .add('default', withInfo('')(
+    .add('with icon', withInfo('')(
         () => (
             <IconButton
                 disabled={boolean('Disabled', false)}
                 onClick={action('clicked')}
-                glyph={text('Icon glyph', 'favorite')}
                 color={text('Icon color', 'red')}
-            />
+            >{text('Icon glyph', 'favorite')}</IconButton>
         )
-    ));
+    ))
+    .add('with image', withInfo('Image can be both vector and raster')(
+        () => (
+            <IconButton
+                disabled={boolean('Disabled', false)}
+                onClick={action('clicked')}
+            ><img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg'/></IconButton>
+        )
+    ))

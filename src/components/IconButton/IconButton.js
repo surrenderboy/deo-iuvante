@@ -8,31 +8,43 @@ class IconButton extends Component {
     }
 
     render() {
-        const CustomComponent = this.props.component || 'button';
-        const children = this.props.children || <i 
-                className='material-icons icon-button__icon' 
-                style={{color: this.props.disabled ? '#aaa' : this.props.color}}
-            >{this.props.glyph}</i>;
+        const CustomComponent = this.props.href ? 'a' : this.props.component;        
         return (
             <CustomComponent             
                 role='button'
                 {...this.props}
-                className={`icon-button ${this.props.className} ${this.props.disabled ? 'icon-button_disabled' : ''}`}
+                className={`icon-button ${this.props.className || ''} ${this.props.disabled ? 'icon-button_disabled' : ''}`}
             >
-                {children}
+                {
+                    typeof this.props.children === 'string'
+                    ? <i 
+                        className='material-icons icon-button__icon' 
+                        style={{color: this.props.disabled ? '#aaa' : this.props.color}}
+                    >{this.props.children}</i>
+                    : <div className='icon-button__icon' >{this.props.children}</div>
+                }
             </CustomComponent>
         );
     }
 }
 
+IconButton.defaultProps = {
+    disabled: false,
+    component: 'button'
+}
+
 IconButton.propTypes = {
-    /** Glyph icon name according to Material Icons library */
-    glyph: PropTypes.string,
     onClick: PropTypes.func,
     /** Custom component for button */
-    component: PropTypes.node,
+    component: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ]),
     href: PropTypes.string,
-    children: PropTypes.node,
+    children: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ]).isRequired,
     className: PropTypes.string,
     /** Glyph color */
     color: PropTypes.string,
