@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import './IconButton.css'
 
 class IconButton extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const {
             component,
@@ -28,7 +24,7 @@ class IconButton extends Component {
                         className='material-icons icon-button__icon' 
                         style={{color: disabled ? '#aaa' : color}}
                     >{children}</i>
-                    : <span className='icon-button__icon' >{children}</span>
+                    : <div className='icon-button__icon' >{children}</div>
                 }
             </CustomComponent>
         );
