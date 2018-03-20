@@ -4,11 +4,11 @@ import './index.css';
 import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
-//import api from './api';
+// import api from './api';
 //
 // Example of usage API
 //
-//(async () => {
+// (async () => {
 //    //
 //    // Events
 //    //
@@ -85,8 +85,8 @@ import registerServiceWorker from './registerServiceWorker';
 //    console.log('Leave current user to room', await api.currentUserLeaveRoom(rooms.items[0]._id));
 //
 //    console.log(api);
-//})();
+// })();
 
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

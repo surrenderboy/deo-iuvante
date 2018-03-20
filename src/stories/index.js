@@ -17,43 +17,41 @@ import IconButton from '../components/IconButton/IconButton';
 
 // default behavior for component info
 setDefaults({
-    inline: true
+  inline: true,
 });
 
 storiesOf('Avatar', module)
-    .addDecorator(withKnobs)
-    .add('default', withInfo(`
+  .addDecorator(withKnobs)
+  .add('default', withInfo(`
         Default avatar
     `)(() =>
-      [
-        <Avatar size="s" />,
-        <Avatar size="m" />,
-        <Avatar size="l" />
-      ]
-    ))
-    .add('with count', withInfo(`
+    [
+      <Avatar size="s" />,
+      <Avatar size="m" />,
+      <Avatar size="l" />,
+    ]))
+  .add('with count', withInfo(`
         Avatar with count icon
     `)(() =>
-      [
-        <Avatar size="s" count={number('Count', 1)}/>,
-        <Avatar size="m" count={number('Count', 1)}/>,
-        <Avatar size="l" count={number('Count', 1)}/>
-      ]
-    ))
+    [
+      <Avatar size="s" count={number('Count', 1)} />,
+      <Avatar size="m" count={number('Count', 1)} />,
+      <Avatar size="l" count={number('Count', 1)} />,
+    ]));
 
 storiesOf('Lists', module)
-    .addDecorator(withKnobs)
-    .add('List & ListItem', withInfo(`
+  .addDecorator(withKnobs)
+  .add('List & ListItem', withInfo(`
         Default button info
     `)(() => (
-        <List>
-            {
+      <List>
+        {
                 ['red', 'orange', 'yellow', 'green', 'blue', 'violet'].map(backgroundColor => (
-                    <ListItem key={backgroundColor} style={{backgroundColor}} />
+                  <ListItem key={backgroundColor} style={{ backgroundColor }} />
                 ))
             }
-        </List>
-    )));
+      </List>
+  )));
 
 storiesOf('Header', module)
   .addDecorator(withKnobs)
@@ -61,75 +59,70 @@ storiesOf('Header', module)
         Справа и слева кнопки/текст
     `)(() =>
     [
-      <Header left="лев.слот" right="пр.слот">Текст хидера</Header>
-    ]
-  ))
+      <Header left="лев.слот" right="пр.слот">Текст хидера</Header>,
+    ]))
   .add('w/o action buttons', withInfo(`
         Если действия на Header не нужны
     `)(() =>
     [
-      <Header>Текст хидера</Header>
-    ]
-  ));
+      <Header>Текст хидера</Header>,
+    ]));
 
 storiesOf('Bubble', module)
-    .addDecorator(withKnobs)
-    .add('Владелец', withInfo(`
+  .addDecorator(withKnobs)
+  .add('Владелец', withInfo(`
         Сообщение владельца, не прочитано
     `)(() => (
-        <Bubble message='My long and interesting message' isOwner={true} />
-    )))
-    .add('Не владелец', withInfo(`
+      <Bubble message="My long and interesting message" isOwner />
+  )))
+  .add('Не владелец', withInfo(`
         Сообщение другого пользователя, не прочитано
     `)(() => (
-        <Bubble message='My long and interesting message' isOwner={false} />
-    )))
-    .add('Владелец, прочитано', withInfo(`
+      <Bubble message="My long and interesting message" isOwner={false} />
+  )))
+  .add('Владелец, прочитано', withInfo(`
         Сообщение владельца, не прочитано
     `)(() => (
-        <Bubble message='My long and interesting message' isOwner={true} isReaded={true}  />
-    )))
-    .add('Не владелец, прочитано', withInfo(`
+      <Bubble message="My long and interesting message" isOwner isReaded />
+  )))
+  .add('Не владелец, прочитано', withInfo(`
         Сообщение другого пользователя, не прочитано
     `)(() => (
-        <Bubble message='My long and interesting message' isOwner={false} isReaded={true}  />
-    )))
-    .add('Несколько разных сообщений', withInfo(`
+      <Bubble message="My long and interesting message" isOwner={false} isReaded />
+  )))
+  .add('Несколько разных сообщений', withInfo(`
         Пример чата
     `)(() => ([
-        <Bubble message='My long and interesting message1' isOwner={false} isReaded={true} />,
-        <Bubble message='My long and interesting message2' isOwner={true} isReaded={true}  />,
-        <Bubble message='My long and interesting message3' isOwner={false} isReaded={true}  />,
-        <Bubble message='My long and interesting message4' isOwner={true} isReaded={true}  />,
-        <Bubble message='My long and interesting message5' isOwner={true} />,
-        <Bubble message='My long and interesting message6' isOwner={false} />
-    ])));
+      <Bubble message="My long and interesting message1" isOwner={false} isReaded />,
+      <Bubble message="My long and interesting message2" isOwner isReaded />,
+      <Bubble message="My long and interesting message3" isOwner={false} isReaded />,
+      <Bubble message="My long and interesting message4" isOwner isReaded />,
+      <Bubble message="My long and interesting message5" isOwner />,
+      <Bubble message="My long and interesting message6" isOwner={false} />,
+  ])));
 
 storiesOf('MessageInput', module)
   .addDecorator(withKnobs)
   .add('default', withInfo(`
     Message input
   `)(() =>
-    <div style={{width: text('Width', '200px'), height: text('Height', '20px')}}>
-      <MessageInput sendMessage={(msg) => alert(msg)}/>
-    </div>
-  ));
+    (<div style={{ width: text('Width', '200px'), height: text('Height', '20px') }}>
+      <MessageInput sendMessage={msg => alert(msg)} />
+    </div>)));
 storiesOf('IconButton', module)
-    .addDecorator(withKnobs)
-    .add('with icon', withInfo('')(
-        () => (
-            <IconButton
-                disabled={boolean('Disabled', false)}
-                onClick={action('clicked')}
-                color={text('Icon color', 'red')}
-            >{text('Icon glyph', 'favorite')}</IconButton>
-        )
-    ))
-    .add('with image', withInfo('Image can be both vector and raster')(
-        () => (
-            <IconButton
-                disabled={boolean('Disabled', false)}
-                onClick={action('clicked')}
-            ><img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg'/></IconButton>
-        )
-    ))
+  .addDecorator(withKnobs)
+  .add('with icon', withInfo('')(() => (
+    <IconButton
+      disabled={boolean('Disabled', false)}
+      onClick={action('clicked')}
+      color={text('Icon color', 'red')}
+    >{text('Icon glyph', 'favorite')}
+    </IconButton>
+  )))
+  .add('with image', withInfo('Image can be both vector and raster')(() => (
+    <IconButton
+      disabled={boolean('Disabled', false)}
+      onClick={action('clicked')}
+    ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" />
+    </IconButton>
+  )));

@@ -1,61 +1,56 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import FormInputLogin from './FormInputLogin';
 import FormInputPassword from './FormInputPassword';
-import form from './form.css'
+import form from './form.css';
 import ButtonSignIn from './ButtonSignIn';
 import ButtonSignUp from './ButtonSignUp';
 
 export default class Form extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            login: '',
-            password: '',
-            signIn: true,
-            signUp: false,
-            authorization: false
-        };
+    this.state = {
+      login: '',
+      password: '',
+      signIn: true,
+      signUp: false,
+      authorization: false,
+    };
 
-        this.onLoginChangeValue = this.onChangeValue.bind(this, 'login');
-        this.onPasswordChangeValue = this.onChangeValue.bind(this, 'password');
-        this.submitSignIn = this.submit.bind(this, 'signIn');
-        this.submitSignUp = this.submit.bind(this, 'singUp');
+    this.onLoginChangeValue = this.onChangeValue.bind(this, 'login');
+    this.onPasswordChangeValue = this.onChangeValue.bind(this, 'password');
+    this.submitSignIn = this.submit.bind(this, 'signIn');
+    this.submitSignUp = this.submit.bind(this, 'singUp');
+  }
+
+  submit(button, event) {
+    event.preventDefault();
+    if (button === 'signIn') { console.log(event.target, this.state.login, this.state.password); } else this.setState({ signIn: false });
+  }
+
+  onChangeValue(name, event) {
+    this.setState({ [name]: event.target.value });
+  }
+
+
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
+  render() {
+    if (this.state.signIn) {
+      return (
+        <form className="authorization-form">
+          <FormInputLogin onChangeValue={this.onLoginChangeValue} />
+          <FormInputPassword onChangeValue={this.onPasswordChangeValue} />
+          <ButtonSignIn onSubmit={this.submitSignIn} />
+          <ButtonSignUp onSubmit={this.submitSignUp} />
+        </form>
+      );
     }
 
-    submit(button, event) {
-        event.preventDefault();
-        if( button === 'signIn' )
-            console.log(event.target, this.state.login, this.state.password);
-        else this.setState({signIn: false});
-    }
-
-    onChangeValue(name, event) {
-        this.setState({[name]: event.target.value});
-    }
-
-
-    componentDidUpdate() {
-        console.log(this.state)
-    }
-
-    render() {
-        if(this.state.signIn) {
-                return (
-                    <form className="authorization-form">
-                        <FormInputLogin onChangeValue={this.onLoginChangeValue}/>
-                        <FormInputPassword onChangeValue={this.onPasswordChangeValue}/>
-                        <ButtonSignIn onSubmit={this.submitSignIn}/>
-                        <ButtonSignUp onSubmit={this.submitSignUp}/>
-                    </form>
-                )
-            }
-
-            return (
-                <form className="authorization-form">
-
-                </form>
-            )
-        }
-
+    return (
+      <form className="authorization-form" />
+    );
+  }
 }

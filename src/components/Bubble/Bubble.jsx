@@ -8,10 +8,10 @@ class Bubble extends Component {
 
   render() {
     return (
-      <div className='Bubble' key={Date.now()} >
+      <div className="Bubble" key={Date.now()} >
         <div className={this.props.isOwner ? 'Bubble_owner_yes' : ''}>
           <span className="Bubble__message">{this.props.message}</span>
-          <span className={this.props.isReaded ? 'Bubble_readed_yes' : ''}></span>
+          <span className={this.props.isReaded ? 'Bubble_readed_yes' : ''} />
         </div>
       </div>
     );
