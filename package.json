@@ -20,7 +20,7 @@
     "uuid": "^3.2.1"
   },
   "scripts": {
-    "start": "concurrently \"npm run client\" \"npm run server\""
+    "start": "concurrently \"npm run client\" \"npm run server\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

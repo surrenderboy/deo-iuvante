@@ -13,6 +13,8 @@ import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
 import MessageInput from '../components/MessageInput/MessageInput';
 
+import IconButton from '../components/IconButton/IconButton';
+
 // default behavior for component info
 setDefaults({
     inline: true
@@ -112,3 +114,22 @@ storiesOf('MessageInput', module)
       <MessageInput sendMessage={(msg) => alert(msg)}/>
     </div>
   ));
+storiesOf('IconButton', module)
+    .addDecorator(withKnobs)
+    .add('with icon', withInfo('')(
+        () => (
+            <IconButton
+                disabled={boolean('Disabled', false)}
+                onClick={action('clicked')}
+                color={text('Icon color', 'red')}
+            >{text('Icon glyph', 'favorite')}</IconButton>
+        )
+    ))
+    .add('with image', withInfo('Image can be both vector and raster')(
+        () => (
+            <IconButton
+                disabled={boolean('Disabled', false)}
+                onClick={action('clicked')}
+            ><img src='https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg'/></IconButton>
+        )
+    ))
