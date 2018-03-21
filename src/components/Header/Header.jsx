@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import styles from './Header.module.css';
 
 class Header extends Component {
-  state = {
-    normalizedText: ''
-  };
+  constructor() {
+    super();
+
+    this.state = {
+      normalizedText: '',
+    };
+  }
 
   componentWillMount() {
     this.normalizeText();
@@ -17,15 +21,15 @@ class Header extends Component {
   }
 
   normalizeText() {
-    let text = typeof this.props.children === 'string' ? this.props.children : '';
+    const text = typeof this.props.children === 'string' ? this.props.children : '';
 
     this.setState({
-      normalizedText: text
+      normalizedText: text,
     });
   }
 
   render() {
-    return(
+    return (
       <div className={styles.header}>
         <div className={styles.left_slot}>{this.props.left || null}</div>
         <div className={styles.text}>
@@ -33,15 +37,15 @@ class Header extends Component {
         </div>
         <div className={styles.right_slot}>{this.props.right || null}</div>
       </div>
-    )
+    );
   }
 }
 
 
 Header.propTypes = {
-  left: PropTypes.string,
-  right: PropTypes.string,
-  children: PropTypes.element
+  left: PropTypes.string.isRequired,
+  right: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Header;

@@ -30,7 +30,7 @@ Avatar.propTypes = {
   size: PropTypes.oneOf(['s', 'm', 'l']).isRequired,
   src: PropTypes.string,
   alt: PropTypes.string,
-  count: PropTypes.number,
+  count: PropTypes.number.isRequired,
 };
 
 export default Avatar;

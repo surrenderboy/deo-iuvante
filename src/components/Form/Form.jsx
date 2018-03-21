@@ -23,18 +23,17 @@ export default class Form extends Component {
     this.submitSignUp = this.submit.bind(this, 'singUp');
   }
 
-  submit(button, event) {
-    event.preventDefault();
-    if (button === 'signIn') { console.log(event.target, this.state.login, this.state.password); } else this.setState({ signIn: false });
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   onChangeValue(name, event) {
     this.setState({ [name]: event.target.value });
   }
 
-
-  componentDidUpdate() {
-    console.log(this.state);
+  submit(button, event) {
+    event.preventDefault();
+    if (button === 'signIn') { console.log(event.target, this.state.login, this.state.password); } else this.setState({ signIn: false });
   }
 
   render() {

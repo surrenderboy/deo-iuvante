@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Form from '../form/Form';
+import React from 'react';
+import Form from '../Form/Form';
 import './App.css';
 
 const App = () =>

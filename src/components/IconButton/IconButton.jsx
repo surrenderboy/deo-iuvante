@@ -1,36 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './IconButton.css';
 
-class IconButton extends Component {
-  render() {
-    const {
-      component,
-      disabled,
-      children,
-      color,
-      ...validProps
-    } = this.props;
-    const CustomComponent = this.props.href ? 'a' : component;
-    return (
-      <CustomComponent
-        role="button"
-        {...validProps}
-        className={`icon-button ${this.props.className || ''} ${disabled ? 'icon-button_disabled' : ''}`}
-      >
-        {
+const IconButton = (props) => {
+  const {
+    component,
+    disabled,
+    children,
+    color,
+    ...validProps
+  } = props;
+  const CustomComponent = props.href ? 'a' : component;
+  return (
+    <CustomComponent
+      role="button"
+      {...validProps}
+      className={`icon-button ${props.className || ''} ${disabled ? 'icon-button_disabled' : ''}`}
+    >
+      {
                     typeof children === 'string'
-                    ? <i
-                      className="material-icons icon-button__icon"
-                      style={{ color: disabled ? '#aaa' : color }}
-                    >{children}
-                    </i>
+                    ?
+                      <i
+                        className="material-icons icon-button__icon"
+                        style={{ color: disabled ? '#aaa' : color }}
+                      >
+                        {children}
+                      </i>
                     : <div className="icon-button__icon" >{children}</div>
                 }
-      </CustomComponent>
-    );
-  }
-}
+    </CustomComponent>
+  );
+};
 
 IconButton.defaultProps = {
   disabled: false,
@@ -38,20 +38,20 @@ IconButton.defaultProps = {
 };
 
 IconButton.propTypes = {
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
   /** Custom component for button */
   component: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
   ]),
-  href: PropTypes.string,
+  href: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
   ]).isRequired,
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
   /** Glyph color */
-  color: PropTypes.string,
+  color: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
 };
 
