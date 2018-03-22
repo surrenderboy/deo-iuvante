@@ -4,10 +4,9 @@
     justify-content: space-between;
     flex-wrap: nowrap;
     align-items: center;
-    height: 10vh;
 }
 
-.header > * {
+.left_slot, .right_slot, .text {
     margin: auto 1.5vw;
 }
 
