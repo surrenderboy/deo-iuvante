@@ -68,13 +68,15 @@ async function createRoom(db, currentUser, room) {
     throw new Error('Cannot create room without name');
   }
 
-  let collection = db.collection(TABLE),
+  const collection = db.collection(TABLE),
     existsRoom = await collection.findOne({ name: room.name });
 
   if (!existsRoom) {
     // If we clone room
+    // eslint-disable-next-line no-param-reassign
     delete room._id;
 
+    // eslint-disable-next-line no-param-reassign
     room.users = room.users || [];
     room.users.push(currentUser._id);
 
@@ -104,7 +106,7 @@ async function joinRoom(db, { roomId, userId }) {
     throw new Error('You must specify userId to join');
   }
 
-  let collection = db.collection(TABLE),
+  const collection = db.collection(TABLE),
     [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
 
   if (!room) {
@@ -114,8 +116,7 @@ async function joinRoom(db, { roomId, userId }) {
   if (!user) {
     throw new Error(`Unknown user with id=${userId}`);
   }
-
-  const users = room.users.map(user => user.toString());
+  const users = room.users.map(oneUser => oneUser.toString());
 
   if (users.indexOf(userId.toString()) > -1) {
     return room;
@@ -124,7 +125,7 @@ async function joinRoom(db, { roomId, userId }) {
   users.push(userId.toString());
 
   // Make array unique
-  room.users = [...new Set(users)].map(userId => ObjectId(userId));
+  room.users = [...new Set(users)].map(oneUserId => ObjectId(oneUserId));
 
   // Save users to database
   await collection.updateOne({ _id: room._id }, { $set: { users: room.users } });
@@ -148,7 +149,7 @@ async function leaveRoom(db, { roomId, userId }) {
     throw new Error('You must specify userId to join');
   }
 
-  let collection = db.collection(TABLE),
+  const collection = db.collection(TABLE),
     [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
 
   if (!room) {
@@ -160,7 +161,7 @@ async function leaveRoom(db, { roomId, userId }) {
   }
 
   room.users = room.users
-    .filter(user => user.toString() !== userId.toString());
+    .filter(oneUser => oneUser.toString() !== userId.toString());
 
   // Save users to database
   await collection.updateOne({ _id: room._id }, { $set: { users: room.users } });

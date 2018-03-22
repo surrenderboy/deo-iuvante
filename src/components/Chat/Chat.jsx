@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './Chat.module.css';
 
-import MessageBubble from '../Bubble/Bubble.jsx';
+import MessageBubble from '../Bubble/Bubble';
 
 class Chat extends Component {
   renderMessages() {
@@ -29,7 +29,7 @@ class Chat extends Component {
 }
 
 Chat.propTypes = {
-  messages: PropTypes.array.isRequired,
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentUserId: PropTypes.string.isRequired,
 };
 

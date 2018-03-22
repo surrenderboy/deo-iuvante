@@ -18,6 +18,26 @@ const TABLE = 'users';
 
 /**
  * @param {Db} db
+ * @param {string} userId
+ *
+ * @returns {Promise<User>}
+ */
+async function getUser(db, userId) {
+  return db.collection(TABLE).findOne({ _id: ObjectId(userId.toString()) });
+}
+
+/**
+ * @param {Db} db
+ * @param {User} user
+ *
+ * @returns {Promise<User>}
+ */
+async function saveUser(db, user) {
+  return insertOrUpdateEntity(db.collection(TABLE), user);
+}
+
+/**
+ * @param {Db} db
  * @param {string} sid Session ID
  *
  * @returns {Promise<User>}
@@ -43,26 +63,6 @@ async function findUserBySid(db, sid) {
     return user;
   }
   return db.collection(TABLE).findOne({ _id: session.userId });
-}
-
-/**
- * @param {Db} db
- * @param {string} userId
- *
- * @returns {Promise<User>}
- */
-async function getUser(db, userId) {
-  return db.collection(TABLE).findOne({ _id: ObjectId(userId.toString()) });
-}
-
-/**
- * @param {Db} db
- * @param {User} user
- *
- * @returns {Promise<User>}
- */
-async function saveUser(db, user) {
-  return insertOrUpdateEntity(db.collection(TABLE), user);
 }
 
 /**

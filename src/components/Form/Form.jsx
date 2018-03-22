@@ -33,7 +33,9 @@ export default class Form extends Component {
 
   submit(button, event) {
     event.preventDefault();
-    if (button === 'signIn') { console.log(event.target, this.state.login, this.state.password); } else this.setState({ signIn: false });
+    if (button === 'signIn') {
+      console.log(event.target, this.state.login, this.state.password);
+    } else this.setState({ signIn: false });
   }
 
   render() {

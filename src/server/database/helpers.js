@@ -21,7 +21,9 @@ async function pageableCollection(collection, {
   const count = await collection.find(query).count();
 
   if (lastId) {
+    // eslint-disable-next-line no-param-reassign
     query._id = {
+      // eslint-disable-next-line no-undef
       $gt: ObjectId(_id),
     };
   }
@@ -33,12 +35,13 @@ async function pageableCollection(collection, {
   }
 
   if (query._id) {
+    // eslint-disable-next-line no-param-reassign
     query._id = ObjectId(query._id.toString());
   }
 
-  let cursor = await queryBuilder,
-    items = await cursor.toArray(),
-    next = null;
+  const cursor = await queryBuilder,
+    items = await cursor.toArray();
+  let next = null;
 
   if (items.length === limit) {
     next = {
@@ -70,14 +73,15 @@ async function insertOrUpdateEntity(collection, data) {
       { _id: data._id },
       data,
     );
-
+    // eslint-disable-next-line no-console
     console.log(result);
-  } else {
-    const result = await collection.insertOne(data);
-    data._id = result.insertedId;
-
-    return data;
   }
+  const result = await collection.insertOne(data);
+
+  return {
+    ...data,
+    _id: result.insertedId,
+  };
 }
 
 module.exports = {

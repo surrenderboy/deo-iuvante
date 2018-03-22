@@ -9,6 +9,7 @@ const TYPES = require('./messages');
  * @param {Db} db
  * @param {*} io
  */
+// eslint-disable-next-line func-names
 module.exports = function (db, io) {
   const ONLINE = {};
 
@@ -17,17 +18,20 @@ module.exports = function (db, io) {
      * @return {Pagination<User>}
      */
   function fillUsersWithStatus(users) {
-    users.items = users.items.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) }));
+    // eslint-disable-next-line no-param-reassign
 
-    return users;
+    return {
+      ...users,
+      items: users.items.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) })),
+    };
   }
 
   /**
      * Connection is created
      */
   io.on('connection', (socket) => {
-    let { sid } = socket.request.cookies,
-      isDisconnected = false;
+    const { sid } = socket.request.cookies;
+    let isDisconnected = false;
 
     socket.join('broadcast');
 
@@ -37,8 +41,10 @@ module.exports = function (db, io) {
          * @param callback
          */
     function wrapCallback(callback) {
+      // eslint-disable-next-line func-names
       return function (...args) {
         const printErr = (err) => {
+          // eslint-disable-next-line no-console
           console.error(err);
 
           socket.emit(TYPES.ERROR, {
@@ -61,7 +67,7 @@ module.exports = function (db, io) {
          * @param {string} userId
          */
     function userChangeOnlineStatus(userId) {
-      const r = socket.broadcast.emit(TYPES.ONLINE, {
+      socket.broadcast.emit(TYPES.ONLINE, {
         status: ONLINE[userId],
         userId,
       });
