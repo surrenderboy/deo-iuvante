@@ -105,6 +105,7 @@ async function joinRoom(db, { roomId, userId }) {
   }
 
   let collection = db.collection(TABLE),
+    // eslint-disable-next-line no-shadow
     [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
 
   if (!room) {
@@ -114,7 +115,7 @@ async function joinRoom(db, { roomId, userId }) {
   if (!user) {
     throw new Error(`Unknown user with id=${userId}`);
   }
-
+  // eslint-disable-next-line no-shadow
   const users = room.users.map(user => user.toString());
 
   if (users.indexOf(userId.toString()) > -1) {
@@ -124,6 +125,7 @@ async function joinRoom(db, { roomId, userId }) {
   users.push(userId.toString());
 
   // Make array unique
+  // eslint-disable-next-line no-shadow
   room.users = [...new Set(users)].map(userId => ObjectId(userId));
 
   // Save users to database
@@ -160,6 +162,7 @@ async function leaveRoom(db, { roomId, userId }) {
   }
 
   room.users = room.users
+    // eslint-disable-next-line no-shadow
     .filter(user => user.toString() !== userId.toString());
 
   // Save users to database

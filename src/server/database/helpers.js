@@ -70,7 +70,7 @@ async function insertOrUpdateEntity(collection, data) {
       { _id: data._id },
       data,
     );
-
+    // eslint-disable-next-line no-console
     console.log(result);
   } else {
     const result = await collection.insertOne(data);

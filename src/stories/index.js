@@ -141,9 +141,11 @@ storiesOf('MessageInput', module)
   .add('default', withInfo(`
     Message input
   `)(() =>
-    (<div style={{ width: text('Width', '200px'), height: text('Height', '20px') }}>
-      <MessageInput sendMessage={msg => alert(msg)} />
-    </div>)));
+    (
+      <div style={{ width: text('Width', '200px'), height: text('Height', '20px') }}>
+        <MessageInput sendMessage={msg => alert(msg)} />
+      </div>
+    )));
 
 storiesOf('IconButton', module)
   .addDecorator(withKnobs)
@@ -159,6 +161,6 @@ storiesOf('IconButton', module)
     <IconButton
       disabled={boolean('Disabled', false)}
       onClick={action('clicked')}
-    ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" />
+    ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="" />
     </IconButton>
   )));

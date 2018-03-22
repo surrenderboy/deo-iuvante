@@ -55,6 +55,7 @@ exports.createServer = function (serverConfig, databaseConfig) {
     });
 
     http.listen(serverConfig.port, () => {
+      // eslint-disable-next-line no-console
       console.log(`API server listen at http://${serverConfig.host}:${serverConfig.port}`);
 
       resolve();

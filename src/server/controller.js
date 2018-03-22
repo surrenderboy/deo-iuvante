@@ -39,6 +39,7 @@ module.exports = function (db, io) {
     function wrapCallback(callback) {
       return function (...args) {
         const printErr = (err) => {
+          // eslint-disable-next-line no-console
           console.error(err);
 
           socket.emit(TYPES.ERROR, {
