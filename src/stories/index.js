@@ -63,11 +63,19 @@ storiesOf('Header', module)
       <Header
         left={
           <span>
-            <IconButton color="#fff">arrow_back</IconButton>
-            Назад
+            <IconButton
+              onClick={action('back')}
+              icon={{ color: '#fff', glyph: 'arrow_back' }}
+              text={{ caption: 'Назад', color: '#fff' }}
+            />
           </span>
         }
-        right={<IconButton color="#fff">add</IconButton>}
+        right={
+          <IconButton
+            onClick={action('back')}
+            icon={{ color: '#fff', glyph: 'add' }}
+          />
+        }
       >Текст хидера
       </Header>,
     ]))
@@ -158,20 +166,21 @@ storiesOf('IconButton', module)
     <IconButton
       disabled={boolean('Disabled', false)}
       onClick={action('clicked')}
-    >
-      <Icon glyph="favorite" color="red" />
-    </IconButton>
+      icon={{ color: text('Icon color', 'red'), glyph: text('Icon glyph', 'favorite') }}
+      text={{ caption: text('Button text', 'Hello World') }}
+    />
   )))
   .add('with image', withInfo('Image can be both vector and raster')(() => (
     <IconButton
       disabled={boolean('Disabled', false)}
       onClick={action('clicked')}
-    ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="" />
-    </IconButton>
+      icon={{ src: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' }}
+      text={{ caption: text('Button text', 'Hello World') }}
+    />
   )));
 
 storiesOf('Icon', module)
   .addDecorator(withKnobs)
-  .add('default', withInfo('')(() => (
+  .add('favorite', withInfo('')(() => (
     <Icon style={{ fontSize: 40 }} color={text('Icon color', 'red')} glyph={text('Icon glyph', 'favorite')} />
   )));
