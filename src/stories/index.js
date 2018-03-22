@@ -59,7 +59,16 @@ storiesOf('Header', module)
         Справа и слева кнопки/текст
     `)(() =>
     [
-      <Header left="лев.слот" right="пр.слот">Текст хидера</Header>,
+      <Header
+        left={
+          <span>
+            <IconButton color="#fff">arrow_back</IconButton>
+            Назад
+          </span>
+        }
+        right={<IconButton color="#fff">add</IconButton>}
+      >Текст хидера
+      </Header>,
     ]))
   .add('w/o action buttons', withInfo(`
         Если действия на Header не нужны
