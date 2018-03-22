@@ -18,36 +18,6 @@ const TABLE = 'users';
 
 /**
  * @param {Db} db
- * @param {string} sid Session ID
- *
- * @returns {Promise<User>}
- */
-async function findUserBySid(db, sid) {
-  const session = await getSessionInfo(db, sid);
-
-  if (!session.userId) {
-    // Create fake user
-
-    let user = {
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      phone: faker.phone.phoneNumber(),
-    };
-
-    // eslint-disable-next-line no-use-before-define
-    user = await saveUser(db, user);
-
-    session.userId = user._id;
-
-    await saveSessionInfo(db, session);
-
-    return user;
-  }
-  return db.collection(TABLE).findOne({ _id: session.userId });
-}
-
-/**
- * @param {Db} db
  * @param {string} userId
  *
  * @returns {Promise<User>}
@@ -64,6 +34,35 @@ async function getUser(db, userId) {
  */
 async function saveUser(db, user) {
   return insertOrUpdateEntity(db.collection(TABLE), user);
+}
+
+/**
+ * @param {Db} db
+ * @param {string} sid Session ID
+ *
+ * @returns {Promise<User>}
+ */
+async function findUserBySid(db, sid) {
+  const session = await getSessionInfo(db, sid);
+
+  if (!session.userId) {
+    // Create fake user
+
+    let user = {
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber(),
+    };
+
+    user = await saveUser(db, user);
+
+    session.userId = user._id;
+
+    await saveSessionInfo(db, session);
+
+    return user;
+  }
+  return db.collection(TABLE).findOne({ _id: session.userId });
 }
 
 /**

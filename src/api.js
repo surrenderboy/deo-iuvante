@@ -6,7 +6,6 @@ class Api {
     this._connectPromise = fetch('/api/auth', { credentials: 'same-origin' })
       .then(() => this._setupSocket())
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(`Auth problems: ${err.message}`);
 
         throw err;
@@ -81,13 +80,12 @@ class Api {
      */
   async createRoom(room) {
     return this._requestResponse(MESSAGES.CREATE_ROOM, room)
-    // eslint-disable-next-line no-shadow
-      .then((room) => {
-        if (room.error) {
-          throw new Error(room.error);
+      .then((roomResult) => {
+        if (roomResult.error) {
+          throw new Error(roomResult.error);
         }
 
-        return room;
+        return roomResult;
       });
   }
 

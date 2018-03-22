@@ -39,11 +39,9 @@ async function pageableCollection(collection, {
     query._id = ObjectId(query._id.toString());
   }
 
-  // eslint-disable-next-line one-var,prefer-const
-  let cursor = await queryBuilder,
-    // eslint-disable-next-line prefer-const
-    items = await cursor.toArray(),
-    next = null;
+  const cursor = await queryBuilder,
+    items = await cursor.toArray();
+  let next = null;
 
   if (items.length === limit) {
     next = {
@@ -80,10 +78,11 @@ async function insertOrUpdateEntity(collection, data) {
     console.log(result);
   } else {
     const result = await collection.insertOne(data);
-    // eslint-disable-next-line no-param-reassign
-    data._id = result.insertedId;
 
-    return data;
+    return {
+      ...data,
+      _id: result.insertedId,
+    };
   }
 }
 

@@ -27,9 +27,8 @@ module.exports = function (db, io) {
      * Connection is created
      */
   io.on('connection', (socket) => {
-    // eslint-disable-next-line one-var,prefer-const
-    let { sid } = socket.request.cookies,
-      isDisconnected = false;
+    const { sid } = socket.request.cookies;
+    let isDisconnected = false;
 
     socket.join('broadcast');
 
@@ -41,7 +40,6 @@ module.exports = function (db, io) {
     function wrapCallback(callback) {
       return function (...args) {
         const printErr = (err) => {
-          // eslint-disable-next-line no-console
           console.error(err);
 
           socket.emit(TYPES.ERROR, {
@@ -64,8 +62,7 @@ module.exports = function (db, io) {
          * @param {string} userId
          */
     function userChangeOnlineStatus(userId) {
-      // eslint-disable-next-line no-unused-vars
-      const r = socket.broadcast.emit(TYPES.ONLINE, {
+      socket.broadcast.emit(TYPES.ONLINE, {
         status: ONLINE[userId],
         userId,
       });

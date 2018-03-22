@@ -23,7 +23,6 @@ function startLocalDatabase(port) {
 
   const close = () => {
     server.close().catch((err) => {
-      // eslint-disable-next-line no-console
       console.error(err);
     });
   };

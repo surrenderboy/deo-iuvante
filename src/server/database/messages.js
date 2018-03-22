@@ -1,6 +1,5 @@
 const { ObjectId } = require('mongodb');
-// eslint-disable-next-line no-unused-vars
-const { insertOrUpdateEntity, pageableCollection } = require('./helpers');
+const { pageableCollection } = require('./helpers');
 const { getUser } = require('./user');
 const { getRoom } = require('./room');
 

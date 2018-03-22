@@ -8,6 +8,7 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-underscore-dangle": 0,
-        "max-len": ["error", { "code": 120 }]
+        "max-len": ["error", { "code": 120 }],
+        "one-var": 0
     }
 }

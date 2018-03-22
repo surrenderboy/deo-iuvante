@@ -142,7 +142,12 @@ storiesOf('MessageInput', module)
     Message input
   `)(() =>
     (
-      <div style={{ width: text('Width', '200px'), height: text('Height', '20px') }}>
+      <div
+        style={{
+              width: text('Width', '200px'),
+              height: text('Height', '20px'),
+}}
+      >
         <MessageInput sendMessage={msg => alert(msg)} />
       </div>
     )));
