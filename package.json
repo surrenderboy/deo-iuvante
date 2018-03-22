@@ -35,7 +35,8 @@
     "server": "nodemon -w server.js -w src/server server.js",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public -o docs",
-    "lint": "eslint --ext .js --ext .jsx ./src --fix"
+    "lint": "eslint --ext .js --ext .jsx ./src",
+    "lint:fix": "eslint --ext .js --ext .jsx ./src --fix"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
