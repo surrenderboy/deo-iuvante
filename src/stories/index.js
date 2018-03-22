@@ -11,6 +11,7 @@ import List from '../components/List/List';
 import ListItem from '../components/ListItem/ListItem';
 import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
+import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
 
 import IconButton from '../components/IconButton/IconButton';
@@ -59,7 +60,16 @@ storiesOf('Header', module)
         Справа и слева кнопки/текст
     `)(() =>
     [
-      <Header left="лев.слот" right="пр.слот">Текст хидера</Header>,
+      <Header
+        left={
+          <span>
+            <IconButton color="#fff">arrow_back</IconButton>
+            Назад
+          </span>
+        }
+        right={<IconButton color="#fff">add</IconButton>}
+      >Текст хидера
+      </Header>,
     ]))
   .add('w/o action buttons', withInfo(`
         Если действия на Header не нужны
@@ -83,23 +93,48 @@ storiesOf('Bubble', module)
   .add('Владелец, прочитано', withInfo(`
         Сообщение владельца, не прочитано
     `)(() => (
-      <Bubble message="My long and interesting message" isOwner isReaded />
+      <Bubble message="My long and interesting message" isOwner isRead />
   )))
   .add('Не владелец, прочитано', withInfo(`
         Сообщение другого пользователя, не прочитано
     `)(() => (
-      <Bubble message="My long and interesting message" isOwner={false} isReaded />
+      <Bubble message="My long and interesting message" isOwner={false} isRead />
   )))
   .add('Несколько разных сообщений', withInfo(`
         Пример чата
     `)(() => ([
-      <Bubble message="My long and interesting message1" isOwner={false} isReaded />,
-      <Bubble message="My long and interesting message2" isOwner isReaded />,
-      <Bubble message="My long and interesting message3" isOwner={false} isReaded />,
-      <Bubble message="My long and interesting message4" isOwner isReaded />,
+      <Bubble message="My long and interesting message1" isOwner={false} isRead />,
+      <Bubble message="My long and interesting message2" isOwner isRead />,
+      <Bubble message="My long and interesting message3" isOwner={false} isRead />,
+      <Bubble message="My long and interesting message4" isOwner isRead />,
       <Bubble message="My long and interesting message5" isOwner />,
       <Bubble message="My long and interesting message6" isOwner={false} />,
   ])));
+
+storiesOf('Chat', module)
+  .addDecorator(withKnobs)
+  .add('Комната чата', withInfo(`
+        Чат
+    `)(() =>
+    [
+      <Chat
+        messages={[
+          {
+            _id: 1,
+            userId: 'pistch',
+            message: text('Текст первого сообщения', 'Привет'),
+            isRead: boolean('Первое сообщение прочитано', true),
+          },
+          {
+            _id: 2,
+            userId: 'somebody',
+            message: text('Текст второго сообщения', 'И тебе привет'),
+            isRead: boolean('Второе сообщение прочитано', false),
+          },
+        ]}
+        currentUserId="pistch"
+      />,
+    ]));
 
 storiesOf('MessageInput', module)
   .addDecorator(withKnobs)
@@ -109,6 +144,7 @@ storiesOf('MessageInput', module)
     (<div style={{ width: text('Width', '200px'), height: text('Height', '20px') }}>
       <MessageInput sendMessage={msg => alert(msg)} />
     </div>)));
+
 storiesOf('IconButton', module)
   .addDecorator(withKnobs)
   .add('with icon', withInfo('')(() => (
