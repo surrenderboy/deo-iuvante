@@ -1,57 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './IconButton.css';
+import styles from './IconButton.module.css';
 
 const IconButton = (props) => {
   const {
     component,
     disabled,
     children,
-    color,
     ...validProps
   } = props;
-  const CustomComponent = props.href ? 'a' : component;
+  const CustomComponent = props.href && props.href.length ? 'a' : component;
   return (
     <CustomComponent
       role="button"
       {...validProps}
-      className={`icon-button ${props.className || ''} ${disabled ? 'icon-button_disabled' : ''}`}
+      className={`${styles.icon_button} ${props.className || ''} ${disabled ? styles.disabled : ''}`}
     >
-      {
-                    typeof children === 'string'
-                    ?
-                      <i
-                        className="material-icons icon-button__icon"
-                        style={{ color: disabled ? '#aaa' : color }}
-                      >
-                        {children}
-                      </i>
-                    : <div className="icon-button__icon" >{children}</div>
-                }
+      {children}
     </CustomComponent>
   );
 };
 
 IconButton.defaultProps = {
-  disabled: false,
+  onClick: () => undefined,
   component: 'button',
+  href: '',
+  className: '',
+  disabled: false,
 };
 
 IconButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   /** Custom component for button */
   component: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
   ]),
-  href: PropTypes.string.isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]).isRequired,
-  className: PropTypes.string.isRequired,
-  /** Glyph color */
-  color: PropTypes.string.isRequired,
+  href: PropTypes.string,
+  /** Can be both <Icon /> component or image */
+  children: PropTypes.element.isRequired,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
 };
 

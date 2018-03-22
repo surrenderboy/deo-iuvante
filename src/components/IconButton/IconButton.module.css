@@ -1,6 +1,4 @@
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
-
-.icon-button {
+.icon_button {
     box-sizing: border-box;
     display: inline-block;
     outline: none;
@@ -15,15 +13,19 @@
     border-radius: 50%;
 }
 
-.icon-button:hover {
+.icon_button:hover {
     cursor: pointer;
 }
 
-.icon-button__icon :first-child {
+.icon_button :first-child {
     width: 100%;
     height: 100%;
 }
 
-.icon-button_disabled {
+.disabled {
     pointer-events:none;
+}
+
+.disabled :first-child {
+  color: #aaa !important;
 }

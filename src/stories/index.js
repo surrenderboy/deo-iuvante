@@ -158,8 +158,8 @@ storiesOf('IconButton', module)
     <IconButton
       disabled={boolean('Disabled', false)}
       onClick={action('clicked')}
-      color={text('Icon color', 'red')}
-    >{text('Icon glyph', 'favorite')}
+    >
+      <Icon glyph="favorite" color="red" />
     </IconButton>
   )))
   .add('with image', withInfo('Image can be both vector and raster')(() => (
