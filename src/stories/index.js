@@ -13,7 +13,7 @@ import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
 import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
-
+import Icon from '../components/Icon/Icon';
 import IconButton from '../components/IconButton/IconButton';
 
 // default behavior for component info
@@ -168,4 +168,10 @@ storiesOf('IconButton', module)
       onClick={action('clicked')}
     ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="" />
     </IconButton>
+  )));
+
+storiesOf('Icon', module)
+  .addDecorator(withKnobs)
+  .add('default', withInfo('')(() => (
+    <Icon style={{ fontSize: 40 }} color={text('Icon color', 'red')} glyph={text('Icon glyph', 'favorite')} />
   )));
