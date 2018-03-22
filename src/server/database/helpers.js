@@ -67,23 +67,20 @@ async function pageableCollection(collection, {
  *
  * @return {Promise<*>}
  */
-// eslint-disable-next-line consistent-return
 async function insertOrUpdateEntity(collection, data) {
   if (data._id) {
     const result = await collection.findOneAndUpdate(
       { _id: data._id },
       data,
     );
-    // eslint-disable-next-line no-console
     console.log(result);
-  } else {
-    const result = await collection.insertOne(data);
-
-    return {
-      ...data,
-      _id: result.insertedId,
-    };
   }
+  const result = await collection.insertOne(data);
+
+  return {
+    ...data,
+    _id: result.insertedId,
+  };
 }
 
 module.exports = {

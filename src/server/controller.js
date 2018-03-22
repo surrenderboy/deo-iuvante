@@ -18,9 +18,11 @@ module.exports = function (db, io) {
      */
   function fillUsersWithStatus(users) {
     // eslint-disable-next-line no-param-reassign
-    users.items = users.items.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) }));
 
-    return users;
+    return {
+      ...users,
+      items: users.items.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) })),
+    };
   }
 
   /**
