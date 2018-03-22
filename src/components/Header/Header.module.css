@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.header > * {
+.left_slot, .right_slot, .text {
     margin: auto 1.5vw;
 }
 
