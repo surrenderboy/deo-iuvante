@@ -9,6 +9,7 @@ const TYPES = require('./messages');
  * @param {Db} db
  * @param {*} io
  */
+// eslint-disable-next-line func-names
 module.exports = function (db, io) {
   const ONLINE = {};
 
@@ -40,8 +41,10 @@ module.exports = function (db, io) {
          * @param callback
          */
     function wrapCallback(callback) {
+      // eslint-disable-next-line func-names
       return function (...args) {
         const printErr = (err) => {
+          // eslint-disable-next-line no-console
           console.error(err);
 
           socket.emit(TYPES.ERROR, {

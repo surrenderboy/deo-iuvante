@@ -20,6 +20,7 @@ const attachController = require('./controller');
  *
  * @return {Promise<void>}
  */
+// eslint-disable-next-line func-names
 exports.createServer = function (serverConfig, databaseConfig) {
   return connect(databaseConfig).then(db => new Promise((resolve) => {
     app.use(express.static('build'));
@@ -55,6 +56,7 @@ exports.createServer = function (serverConfig, databaseConfig) {
     });
 
     http.listen(serverConfig.port, () => {
+      // eslint-disable-next-line no-console
       console.log(`API server listen at http://${serverConfig.host}:${serverConfig.port}`);
 
       resolve();
