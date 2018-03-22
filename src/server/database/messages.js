@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb');
+// eslint-disable-next-line no-unused-vars
 const { insertOrUpdateEntity, pageableCollection } = require('./helpers');
 const { getUser } = require('./user');
 const { getRoom } = require('./room');
@@ -67,6 +68,7 @@ async function sendMessage(db, { userId, roomId, message }) {
 async function getMessages(db, filter) {
   ['roomId', 'userId'].forEach((key) => {
     if (filter[key]) {
+      // eslint-disable-next-line no-param-reassign
       filter[key] = ObjectId(filter[key].toString());
     }
   });

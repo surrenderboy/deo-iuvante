@@ -34,6 +34,7 @@ async function findUserBySid(db, sid) {
       phone: faker.phone.phoneNumber(),
     };
 
+    // eslint-disable-next-line no-use-before-define
     user = await saveUser(db, user);
 
     session.userId = user._id;

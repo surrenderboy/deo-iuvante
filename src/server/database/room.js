@@ -68,13 +68,17 @@ async function createRoom(db, currentUser, room) {
     throw new Error('Cannot create room without name');
   }
 
+  // eslint-disable-next-line one-var,prefer-const
   let collection = db.collection(TABLE),
+    // eslint-disable-next-line prefer-const
     existsRoom = await collection.findOne({ name: room.name });
 
   if (!existsRoom) {
     // If we clone room
+    // eslint-disable-next-line no-param-reassign
     delete room._id;
 
+    // eslint-disable-next-line no-param-reassign
     room.users = room.users || [];
     room.users.push(currentUser._id);
 
@@ -104,8 +108,9 @@ async function joinRoom(db, { roomId, userId }) {
     throw new Error('You must specify userId to join');
   }
 
+  // eslint-disable-next-line one-var,prefer-const
   let collection = db.collection(TABLE),
-    // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line no-shadow,prefer-const
     [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
 
   if (!room) {
@@ -150,7 +155,9 @@ async function leaveRoom(db, { roomId, userId }) {
     throw new Error('You must specify userId to join');
   }
 
+  // eslint-disable-next-line one-var,prefer-const
   let collection = db.collection(TABLE),
+    // eslint-disable-next-line prefer-const
     [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
 
   if (!room) {

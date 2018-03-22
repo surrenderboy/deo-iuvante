@@ -38,6 +38,17 @@ function startLocalDatabase(port) {
 }
 
 /**
+ * Create url to connect to database
+ *
+ * @param {MongoConfig} config
+ *
+ * @return {string}
+ */
+function createDatabaseUri(config) {
+  return `mongodb://${config.host}:${config.port}/${config.database}`;
+}
+
+/**
  * Connect to database
  *
  * @param {MongoConfig} config
@@ -47,17 +58,6 @@ function startLocalDatabase(port) {
 function createConnection(config) {
   return mongo.connect(createDatabaseUri(config))
     .then(client => client.db(config.database));
-}
-
-/**
- * Create url to connect to database
- *
- * @param {MongoConfig} config
- *
- * @return {string}
- */
-function createDatabaseUri(config) {
-  return `mongodb://${config.host}:${config.port}/${config.database}`;
 }
 
 /**

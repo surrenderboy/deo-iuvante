@@ -17,6 +17,7 @@ module.exports = function (db, io) {
      * @return {Pagination<User>}
      */
   function fillUsersWithStatus(users) {
+    // eslint-disable-next-line no-param-reassign
     users.items = users.items.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) }));
 
     return users;
@@ -26,6 +27,7 @@ module.exports = function (db, io) {
      * Connection is created
      */
   io.on('connection', (socket) => {
+    // eslint-disable-next-line one-var,prefer-const
     let { sid } = socket.request.cookies,
       isDisconnected = false;
 
@@ -62,6 +64,7 @@ module.exports = function (db, io) {
          * @param {string} userId
          */
     function userChangeOnlineStatus(userId) {
+      // eslint-disable-next-line no-unused-vars
       const r = socket.broadcast.emit(TYPES.ONLINE, {
         status: ONLINE[userId],
         userId,

@@ -45,6 +45,7 @@ exports.createServer = function (serverConfig, databaseConfig) {
 
     app.use((req, res, next) => {
       const index = 'build/index.html';
+      // eslint-disable-next-line no-unused-vars
       stat(index, (err, result) => {
         if (err) {
           next();
