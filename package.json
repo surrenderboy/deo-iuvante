@@ -35,7 +35,8 @@
     "server": "nodemon -w server.js -w src/server server.js",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public -o docs",
-    "lint": "eslint --ext .js --ext .jsx ./src --fix"
+    "lint": "eslint --ext .js --ext .jsx ./src",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -43,7 +44,8 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0"
+    "eslint-plugin-react": "^7.7.0",
+    "pre-commit": "^1.2.2"
   },
   "browserslist": {
     "development": [
@@ -52,5 +54,6 @@
     "production": [
       "last 2 versions"
     ]
-  }
+  },
+  "pre-commit": "lint"
 }
