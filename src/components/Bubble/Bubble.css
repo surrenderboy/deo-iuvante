@@ -1,6 +1,6 @@
 .Bubble {
 	padding: 1rem;
-	font-size: 14px; 
+	font-size: 14px;
 }
 .Bubble div{
 	display: flex;
@@ -14,11 +14,11 @@
 .Bubble .Bubble_owner_yes {
 	flex-direction: row-reverse;
 }
-.Bubble_readed_yes{
+.Bubble_read_yes{
 	position: relative;
 	width: 20px;
 }
-.Bubble_readed_yes::after {
+.Bubble_read_yes::after {
 	content: '';
 	width: 10px;
 	height: 10px;

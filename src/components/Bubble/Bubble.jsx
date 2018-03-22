@@ -7,7 +7,7 @@ const Bubble = props =>
     <div className="Bubble" key={Date.now()} >
       <div className={props.isOwner ? 'Bubble_owner_yes' : ''}>
         <span className="Bubble__message">{props.message}</span>
-        <span className={props.isReaded ? 'Bubble_readed_yes' : ''} />
+        <span className={props.isRead ? 'Bubble_read_yes' : ''} />
       </div>
     </div>
   );
@@ -15,7 +15,7 @@ const Bubble = props =>
 Bubble.propTypes = {
   isOwner: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
-  isReaded: PropTypes.bool.isRequired,
+  isRead: PropTypes.bool.isRequired,
 };
 
 export default Bubble;
