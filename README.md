@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/yandex-shri-minsk-2018/deo-iuvante.svg?branch=master)](https://travis-ci.org/yandex-shri-minsk-2018/deo-iuvante)
+
 # Яндекс ШРИ, Минск 2018
 
 Требования к окружению:
