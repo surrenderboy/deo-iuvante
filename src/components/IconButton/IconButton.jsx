@@ -19,17 +19,16 @@ const IconButton = (props) => {
       className={`${styles.icon_button} ${props.className || ''} ${disabled ? styles.disabled : ''}`}
     >
       <div className={styles.label} style={{ color: text.color }}>
-        {icon.src
-          ? <img src={icon.src} alt={icon.alt || ''} />
-          : icon.glyph &&
-            <Icon
-              style={{ marginRight: text.caption && 8 }}
-              color={disabled ? '#aaa' : icon.color}
-              glyph={icon.glyph}
-            />
+        {(icon.glyph || icon.src) &&
+          <Icon
+            color={disabled ? '#aaa' : icon.color}
+            glyph={icon.glyph}
+            src={icon.src}
+            alt={icon.alt}
+          />
         }
         {text.caption &&
-          text.caption
+          <span className={styles.caption}>{text.caption}</span>
         }
       </div>
     </CustomComponent>

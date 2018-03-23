@@ -181,6 +181,12 @@ storiesOf('IconButton', module)
 
 storiesOf('Icon', module)
   .addDecorator(withKnobs)
-  .add('favorite', withInfo('')(() => (
+  .add('with font icon', withInfo('')(() => (
     <Icon style={{ fontSize: 40 }} color={text('Icon color', 'red')} glyph={text('Icon glyph', 'favorite')} />
+  )))
+  .add('with image icon', withInfo('')(() => (
+    <Icon
+      style={{ height: 40 }}
+      src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+    />
   )));
