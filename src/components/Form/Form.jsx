@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
-import FormInputLogin from './FormInputLogin';
-import FormInputPassword from './FormInputPassword';
-import form from './form.css';
-import ButtonSignIn from './ButtonSignIn';
-import ButtonSignUp from './ButtonSignUp';
+import FormInput from './FormInput';
+import form from './form.module.css';
+import FormButton from './FormButton';
 
 export default class Form extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       login: '',
       password: '',
+      loginIsEmpty: false,
+      passwordIsEmpty: false,
       signIn: true,
       signUp: false,
-      authorization: false,
     };
 
     this.onLoginChangeValue = this.onChangeValue.bind(this, 'login');
     this.onPasswordChangeValue = this.onChangeValue.bind(this, 'password');
     this.submitSignIn = this.submit.bind(this, 'signIn');
-    this.submitSignUp = this.submit.bind(this, 'singUp');
-  }
-
-  componentDidUpdate() {
-    console.log(this.state);
+    this.submitSignUp = this.submit.bind(this, 'signUp');
+    this.submitCreateAccount = this.submit.bind(this, 'createAcc');
   }
 
   onChangeValue(name, event) {
@@ -32,26 +28,115 @@ export default class Form extends Component {
   }
 
   submit(button, event) {
+    if (button === 'signIn' || button === 'createAcc') {
+      this._checkValue(this.state.login, this.state.password);
+    } else {
+      this.setState({
+        signIn: false,
+        signUp: true,
+        loginIsEmpty: false,
+        passwordIsEmpty: false,
+      });
+    }
     event.preventDefault();
-    if (button === 'signIn') {
-      console.log(event.target, this.state.login, this.state.password);
-    } else this.setState({ signIn: false });
+  }
+
+  _checkValue(login, password) {
+    const loginValue = login.trim(),
+      passwordValue = password.trim();
+    if (!loginValue) {
+      this.setState({ loginIsEmpty: true });
+    } else this.setState({ loginIsEmpty: false });
+    if (!passwordValue) {
+      this.setState({ passwordIsEmpty: true });
+    } else this.setState({ passwordIsEmpty: false });
   }
 
   render() {
     if (this.state.signIn) {
       return (
-        <form className="authorization-form">
-          <FormInputLogin onChangeValue={this.onLoginChangeValue} />
-          <FormInputPassword onChangeValue={this.onPasswordChangeValue} />
-          <ButtonSignIn onSubmit={this.submitSignIn} />
-          <ButtonSignUp onSubmit={this.submitSignUp} />
-        </form>
+        <section className={form.form}>
+          <form className={form.form__fields}>
+            <p className={form.form__title}>Sign in to <span className={form.titleDeoIuvante}>Deo-iuvante</span></p>
+            <FormInput
+              onChangeValue={this.onLoginChangeValue}
+              label="Login"
+              className={form.login_input}
+              id="login-input"
+              type="text"
+              placeholder="Login..."
+            />
+            {
+              this.state.loginIsEmpty &&
+              <span className={form.error_message}>Login {"can't"} be blank</span>
+            }
+            <FormInput
+              onChangeValue={this.onPasswordChangeValue}
+              label="Password"
+              className={form.password_input}
+              id="password-input"
+              type="password"
+              placeholder="password"
+            />
+            {
+              this.state.passwordIsEmpty &&
+              <span className={form.error_message}>Password {"can't"} be blank</span>
+            }
+            <FormButton
+              className={form.buttonSignIn}
+              onSubmit={this.submitSignIn}
+              text="Sign in"
+            />
+            <p className={form.form__createAcc}>
+                  New to Deo-iuvante?
+              <FormButton
+                className={form.buttonSignUp}
+                onSubmit={this.submitSignUp}
+                text="Create an account"
+              />
+            </p>
+          </form>
+        </section>
       );
     }
-
-    return (
-      <form className="authorization-form" />
-    );
+    if (this.state.signUp) {
+      return (
+        <section className={form.form}>
+          <form className={form.form__fields}>
+            <p className={form.form__title}>Create your account</p>
+            <FormInput
+              onChangeValue={this.onLoginChangeValue}
+              label="Username"
+              className={form.login_input}
+              id="login-input"
+              type="text"
+              placeholder="Username..."
+            />
+            {
+               this.state.loginIsEmpty &&
+               <span className={form.error_message}>Username {"can't"} be blank</span>
+            }
+            <FormInput
+              onChangeValue={this.onPasswordChangeValue}
+              label="Password"
+              className={form.password_input}
+              id="password-input"
+              type="password"
+              placeholder="password"
+            />
+            {
+               this.state.passwordIsEmpty &&
+               <span className={form.error_message}>Password {"can't"} be blank</span>
+            }
+            <FormButton
+              className={form.buttonCreateAccount}
+              text="Create an account"
+              onSubmit={this.submitCreateAccount}
+            />
+          </form>
+        </section>
+      );
+    }
+    return ('');
   }
 }
