@@ -13,7 +13,10 @@ import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
 import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
+
 import Icon from '../components/Icon/Icon';
+import Form from '../components/Form/Form';
+
 import IconButton from '../components/IconButton/IconButton';
 import ChatFooter from '../components/ChatFooter/ChatFooter';
 
@@ -192,4 +195,10 @@ storiesOf('ChatFooter', module)
       sendMessage={msg => alert(msg)}
       handleVoice={() => alert("I'm handling voice")}
     />
+  )));
+
+storiesOf('Form', module)
+  .addDecorator(withKnobs)
+  .add('Форма авторизации/регистрации', withInfo('')(() => (
+    <Form />
   )));
