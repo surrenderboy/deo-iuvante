@@ -56,12 +56,12 @@ export default class Form extends Component {
     if (this.state.signIn) {
       return (
         <section className={form.form}>
-          <form className={form.form__fields}>
-            <p className={form.form__title}>Sign in to <span className={form.titleDeoIuvante}>Deo-iuvante</span></p>
+          <form className={form.formFields}>
+            <p className={form.formTitle}>Sign in to <span className={form.titleDeoIuvante}>Deo-iuvante</span></p>
             <FormInput
               onChangeValue={this.onLoginChangeValue}
               label="Login"
-              className={form.login_input}
+              className={form.loginInput}
               id="login-input"
               type="text"
               placeholder="Login..."
@@ -71,7 +71,7 @@ export default class Form extends Component {
             <FormInput
               onChangeValue={this.onPasswordChangeValue}
               label="Password"
-              className={form.password_input}
+              className={form.passwordInput}
               id="password-input"
               type="password"
               placeholder="Password"
@@ -83,7 +83,7 @@ export default class Form extends Component {
               onSubmit={this.submitSignIn}
               text="Sign in"
             />
-            <p className={form.form__createAcc}>
+            <p className={form.formCreateAcc}>
                   New to Deo-iuvante?
               <FormButton
                 className={form.buttonSignUp}
@@ -98,12 +98,12 @@ export default class Form extends Component {
     if (this.state.signUp) {
       return (
         <section className={form.form}>
-          <form className={form.form__fields}>
-            <p className={form.form__title}>Create your account</p>
+          <form className={form.formFields}>
+            <p className={form.formTitle}>Create your account</p>
             <FormInput
               onChangeValue={this.onLoginChangeValue}
               label="Username"
-              className={form.login_input}
+              className={form.loginInput}
               id="login-input"
               type="text"
               placeholder="Username..."
@@ -113,7 +113,7 @@ export default class Form extends Component {
             <FormInput
               onChangeValue={this.onPasswordChangeValue}
               label="Password"
-              className={form.password_input}
+              className={form.passwordInput}
               id="password-input"
               type="password"
               placeholder="Password"

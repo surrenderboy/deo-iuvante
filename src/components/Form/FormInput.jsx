@@ -14,7 +14,7 @@ const FormInput =
       errorMessage,
     }) =>
       (
-        <div className={form.login_field}>
+        <div className={form.loginField}>
           <label className={form.label} htmlFor={id} >
             {label}
             <input
@@ -26,7 +26,7 @@ const FormInput =
             />
           </label>
           {!validationState &&
-            <p className={form.error_message}>{errorMessage}</p>
+            <p className={form.errorMessage}>{errorMessage}</p>
           }
         </div>
       );

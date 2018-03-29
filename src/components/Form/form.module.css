@@ -6,7 +6,7 @@
     background-color: #c3c3c3;
 }
 
-.form__fields {
+.formFields {
     display: flex;
     flex-direction: column;
     width: 320px;
@@ -17,7 +17,7 @@
     border-radius: 5px;
 }
 
-.form__title {
+.formTitle {
     margin: 0 0 15px 0;
     font-size: 1.5rem;
 }
@@ -27,8 +27,8 @@
     font-size: 1.5rem;
 }
 
-.login_field,
-.password_field {
+.loginField,
+.passwordField {
     min-width: 320px;
 }
 
@@ -42,8 +42,8 @@
     background-color: #fff;
 }
 
-.login_input,
-.password_input {
+.loginInput,
+.passwordInput {
     box-sizing: border-box;
     width: 100%;
     margin: 10px 0 20px 0;
@@ -56,20 +56,20 @@
     color: #00bff3;
 }
 
-.login_input:focus,
-.password_input:focus,
+.loginInput:focus,
+.passwordInput:focus,
 .buttonSignIn:focus,
 .buttonSignUp:focus,
 .buttonCreateAccount:focus {
     outline: none;
 }
 
-.login_input::placeholder,
-.password_input::placeholder {
+.loginInput::placeholder,
+.passwordInput::placeholder {
     color: #c3c3c3;
 }
 
-.form__createAcc {
+.formCreateAcc {
     margin: 0;
     font-size: .8rem;
     align-self: flex-end;
@@ -100,7 +100,7 @@
     text-decoration: underline;
 }
 
-.error_message {
+.errorMessage {
     font-size: .7rem;
     text-transform: uppercase;
     margin-bottom: 10px;
