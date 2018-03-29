@@ -10,8 +10,8 @@ export default class Form extends Component {
     this.state = {
       login: '',
       password: '',
-      loginIsEmpty: false,
-      passwordIsEmpty: false,
+      loginValidationState: true,
+      passwordValidationState: true,
       signIn: true,
       signUp: false,
     };
@@ -34,8 +34,8 @@ export default class Form extends Component {
       this.setState({
         signIn: false,
         signUp: true,
-        loginIsEmpty: false,
-        passwordIsEmpty: false,
+        loginValidationState: true,
+        passwordValidationState: true,
       });
     }
     event.preventDefault();
@@ -45,11 +45,11 @@ export default class Form extends Component {
     const loginValue = login.trim(),
       passwordValue = password.trim();
     if (!loginValue) {
-      this.setState({ loginIsEmpty: true });
-    } else this.setState({ loginIsEmpty: false });
+      this.setState({ loginValidationState: false });
+    } else this.setState({ loginValidationState: true });
     if (!passwordValue) {
-      this.setState({ passwordIsEmpty: true });
-    } else this.setState({ passwordIsEmpty: false });
+      this.setState({ passwordValidationState: false });
+    } else this.setState({ passwordValidationState: true });
   }
 
   render() {
@@ -65,23 +65,19 @@ export default class Form extends Component {
               id="login-input"
               type="text"
               placeholder="Login..."
+              validationState={this.state.loginValidationState}
+              errorMessage="Login can't be blank"
             />
-            {
-              this.state.loginIsEmpty &&
-              <span className={form.error_message}>Login {"can't"} be blank</span>
-            }
             <FormInput
               onChangeValue={this.onPasswordChangeValue}
               label="Password"
               className={form.password_input}
               id="password-input"
               type="password"
-              placeholder="password"
+              placeholder="Password"
+              validationState={this.state.passwordValidationState}
+              errorMessage="Password can't be blank"
             />
-            {
-              this.state.passwordIsEmpty &&
-              <span className={form.error_message}>Password {"can't"} be blank</span>
-            }
             <FormButton
               className={form.buttonSignIn}
               onSubmit={this.submitSignIn}
@@ -111,23 +107,19 @@ export default class Form extends Component {
               id="login-input"
               type="text"
               placeholder="Username..."
+              validationState={this.state.loginValidationState}
+              errorMessage="Username can't be blank"
             />
-            {
-               this.state.loginIsEmpty &&
-               <span className={form.error_message}>Username {"can't"} be blank</span>
-            }
             <FormInput
               onChangeValue={this.onPasswordChangeValue}
               label="Password"
               className={form.password_input}
               id="password-input"
               type="password"
-              placeholder="password"
+              placeholder="Password"
+              validationState={this.state.passwordValidationState}
+              errorMessage="Password can't be blank"
             />
-            {
-               this.state.passwordIsEmpty &&
-               <span className={form.error_message}>Password {"can't"} be blank</span>
-            }
             <FormButton
               className={form.buttonCreateAccount}
               text="Create an account"

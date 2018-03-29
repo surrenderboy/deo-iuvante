@@ -10,6 +10,8 @@ const FormInput =
       id,
       type,
       placeholder,
+      validationState,
+      errorMessage,
     }) =>
       (
         <div className={form.login_field}>
@@ -23,6 +25,9 @@ const FormInput =
               onChange={onChangeValue}
             />
           </label>
+          {!validationState &&
+            <p className={form.error_message}>{errorMessage}</p>
+          }
         </div>
       );
 
@@ -33,6 +38,8 @@ FormInput.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string,
   placeholder: PropTypes.string,
+  validationState: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 FormInput.defaultProps = {
