@@ -2,20 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import testAvatar from './test-avatar.jpg';
-import './Avatar.css';
+import styles from './Avatar.module.css';
 
-function Avatar(props) {
-  const sizeModifier = `avatar_size_${props.size}`;
+function classNameWithSize(className, size) {
+  return styles[`${className}${size.toUpperCase()}`];
+}
 
-  const withCount = props.count && props.count > 0;
+function Avatar({
+  size, src, alt, count,
+}) {
+  const withCount = count > 0;
+  const sanitizedCount = count > 99 ? '99+' : count;
 
   return (
-    <div className={`avatar ${sizeModifier}`}>
-      <img src={props.src} className="avatar__image" alt={props.alt} />
+    <div className={styles.avatar}>
+      <img src={src} className={classNameWithSize('image', size)} alt={alt} />
 
       {
         withCount &&
-          <div className="avatar__count">{props.count}</div>
+          <div className={classNameWithSize('count', size)}>{sanitizedCount}</div>
       }
     </div>
   );
