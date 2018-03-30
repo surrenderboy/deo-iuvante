@@ -10,8 +10,10 @@ const FormInput =
       id,
       type,
       placeholder,
-      validationState,
-      errorMessage,
+      validationStateForEmpty,
+      errorMessageForEmpty,
+      passwordsMatchValidationState,
+      errorMessageDidntMatchPasswords,
     }) =>
       (
         <div className={form.loginField}>
@@ -25,8 +27,13 @@ const FormInput =
               onChange={onChangeValue}
             />
           </label>
-          {!validationState &&
-            <p className={form.errorMessage}>{errorMessage}</p>
+          {
+            !validationStateForEmpty &&
+            <p className={form.errorMessage}>{errorMessageForEmpty}</p>
+          }
+          {
+            !passwordsMatchValidationState &&
+            <p className={form.errorMessage}>{errorMessageDidntMatchPasswords}</p>
           }
         </div>
       );
@@ -38,11 +45,15 @@ FormInput.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string,
   placeholder: PropTypes.string,
-  validationState: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  validationStateForEmpty: PropTypes.bool.isRequired,
+  errorMessageForEmpty: PropTypes.string.isRequired,
+  passwordsMatchValidationState: PropTypes.bool,
+  errorMessageDidntMatchPasswords: PropTypes.string,
 };
 
 FormInput.defaultProps = {
+  passwordsMatchValidationState: true,
+  errorMessageDidntMatchPasswords: '',
   className: '',
   type: 'text',
   placeholder: '...',
