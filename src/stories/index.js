@@ -146,19 +146,12 @@ storiesOf('Chat', module)
 
 storiesOf('MessageInput', module)
   .addDecorator(withKnobs)
-  .add('default', withInfo(`
-    Message input
-  `)(() =>
-    (
-      <div
-        style={{
-              width: text('Width', '200px'),
-              height: text('Height', '20px'),
-}}
-      >
-        <MessageInput sendMessage={msg => alert(msg)} />
-      </div>
-    )));
+  .add(
+    'default',
+    withInfo('Hit "Enter" to send message')(() => (
+      <MessageInput sendMessage={msg => alert(msg)} />
+    )),
+  );
 
 storiesOf('IconButton', module)
   .addDecorator(withKnobs)

@@ -1,13 +1,9 @@
-.message-input {
-  height: 100%;
-  width: 100%;
-}
-
 .message-input input {
   outline: none;
 
-  height: inherit;
+  box-sizing: border-box;
   width: inherit;
+  height: inherit;
 
   padding: 5px;
 
@@ -16,7 +12,7 @@
 
   border-radius: 5px;
   border: 1px solid lightgray;
-  }
+}
 
 .message-input input::placeholder {
   opacity: 0.5;
