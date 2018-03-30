@@ -33,28 +33,29 @@
 
   border-radius: 50%;
 
+  font-family: Arial, sans-serif;
   color: white;
   border: 2px solid white;
   background-color: #00bff3;
 
-  width: 1.3em;
-  height: 1.3em;
-  line-height: 1.3em;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
 
   text-align: center;
 }
 
 .countS {
   composes: count;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 .countM {
   composes: count;
-  font-size: 2.6rem;
+  font-size: 2.2rem;
 }
 
 .countL {
   composes: count;
-  font-size: 3.9rem;
+  font-size: 3.3rem;
 }

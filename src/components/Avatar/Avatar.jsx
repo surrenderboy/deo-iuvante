@@ -26,11 +26,6 @@ function Avatar({
   );
 }
 
-Avatar.defaultProps = {
-  src: testAvatar,
-  alt: 'avatar',
-};
-
 Avatar.propTypes = {
   size: PropTypes.oneOf(['s', 'm', 'l']).isRequired,
   src: PropTypes.string,
