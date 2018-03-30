@@ -7,14 +7,17 @@ export default class Form extends Component {
     super(props);
 
     this.state = {
-      login: '',
-      password: '',
-      confirmPassword: '',
       loginValidationState: true,
       passwordValidationState: true,
       confirmPasswordValidationState: true,
       passwordsMatch: true,
       signUp: false,
+    };
+
+    this._values = {
+      login: '',
+      password: '',
+      confirmPassword: '',
     };
 
     this.onLoginChangeValue = this.onChangeValue.bind(this, 'login');
@@ -26,18 +29,20 @@ export default class Form extends Component {
   }
 
   onChangeValue(name, event) {
-    this.setState({ [name]: event.target.value });
+    this._values = {
+      ...this._values,
+      [name]: event.target.value,
+    };
   }
 
   submit(button, event) {
     if (button === 'signIn' || button === 'createAcc') {
-      this._validateInput(button, this.state.login, this.state.password, this.state.confirmPassword);
+      this._validateInput(button, this._values.login, this._values.password, this._values.confirmPassword);
     } else {
       this.setState({
         signUp: true,
         loginValidationState: true,
         passwordValidationState: true,
-        confirmPasswordValidationState: true,
       });
     }
     event.preventDefault();
