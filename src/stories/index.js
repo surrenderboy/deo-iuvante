@@ -8,7 +8,7 @@ import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import Avatar from '../components/Avatar/Avatar';
 import List from '../components/List/List';
-import ListItem from '../components/ListItem/ListItem';
+import ChatListItem from '../components/ChatsListItem/ChatsListItem';
 import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
 import Chat from '../components/Chat/Chat';
@@ -49,13 +49,35 @@ storiesOf('Lists', module)
   .add('List & ListItem', withInfo(`
         Default button info
     `)(() => (
-      <List>
-        {
-                ['red', 'orange', 'yellow', 'green', 'blue', 'violet'].map(backgroundColor => (
-                  <ListItem key={backgroundColor} style={{ backgroundColor }} />
-                ))
-            }
-      </List>
+      <List
+        ListItem={ChatListItem}
+        listItemProps={[
+          {
+            unreadMessages: number('Количество непрочитанных сообщений в первом чате', 1),
+            lastActivity: Date.now(),
+            lastMessage: text('Тескт сообщения в первом чате', 'И так сойдёт!'),
+            room: {
+              name: text('Название первого чата', 'Deo Iuvante'),
+              avatarUrl: text('Аватар первого чата', 'https://avatars2.githubusercontent.com/u/2494140?s=460&v=4'),
+            },
+          },
+          {
+            unreadMessages: 100500,
+            lastActivity: Date.now() - 100000,
+            lastMessage: 'Ты же там у меня небось голодаешь снова, внучок!',
+            room: {
+              name: 'Бабушка',
+              avatarUrl: 'http://www.sonarium.ru/wp-content/uploads/2013/09/babushka-318x400.jpg',
+            },
+          },
+          {
+            room: {
+              name: 'Эмма Уотсон',
+              avatarUrl: 'http://www.purehdwallpaper.com/thumbs/emma-watson-angel-smile-t2.jpg',
+            },
+          },
+        ]}
+      />
   )));
 
 storiesOf('Header', module)
