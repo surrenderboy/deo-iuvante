@@ -9,13 +9,13 @@ function classNameWithSize(className, size) {
 }
 
 function Avatar({
-  size, src, alt, count,
+  size, src, alt, count, className,
 }) {
   const withCount = count > 0;
   const sanitizedCount = count > 99 ? '99+' : count;
 
   return (
-    <div className={styles.avatar}>
+    <div className={`${styles.avatar} ${className}`}>
       <img src={src} className={classNameWithSize('image', size)} alt={alt} />
 
       {
@@ -31,9 +31,11 @@ Avatar.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string,
   count: PropTypes.number,
+  className: PropTypes.string,
 };
 
 Avatar.defaultProps = {
+  className: '',
   src: testAvatar,
   alt: 'avatar',
   count: 0,
