@@ -27,7 +27,7 @@ class MessageInput extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="message-input">
+      <form onSubmit={this.handleSubmit} className={`message-input ${this.props.className}`}>
         <input
           type="text"
           placeholder="Type your message"
@@ -41,6 +41,11 @@ class MessageInput extends Component {
 
 MessageInput.propTypes = {
   sendMessage: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+MessageInput.defaultProps = {
+  className: '',
 };
 
 export default MessageInput;

@@ -15,6 +15,7 @@ import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
 import Icon from '../components/Icon/Icon';
 import IconButton from '../components/IconButton/IconButton';
+import ChatFooter from '../components/ChatFooter/ChatFooter';
 
 // default behavior for component info
 setDefaults({
@@ -146,19 +147,12 @@ storiesOf('Chat', module)
 
 storiesOf('MessageInput', module)
   .addDecorator(withKnobs)
-  .add('default', withInfo(`
-    Message input
-  `)(() =>
-    (
-      <div
-        style={{
-              width: text('Width', '200px'),
-              height: text('Height', '20px'),
-}}
-      >
-        <MessageInput sendMessage={msg => alert(msg)} />
-      </div>
-    )));
+  .add(
+    'default',
+    withInfo('Hit "Enter" to send message')(() => (
+      <MessageInput sendMessage={msg => alert(msg)} />
+    )),
+  );
 
 storiesOf('IconButton', module)
   .addDecorator(withKnobs)
@@ -188,5 +182,14 @@ storiesOf('Icon', module)
     <Icon
       style={{ height: 40 }}
       src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+    />
+  )));
+
+storiesOf('ChatFooter', module)
+  .add('default', withInfo('')(() => (
+    <ChatFooter
+      handleAttachment={() => alert("I'm handling attachment")}
+      sendMessage={msg => alert(msg)}
+      handleVoice={() => alert("I'm handling voice")}
     />
   )));
