@@ -4,59 +4,51 @@ import form from './form.module.css';
 
 const FormInput =
     ({
-      onChangeValue,
+      value,
+      onChange,
       label,
       className,
       id,
       type,
       placeholder,
-      validationStateForEmpty,
-      errorMessageForEmpty,
-      passwordsMatchValidationState,
-      errorMessageDidntMatchPasswords,
+      errorMessage,
     }) =>
       (
         <div className={form.loginField}>
           <label className={form.label} htmlFor={id} >
             {label}
             <input
+              value={value}
               className={className}
               id={id}
               type={type}
               placeholder={placeholder}
-              onChange={onChangeValue}
+              onChange={onChange}
             />
           </label>
           {
-            !validationStateForEmpty &&
-            <p className={form.errorMessage}>{errorMessageForEmpty}</p>
-          }
-          {
-            !passwordsMatchValidationState &&
-            <p className={form.errorMessage}>{errorMessageDidntMatchPasswords}</p>
+            errorMessage.length > 0 &&
+            <p className={form.errorMessage}>{errorMessage}</p>
           }
         </div>
       );
 
 FormInput.propTypes = {
-  onChangeValue: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   type: PropTypes.string,
   placeholder: PropTypes.string,
-  validationStateForEmpty: PropTypes.bool.isRequired,
-  errorMessageForEmpty: PropTypes.string.isRequired,
-  passwordsMatchValidationState: PropTypes.bool,
-  errorMessageDidntMatchPasswords: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
 
 FormInput.defaultProps = {
-  passwordsMatchValidationState: true,
-  errorMessageDidntMatchPasswords: '',
   className: '',
   type: 'text',
   placeholder: '...',
+  errorMessage: '',
 };
 
 export default FormInput;
