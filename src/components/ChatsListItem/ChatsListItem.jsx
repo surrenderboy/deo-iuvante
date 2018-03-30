@@ -5,6 +5,18 @@ import Avatar from '../Avatar/Avatar';
 import styles from './ChatsListItem.module.css';
 
 class ChatsListItem extends Component {
+  prettifyLastActivity() {
+    const { lastActivity } = this.props;
+
+    if (lastActivity === 0) return '';
+    return new Date(lastActivity).toLocaleString('ru', {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+  }
+
   render() {
     return (
       <div className={styles.listItem}>
@@ -16,7 +28,7 @@ class ChatsListItem extends Component {
           {this.props.lastMessage}
         </span>
         <span className={styles.lastActivity}>
-          
+          {this.prettifyLastActivity()}
         </span>
       </div>
     );
