@@ -14,13 +14,21 @@ class ChatFooter extends React.PureComponent {
 
     return (
       <div className={`${styles.footer} ${className}`}>
-        <IconButton onClick={handleAttachment} color="#a9d18b" className={styles.icon}>
-          attach_file
-        </IconButton>
+        <IconButton
+          onClick={handleAttachment}
+          icon={{
+            color: '#a9d18b',
+            glyph: 'attach_file',
+          }}
+        />
         <MessageInput sendMessage={sendMessage} className={styles.messageInput} />
-        <IconButton onClick={handleVoice} color="#a9d18b" className={styles.icon}>
-          mic_none
-        </IconButton>
+        <IconButton
+          onClick={handleVoice}
+          icon={{
+            color: '#a9d18b',
+            glyph: 'mic_none',
+          }}
+        />
       </div>
     );
   }
