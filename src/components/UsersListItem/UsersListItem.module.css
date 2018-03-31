@@ -2,26 +2,31 @@
     display: grid;
     padding: .3rem;
     grid-template-columns: 100px auto auto;
-    grid-template-rows: 2rem auto;
+    grid-template-rows: 2rem auto 2rem;
     grid-gap: .5rem;
     border-bottom: 1px #f3f3f3 solid;
 }
 
+.selectedItem {
+    background-color: #f3f3f3;
+}
+
 .avatar {
     grid-column: 1 / 2;
-    grid-row: 1 / 3;
+    grid-row: 1 / 4;
+    align-self: center;
 }
 
 .username {
     grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-row: 1 / 3;
     font-weight: bold;
     font-size: 1.3rem;
 }
 
 .phone {
     grid-column: 2 / 3;
-    grid-row: 2 / 3;
+    grid-row: 3 / 4;
     font-size: .6rem;
     color: #777;
     align-self: center;
@@ -29,16 +34,23 @@
 
 .email {
     grid-column: 3 / 4;
-    grid-row: 2 / 3;
+    grid-row: 3 / 4;
     font-size: .6rem;
     color: #777;
     align-self: center;
 }
 
 .onlineMark {
+     grid-column: 3 / 4;
+     grid-row: 1 / 2;
+     font-size: .8rem;
+     color: #18a0e2;
+     justify-self: end;
+ }
+
+.selectedIcon {
     grid-column: 3 / 4;
-    grid-row: 1 / 2;
-    font-size: .8rem;
-    color: #18a0e2;
+    grid-row: 2 / 3;
     justify-self: end;
+    align-self: center;
 }
