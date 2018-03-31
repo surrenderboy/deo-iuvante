@@ -33,11 +33,12 @@ class App extends React.Component {
   }
 
   renderChatsList() {
-    const chatRooms = this.state.rooms.map(room => ({
+    const chatRooms = this.state.rooms.map((room, index) => ({
       unreadMessages: room.messages.reduce((sum, { isRead }) => (!isRead ? sum + 1 : sum), 0),
       lastActivity: room.messages[0] ? room.messages[room.messages.length - 1].time : 0,
       lastMessage: room.messages[0] ? room.messages[room.messages.length - 1].message : undefined,
       room: {
+        id: index,
         name: room.name,
         avatarUrl: room.avatarUrl,
       },
@@ -45,8 +46,8 @@ class App extends React.Component {
 
     return (
       <List>
-        {chatRooms.map((chatRoom, index) => (
-          <Link to={`/chat/${index}`}>
+        {chatRooms.map(chatRoom => (
+          <Link key={chatRoom.room.id} to={`/chat/${chatRoom.room.id}`}>
             <ChatListItem {...chatRoom} />
           </Link>
         ))}
