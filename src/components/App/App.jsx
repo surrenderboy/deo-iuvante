@@ -99,10 +99,11 @@ class App extends React.Component {
       }));
 
       return (
-        <List
-          ListItem={ChatListItem}
-          listItemProps={chatRooms}
-        />
+        <List>
+          {chatRooms.map(chatRoom => (
+            <ChatListItem {...chatRoom} />
+          ))}
+        </List>
       );
     }
 
