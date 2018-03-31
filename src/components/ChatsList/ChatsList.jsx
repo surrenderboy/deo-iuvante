@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import api from '../../api';
 
@@ -26,9 +27,10 @@ class ChatsList extends Component {
 
     rooms = rooms.map(room => ({
       ...room,
+      // stubs next 3 lines
       unreadMessages: 3,
       lastActivity: Date.now() - 3000000,
-      lastMessage: 'О боже мой',
+      lastMessage: 'Мессадж богов, услышьте и внемлите!',
     }));
 
     this.setState({
@@ -44,12 +46,14 @@ class ChatsList extends Component {
           <IconButton
             onClick={() => {}}
             icon={{ glyph: 'add', color: '#fff' }}
+            component={Link}
+            to="/create-chat"
           />
         )}
       >
         <List>
           {this.state.rooms.map(room => (
-            <ChatsListItem room={room} {...room} />
+            <ChatsListItem room={room} {...room} key={room._id} />
           ))}
         </List>
       </AppLayout>
