@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 
 import List from '../List/List';
@@ -46,11 +45,7 @@ class App extends React.Component {
 
     return (
       <List>
-        {chatRooms.map(chatRoom => (
-          <Link key={chatRoom.room.id} to={`/chat/${chatRoom.room.id}`}>
-            <ChatListItem {...chatRoom} />
-          </Link>
-        ))}
+        {chatRooms.map(chatRoom => <ChatListItem key={chatRoom.room.id} {...chatRoom} />)}
       </List>
     );
   }
