@@ -41,7 +41,7 @@
     "build-storybook": "build-storybook -s public -o docs",
     "lint": "eslint --ext .js --ext .jsx ./src",
     "lint:fix": "npm run lint -- --fix",
-    "lint:staged": "./scripts/lint-staged.sh"
+    "lint:staged": "lint-staged.sh"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
