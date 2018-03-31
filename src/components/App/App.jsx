@@ -10,8 +10,8 @@ import {
 import chatReducer from '../../reducers/chat';
 
 import Chat from '../Chat/Chat';
-import CreateChat from '../CreateChat/CreateChat';
-import ChatsList from '../ChatsList/ChatsList';
+import CreateChat from '../CreateChatLayout/CreateChatLayout';
+import ChatsList from '../ChatsListLayout/ChatsListLayout';
 import ChatLayout from '../ChatLayout/ChatLayout';
 
 const store = createStore(
