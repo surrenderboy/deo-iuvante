@@ -19,8 +19,8 @@ class ChatsListItem extends Component {
 
   render() {
     return (
-      <div className={styles.listItem}>
-        <Avatar size="s" src={this.props.room.avatarUrl} count={this.props.unreadMessages} className={styles.avatar} />
+      <div className={styles.listItem} onClick={this.props.onClick}>
+        <Avatar size="m" src={this.props.room.avatarUrl} count={this.props.unreadMessages} className={styles.avatar} />
         <span className={styles.roomName}>
           {this.props.room.name}
         </span>
@@ -38,6 +38,7 @@ class ChatsListItem extends Component {
 ChatsListItem.propTypes = {
   unreadMessages: PropTypes.number,
   lastActivity: PropTypes.number,
+  onClick: PropTypes.func,
   room: PropTypes.shape({
     avatarUrl: PropTypes.string,
     name: PropTypes.string,
@@ -49,6 +50,7 @@ ChatsListItem.defaultProps = {
   lastMessage: 'Ваш чат пока пуст',
   unreadMessages: 0,
   lastActivity: 0,
+  onClick: () => {},
 };
 
 export default ChatsListItem;

@@ -1,6 +1,6 @@
 .Bubble {
-	padding: 1rem;
-	font-size: 14px;
+	padding: .4rem .6rem;
+	font-size: .9rem;
 }
 .Bubble div{
 	display: flex;

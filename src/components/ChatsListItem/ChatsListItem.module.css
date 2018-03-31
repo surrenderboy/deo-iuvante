@@ -4,6 +4,7 @@
     grid-template-columns: 100px auto auto;
     grid-template-rows: 2rem auto;
     grid-gap: .5rem;
+    border-bottom: 1px #f3f3f3 solid;
 }
 
 .avatar {
@@ -29,6 +30,7 @@
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     justify-self: end;
-    font-size: 0.8rem;
-    color: #777;
+    align-self: center;
+    font-size: 0.7rem;
+    color: #aaa;
 }

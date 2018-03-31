@@ -1,6 +1,21 @@
-.chat_container {
-    display: flex;
-    flex-direction: column;
+.chatContainer {
+    display: grid;
     height: 100%;
-    width: 100%;
+    grid-template-rows: calc(100% - 4rem) 4rem;
+}
+
+.emptyState {
+    text-align: center;
+    color: #777777;
+    padding: 2rem;
+}
+
+.chatMessages {
+    grid-row: 1 / 2;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.chatFooter {
+    grid-row: 2 / 3;
 }

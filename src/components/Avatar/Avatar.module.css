@@ -10,20 +10,20 @@
 
 .imageS {
   composes: image;
-  width: 100px;
-  height: 100px;
+  width: 3rem;
+  height: 3rem;
 }
 
 .imageM {
   composes: image;
-  width: 200px;
-  height: 200px;
+  width: 5rem;
+  height: 5rem;
 }
 
 .imageL {
   composes: image;
-  width: 300px;
-  height: 300px;
+  width: 8rem;
+  height: 8rem;
 }
 
 .count {
@@ -38,9 +38,9 @@
   border: 2px solid white;
   background-color: #00bff3;
 
-  width: 2em;
-  height: 2em;
-  line-height: 2em;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
 
   text-align: center;
 }
@@ -52,7 +52,7 @@
 
 .countM {
   composes: count;
-  font-size: 2.2rem;
+  font-size: 1rem;
 }
 
 .countL {

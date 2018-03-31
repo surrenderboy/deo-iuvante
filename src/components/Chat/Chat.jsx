@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 import styles from './Chat.module.css';
 
 import MessageBubble from '../Bubble/Bubble';
+import ChatFooter from '../ChatFooter/ChatFooter';
 
 class Chat extends Component {
   renderMessages() {
+    if (!this.props.messages[0]) {
+      return <div className={styles.emptyState}>В этом чате пока нет сообщений</div>;
+    }
+
     const aggregateMessage = message => (
       <MessageBubble
         isOwner={message.userId === this.props.currentUserId}
@@ -21,8 +26,16 @@ class Chat extends Component {
 
   render() {
     return (
-      <div className={styles.chat_container}>
-        { this.renderMessages() }
+      <div className={styles.chatContainer}>
+        <div className={styles.chatMessages}>
+          { this.renderMessages() }
+        </div>
+        <ChatFooter
+          handleAttachment={() => {}}
+          sendMessage={() => {}}
+          handleVoice={() => {}}
+          className={styles.chatFooter}
+        />
       </div>
     );
   }
