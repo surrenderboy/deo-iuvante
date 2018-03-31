@@ -4,6 +4,8 @@ import api from '../../api';
 
 import List from '../List/List';
 import ChatsListItem from '../ChatsListItem/ChatsListItem';
+import IconButton from '../IconButton/IconButton';
+import AppLayout from '../AppLayout/AppLayout';
 
 class ChatsList extends Component {
   constructor(props) {
@@ -36,11 +38,21 @@ class ChatsList extends Component {
 
   render() {
     return (
-      <List >
-        {this.state.rooms.map(room => (
-          <ChatsListItem room={room} {...room} />
-        ))}
-      </List>
+      <AppLayout
+        headerText="Чаты"
+        headerRight={(
+          <IconButton
+            onClick={() => {}}
+            icon={{ glyph: 'add', color: '#fff' }}
+          />
+        )}
+      >
+        <List>
+          {this.state.rooms.map(room => (
+            <ChatsListItem room={room} {...room} />
+          ))}
+        </List>
+      </AppLayout>
     );
   }
 }
