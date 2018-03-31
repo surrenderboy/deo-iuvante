@@ -23,6 +23,7 @@
     "react-redux": "^5.0.7",
     "react-scripts": "^2.0.0-next.47d2d941",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "socket.io-cookie-parser": "^1.0.0",
