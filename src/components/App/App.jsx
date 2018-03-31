@@ -1,4 +1,8 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import chatReducer from '../../reducers/chat';
 
 import IconButton from '../IconButton/IconButton';
 import AppLayout from '../AppLayout/AppLayout';
@@ -8,6 +12,11 @@ import ChatListItem from '../ChatsListItem/ChatsListItem';
 import Chat from '../Chat/Chat';
 
 import rooms from './mockRooms';
+
+const store = createStore(
+  combineReducers({ chatReducer }),
+  applyMiddleware(thunkMiddleware),
+);
 
 class App extends React.Component {
   constructor(props) {
@@ -111,16 +120,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <AppLayout
-        headerText={this.headerTextContent()}
-        headerLeft={this.headerLeftContent()}
-        headerRight={this.headerRightContent()}
-      >
-        <React.Fragment>
-          {this.renderChatsList()}
-          {this.renderChat()}
-        </React.Fragment>
-      </AppLayout>
+      <Provider store={store}>
+        <AppLayout
+          headerText={this.headerTextContent()}
+          headerLeft={this.headerLeftContent()}
+          headerRight={this.headerRightContent()}
+        >
+          <React.Fragment>
+            {this.renderChatsList()}
+            {this.renderChat()}
+          </React.Fragment>
+        </AppLayout>
+      </Provider>
     );
   }
 }
