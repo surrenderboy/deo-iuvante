@@ -54,7 +54,10 @@ Chat.propTypes = {
 };
 
 export default connect(
-  undefined,
+  state => ({
+    messages: state.messages,
+    currentUserId: state.currentUserId,
+  }),
   dispatch => ({
     sendMessage: ({ roomID, message }) => dispatch(sendMessage({ roomID, message })),
     addMessage: describer => dispatch(addMessage(describer)),

@@ -20,13 +20,12 @@ const chat = (state = { messages: [], currentUserId: '', isFetching: false }, ac
     return { messages, isFetching: false, currentUserId: state.currentUserId };
   },
   REQUEST_CURRENT_USER_ID: () => ({ ...state, isFetching: true }),
-  RECEIVE_CURRENT_USER_ID: () => {
-    return {
-      message: state.messages,
-      isFetching: false,
-      currentUserId: action.currentUserId,
-    };
-  },
+  RECEIVE_CURRENT_USER_ID: () => ({
+    message: state.messages,
+    isFetching: false,
+    currentUserId: action.currentUserId,
+  }
+  ),
 }[action.type] || (() => state))();
 
 export default chat;
