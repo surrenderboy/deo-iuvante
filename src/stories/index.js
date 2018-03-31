@@ -15,7 +15,7 @@ import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
 
 import Icon from '../components/Icon/Icon';
-import AuthForm from '../components/Form/AuthForm';
+import AuthForm from '../components/AuthForm/AuthForm';
 
 import IconButton from '../components/IconButton/IconButton';
 import ChatFooter from '../components/ChatFooter/ChatFooter';

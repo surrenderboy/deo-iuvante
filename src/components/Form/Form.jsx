@@ -59,7 +59,7 @@ class Form extends React.PureComponent {
       this.setErrors();
       return;
     }
-    if (!this.validatePassword()) {
+    if (this.props.confirmPassword && !this.validatePassword()) {
       this.setErrors();
       return;
     }
