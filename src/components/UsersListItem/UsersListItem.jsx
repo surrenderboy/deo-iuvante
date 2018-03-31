@@ -26,7 +26,7 @@ function UsersListItem({ email, name, phone, online, selected, onClick, }) {
       <Icon
         className={styles.selectedIcon}
         color={selected ? '#00b33c' : '#777'}
-        glyph={selected ? 'check_circle' : 'add_circle'}
+        glyph={selected ? 'check_circle_outline' : 'add_circle_outline'}
       />
     </div>
   );
