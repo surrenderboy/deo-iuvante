@@ -11,6 +11,6 @@ const chat = (state = { messages: [], isFetching: false }, action) => ({
     ];
     return { messages, isFetching: false };
   },
-}[action.type] || (() => state));
+}[action.type] || (() => state))();
 
 export default chat;
