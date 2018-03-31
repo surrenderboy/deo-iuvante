@@ -15,7 +15,7 @@ import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
 
 import Icon from '../components/Icon/Icon';
-import Form from '../components/Form/Form';
+import AuthForm from '../components/Form/AuthForm';
 
 import IconButton from '../components/IconButton/IconButton';
 import ChatFooter from '../components/ChatFooter/ChatFooter';
@@ -200,5 +200,5 @@ storiesOf('ChatFooter', module)
 storiesOf('Form', module)
   .addDecorator(withKnobs)
   .add('Форма авторизации/регистрации', withInfo('')(() => (
-    <Form />
+    <AuthForm />
   )));
