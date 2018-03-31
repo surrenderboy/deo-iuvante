@@ -2,12 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import chatReducer from '../../reducers/chat';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+import chatReducer from '../../reducers/chat';
 
 import List from '../List/List';
 import ChatListItem from '../ChatsListItem/ChatsListItem';
