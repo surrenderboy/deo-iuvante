@@ -79,4 +79,5 @@ module.exports = {
   findUserBySid,
   getUsers,
   getUser,
+  saveUser,
 };

@@ -75,6 +75,24 @@ class Api {
   }
 
   /**
+     * Update user
+     *
+     * @param {User} user
+     *
+     * @returns {Promise<void>}
+     */
+  async updateUser(user) {
+    return this._requestResponse(MESSAGES.UPDATE_USER, user)
+      .then((userResult) => {
+        if (userResult.error) {
+          throw new Error(userResult.error);
+        }
+
+        return userResult;
+      });
+  }
+
+  /**
      * @param {Room} room
      *
      * @return {Promise<void>}

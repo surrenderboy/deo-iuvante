@@ -1,4 +1,4 @@
-const { findUserBySid, getUsers } = require('./database/user');
+const { findUserBySid, getUsers, saveUser } = require('./database/user');
 const {
   joinRoom, leaveRoom, getRooms, getUserRooms, createRoom,
 } = require('./database/room');
@@ -129,6 +129,11 @@ module.exports = function (db, io) {
     // Receive current user information
     socket.on(TYPES.CURRENT_USER, wrapCallback(async () => {
       socket.emit(TYPES.CURRENT_USER, await userPromise);
+    }));
+
+    // Update user information
+    socket.on(TYPES.UPDATE_USER, wrapCallback(async (params) => {
+      socket.emit(TYPES.UPDATE_USER, await saveUser(db, params));
     }));
 
     // Return list of all users with
