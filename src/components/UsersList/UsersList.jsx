@@ -1,41 +1,37 @@
-import React, { Component } from 'react';
-
-import api from '../../api';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import List from '../List/List';
 import UsersListItem from '../UsersListItem/UsersListItem';
 
-class UsersList extends Component {
-  constructor(props) {
-    super(props);
+function UsersList({ users, selectedUsers, switchUserSelection }) {
+  return (
+    <List>
+      {users.map((user) => {
+        const switchThisUserSelection = switchUserSelection.bind(null, user._id);
 
-    this.state = {
-      users: [],
-    };
-  }
-
-  componentWillMount() {
-    this.getUsers();
-  }
-
-  async getUsers() {
-    const usersData = await api.getUsers();
-    let users = usersData.items;
-
-    this.setState({
-      users,
-    });
-  }
-
-  render() {
-    return (
-      <List >
-        {this.state.users.map(user => (
-          <UsersListItem {...user} />
-        ))}
-      </List>
-    );
-  }
+        return (
+          <UsersListItem
+            {...user}
+            key={user._id}
+            onClick={switchThisUserSelection}
+            selected={selectedUsers.indexOf(user._id) !== -1}
+          />
+        );
+      })}
+    </List>
+  );
 }
+
+UsersList.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
+    email: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    phone: PropTypes.string,
+    online: PropTypes.bool,
+  })).isRequired,
+  switchUserSelection: PropTypes.func.isRequired,
+  selectedUsers: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default UsersList;
