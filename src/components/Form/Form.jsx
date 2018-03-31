@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormInput from './FormInput';
+import FormInput from '../FormInput/FormInput';
 import form from './form.module.css';
 
 class Form extends React.PureComponent {
