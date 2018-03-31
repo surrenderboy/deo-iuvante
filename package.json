@@ -4,6 +4,12 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "@storybook/addon-actions": "^3.3.15",
+    "@storybook/addon-info": "^3.3.15",
+    "@storybook/addon-knobs": "^3.3.15",
+    "@storybook/addon-links": "^3.3.15",
+    "@storybook/addons": "^3.3.15",
+    "@storybook/react": "^3.3.15",
     "concurrently": "^3.5.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
@@ -14,17 +20,13 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
     "react-scripts": "^2.0.0-next.47d2d941",
+    "redux": "^3.7.2",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "socket.io-cookie-parser": "^1.0.0",
-    "uuid": "^3.2.1",
-    "@storybook/addon-actions": "^3.3.15",
-    "@storybook/addon-info": "^3.3.15",
-    "@storybook/addon-knobs": "^3.3.15",
-    "@storybook/addon-links": "^3.3.15",
-    "@storybook/addons": "^3.3.15",
-    "@storybook/react": "^3.3.15"
+    "uuid": "^3.2.1"
   },
   "scripts": {
     "start": "concurrently \"npm run client\" \"npm run server\"",

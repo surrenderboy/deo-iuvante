@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import sendMessage from '../../actions/sendMessage';
 
 import styles from './Chat.module.css';
 
@@ -32,7 +34,7 @@ class Chat extends Component {
         </div>
         <ChatFooter
           handleAttachment={() => {}}
-          sendMessage={() => {}}
+          sendMessage={this.props.sendMessage}
           handleVoice={() => {}}
           className={styles.chatFooter}
         />
@@ -41,9 +43,19 @@ class Chat extends Component {
   }
 }
 
+Chat.defaultProps = {
+  sendMessage: () => undefined,
+};
+
 Chat.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentUserId: PropTypes.string.isRequired,
+  sendMessage: PropTypes.func,
 };
 
-export default Chat;
+export default connect(
+  undefined,
+  dispatch => ({
+    sendMessage: ({ roomID, message }) => dispatch(sendMessage({ roomID, message })),
+  }),
+)(Chat);
