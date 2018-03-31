@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Avatar from '../Avatar/Avatar';
 import styles from './ChatsListItem.module.css';
@@ -19,7 +20,7 @@ class ChatsListItem extends Component {
 
   render() {
     return (
-      <div className={styles.listItem} onClick={this.props.onClick}>
+      <Link to={`/chat/${this.props.room.id}`} className={styles.listItem}>
         <Avatar size="m" src={this.props.room.avatarUrl} count={this.props.unreadMessages} className={styles.avatar} />
         <span className={styles.roomName}>
           {this.props.room.name}
@@ -30,7 +31,7 @@ class ChatsListItem extends Component {
         <span className={styles.lastActivity}>
           {this.prettifyLastActivity()}
         </span>
-      </div>
+      </Link>
     );
   }
 }
@@ -38,8 +39,8 @@ class ChatsListItem extends Component {
 ChatsListItem.propTypes = {
   unreadMessages: PropTypes.number,
   lastActivity: PropTypes.number,
-  onClick: PropTypes.func,
   room: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avatarUrl: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
@@ -50,7 +51,6 @@ ChatsListItem.defaultProps = {
   lastMessage: 'Ваш чат пока пуст',
   unreadMessages: 0,
   lastActivity: 0,
-  onClick: () => {},
 };
 
 export default ChatsListItem;
