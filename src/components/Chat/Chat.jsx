@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage, addMessage } from '../../actions/chat';
+import { sendMessage, getCurrentUserId, getRoomMessages } from '../../actions/chat';
 
 import styles from './Chat.module.css';
 
@@ -54,9 +54,13 @@ Chat.propTypes = {
 };
 
 export default connect(
-  undefined,
+  state => ({
+    messages: state.messages,
+    currentUserId: state.currentUserId,
+  }),
   dispatch => ({
     sendMessage: ({ roomID, message }) => dispatch(sendMessage({ roomID, message })),
-    addMessage: describer => dispatch(addMessage(describer)),
+    getCurrentUserId: () => dispatch(getCurrentUserId()),
+    getRoomMessages: id => dispatch(getRoomMessages(id)),
   }),
 )(Chat);
