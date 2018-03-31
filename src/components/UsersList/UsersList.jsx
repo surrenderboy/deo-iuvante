@@ -11,7 +11,7 @@ function UsersList({ users, selectedUsers, switchUserSelection }) {
         <UsersListItem
           {...user}
           key={user._id}
-          onClick={() => switchUserSelection.call(user._id)}
+          onClick={() => switchUserSelection.call(null, user._id)}
           selected={selectedUsers.indexOf(user._id) !== -1}
         />
       ))}
