@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FormInput from '../FormInput/FormInput';
-import form from './form.module.css';
+import styles from './Form.module.css';
 
 class Form extends React.PureComponent {
   constructor(props) {
@@ -34,6 +34,16 @@ class Form extends React.PureComponent {
     });
   }
 
+  clearErrors() {
+    this.setState({
+      errors: {
+        login: '',
+        password: '',
+        confirmPassword: '',
+      },
+    });
+  }
+
   handleChange(name, event) {
     this.setState({
       values: {
@@ -45,14 +55,22 @@ class Form extends React.PureComponent {
 
   handleSubmit(event) {
     event.preventDefault();
-    if (!this.validatePresence()) return this.setErrors();
-    if (!this.validatePassword()) return this.setErrors();
-    this.setErrors();
-    return this.props.onSubmit(this.state.values);
+    if (!this.validatePresence()) {
+      this.setErrors();
+      return;
+    }
+    if (!this.validatePassword()) {
+      this.setErrors();
+      return;
+    }
+
+    this.clearErrors();
+    this.props.onSubmit(this.state.values);
   }
 
   validatePresence() {
     this.errors = {};
+
     Object.entries(this.state.values)
       .forEach(([field, value]) => {
         if (value.trim().length === 0) {
@@ -66,6 +84,8 @@ class Form extends React.PureComponent {
   }
 
   validatePassword() {
+    this.errors = {};
+
     if (this.state.values.password !== this.state.values.confirmPassword) {
       this.errors = {
         confirmPassword: "Passwords didn't match. Try again",
@@ -82,7 +102,7 @@ class Form extends React.PureComponent {
       <React.Fragment>
         <FormInput
           label="Login"
-          className={form.loginInput}
+          className={styles.loginInput}
           id="login-input"
           type="text"
           placeholder="LoLLiPoP"
@@ -93,7 +113,7 @@ class Form extends React.PureComponent {
         />
         <FormInput
           label="Password"
-          className={form.passwordInput}
+          className={styles.passwordInput}
           id="password-input"
           type="password"
           placeholder="Password"
@@ -105,7 +125,7 @@ class Form extends React.PureComponent {
         { confirmPassword &&
           <FormInput
             label="Confirm password"
-            className={form.passwordInput}
+            className={styles.passwordInput}
             id="confirm-password-input"
             type="password"
             placeholder="Confirm password"
@@ -116,7 +136,7 @@ class Form extends React.PureComponent {
           />
         }
         <button
-          className={form.buttonCreateAccount}
+          className={styles.buttonCreateAccount}
           onClick={this.handleSubmit}
         >
           {buttonMessage}

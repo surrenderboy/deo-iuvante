@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from './Form';
-import form from './form.module.css';
+import form from './Form.module.css';
 
 export default class AuthForm extends Component {
   constructor(props) {
