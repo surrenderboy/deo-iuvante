@@ -1,9 +1,13 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+import chatReducer from '../../reducers/chat';
 
 import List from '../List/List';
 import ChatListItem from '../ChatsListItem/ChatsListItem';
@@ -12,6 +16,11 @@ import Chat from '../Chat/Chat';
 import rooms from './mockRooms';
 import ChatListLayout from '../ChatListLayout/ChatListLayout';
 import ChatLayout from '../ChatLayout/ChatLayout';
+
+const store = createStore(
+  combineReducers({ chatReducer }),
+  applyMiddleware(thunkMiddleware),
+);
 
 class App extends React.Component {
   constructor(props) {
@@ -52,34 +61,36 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <ChatListLayout>
-                {this.renderChatsList()}
-              </ChatListLayout>
-            )}
-          />
-          <Route
-            path="/chat/:id"
-            render={({ match }) => {
-              const { id } = match.params;
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <ChatListLayout>
+                  {this.renderChatsList()}
+                </ChatListLayout>
+              )}
+            />
+            <Route
+              path="/chat/:id"
+              render={({ match }) => {
+                const { id } = match.params;
 
-              return (
-                <ChatLayout
-                  chatName={this.state.rooms[id].name}
-                  avatarUrl={this.state.rooms[id].avatarUrl}
-                >
-                  {this.renderChat(id)}
-                </ChatLayout>
-              );
-            }}
-          />
-        </Switch>
-      </Router>
+                return (
+                  <ChatLayout
+                    chatName={this.state.rooms[id].name}
+                    avatarUrl={this.state.rooms[id].avatarUrl}
+                  >
+                    {this.renderChat(id)}
+                  </ChatLayout>
+                );
+              }}
+            />
+          </Switch>
+        </Router>
+      </Provider>
     );
   }
 }
