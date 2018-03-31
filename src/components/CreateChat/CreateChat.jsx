@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 import api from '../../api';
 
@@ -16,7 +17,8 @@ class CreateChat extends Component {
       selectedUsers: [],
       screen: 'Добавить пользователей',
       roomName: '',
-      currentUserId: api.getCurrentUser(),
+      currentUserId: null,
+      newRoomId: null,
     };
 
     this.switchUserSelection = this.switchUserSelection.bind(this);
@@ -24,9 +26,17 @@ class CreateChat extends Component {
     this.createRoom = this.createRoom.bind(this);
   }
 
-
   componentWillMount() {
+    this.getCurrentUser();
     this.getUsers();
+  }
+
+  async getCurrentUser() {
+    const user = await api.getCurrentUser();
+
+    this.setState({
+      currentUserId: user._id,
+    });
   }
 
   async getUsers() {
@@ -42,26 +52,14 @@ class CreateChat extends Component {
     const userAlreadySelected = this.state.selectedUsers.indexOf(id) !== -1;
 
     if (userAlreadySelected) {
-      return this.setState({
+      this.setState({
         selectedUsers: this.state.selectedUsers.filter(userId => userId !== id),
       });
+    } else {
+      this.setState({
+        selectedUsers: [].concat(this.state.selectedUsers, id),
+      });
     }
-
-    this.setState({
-      selectedUsers: [].concat(this.state.selectedUsers, id),
-    });
-  }
-
-  renderList() {
-    if (this.state.screen !== 'Добавить пользователей') return null;
-
-    return (
-      <UsersList
-        switchUserSelection={this.switchUserSelection}
-        selectedUsers={this.state.selectedUsers}
-        users={this.state.users}
-      />
-    );
   }
 
   handleRoomNameChange(e) {
@@ -79,36 +77,22 @@ class CreateChat extends Component {
   }
 
   createRoom() {
-    console.log('going to save room');
     api.createRoom({
       name: this.state.roomName,
-      users: [].concat(this.state.selectedUsers, this.state.currentUserId),
+      users: this.state.selectedUsers,
     })
-      .then(res => console.log(res));
-  }
-
-  renderRoomSettings() {
-    if (this.state.screen !== 'Настройки чата') return null;
-
-    return (
-      <FormInput
-        label="Room name"
-        className=""
-        id="room-name-input"
-        type="text"
-        placeholder="Например, Привычка"
-        value={this.state.roomName}
-        onChange={this.handleRoomNameChange}
-        errorMessage=""
-      />
-    );
+      .then(({ _id }) => {
+        this.setState({
+          newRoomId: _id,
+        });
+      });
   }
 
   headerRightContent() {
     if (this.state.screen === 'Настройки чата') {
       return (
         <IconButton
-          icon={{ glyph: 'check', color: '#00b33c' }}
+          icon={{ glyph: 'check', color: '#00a000' }}
           onClick={this.createRoom}
         />
       );
@@ -122,6 +106,8 @@ class CreateChat extends Component {
         />
       );
     }
+
+    return null;
   }
 
   headerLeftContent() {
@@ -129,7 +115,8 @@ class CreateChat extends Component {
       return (
         <IconButton
           icon={{ glyph: 'keyboard_arrow_left', color: '#fff' }}
-          onClick={() => {}}
+          component={Link}
+          to="/"
         />
       );
     }
@@ -142,6 +129,42 @@ class CreateChat extends Component {
         />
       );
     }
+
+    return null;
+  }
+
+  renderList() {
+    if (this.state.screen !== 'Добавить пользователей') return null;
+
+    return (
+      <UsersList
+        switchUserSelection={this.switchUserSelection}
+        selectedUsers={this.state.selectedUsers}
+        users={this.state.users}
+      />
+    );
+  }
+
+  renderRoomSettings() {
+    if (this.state.screen !== 'Настройки чата') return null;
+
+    return (
+      <FormInput
+        label="Room name"
+        className=""
+        id="room-name-input"
+        type="text"
+        placeholder="Например, Комната смеха"
+        value={this.state.roomName}
+        onChange={this.handleRoomNameChange}
+        errorMessage=""
+      />
+    );
+  }
+
+  renderRedirect() {
+    if (!this.state.newRoomId) return null;
+    return <Redirect to={`/chat/${this.state.newRoomId}`} push />;
   }
 
   render() {
@@ -154,6 +177,7 @@ class CreateChat extends Component {
         <React.Fragment>
           {this.renderList()}
           {this.renderRoomSettings()}
+          {this.renderRedirect()}
         </React.Fragment>
       </AppLayout>
     );
