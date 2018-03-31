@@ -1,92 +1,135 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import FormInput from './FormInput';
 import form from './form.module.css';
-import SignInOrUpForm from './SignInOrUpForm';
 
-export default class Form extends Component {
+class Form extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      loginValidationState: true,
-      passwordValidationState: true,
-      confirmPasswordValidationState: true,
-      passwordsMatch: true,
-      signUp: false,
+      values: {
+        login: '',
+        password: '',
+        confirmPassword: '',
+      },
+      errors: {
+        login: '',
+        password: '',
+        confirmPassword: '',
+      },
     };
 
-    this._values = {
-      login: '',
-      password: '',
-      confirmPassword: '',
-    };
-
-    this.onLoginChangeValue = this.onChangeValue.bind(this, 'login');
-    this.onPasswordChangeValue = this.onChangeValue.bind(this, 'password');
-    this.onConfirmPasswordChangeValue = this.onChangeValue.bind(this, 'confirmPassword');
-    this.submitSignIn = this.submit.bind(this, 'signIn');
-    this.submitSignUp = this.submit.bind(this, 'signUp');
-    this.submitCreateAccount = this.submit.bind(this, 'createAcc');
+    this.handleLoginChange = this.handleChange.bind(this, 'login');
+    this.handlePasswordChange = this.handleChange.bind(this, 'password');
+    this.handleConfirmPasswordChange = this.handleChange.bind(this, 'confirmPassword');
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onChangeValue(name, event) {
-    this._values = {
-      ...this._values,
-      [name]: event.target.value,
-    };
-  }
-
-  submit(button, event) {
-    if (button === 'signIn' || button === 'createAcc') {
-      this._validateInput(button, this._values.login, this._values.password, this._values.confirmPassword);
-    } else {
-      this.setState({
-        signUp: true,
-        loginValidationState: true,
-        passwordValidationState: true,
-      });
-    }
-    event.preventDefault();
-  }
-
-  _validateInput(button, login, password, confirmPassword) {
+  setErrors() {
     this.setState({
-      loginValidationState: login.trim() !== '',
-      passwordValidationState: password.trim() !== '',
+      errors: {
+        ...this.errors,
+      },
     });
-    if (button === 'createAcc') {
-      if (confirmPassword.trim() !== '') {
-        this.setState({
-          confirmPasswordValidationState: true,
-          passwordsMatch: password.trim() === confirmPassword.trim(),
-        });
-      } else {
-        this.setState({
-          confirmPasswordValidationState: false,
-          passwordsMatch: true,
-        });
-      }
+  }
+
+  handleChange(name, event) {
+    this.setState({
+      values: {
+        ...this.state.values,
+        [name]: event.target.value,
+      },
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    if (!this.validatePresence()) return this.setErrors();
+    if (!this.validatePassword()) return this.setErrors();
+    this.setErrors();
+    return this.props.onSubmit(this.state.values);
+  }
+
+  validatePresence() {
+    this.errors = {};
+    Object.entries(this.state.values)
+      .forEach(([field, value]) => {
+        if (value.trim().length === 0) {
+          if (field === 'confirmPassword' && !this.props.confirmPassword) return;
+
+          this.errors[field] = `${field} can't be blank`;
+        }
+      });
+
+    return Object.keys(this.errors).length === 0;
+  }
+
+  validatePassword() {
+    if (this.state.values.password !== this.state.values.confirmPassword) {
+      this.errors = {
+        confirmPassword: "Passwords didn't match. Try again",
+      };
     }
+
+    return Object.keys(this.errors).length === 0;
   }
 
   render() {
+    const { confirmPassword, buttonMessage } = this.props;
+
     return (
-      <section className={form.form}>
-        <form className={form.formFields}>
-          <SignInOrUpForm
-            createNewUserState={this.state.signUp}
-            onLoginChangeValue={this.onLoginChangeValue}
-            loginValidationState={this.state.loginValidationState}
-            onPasswordChangeValue={this.onPasswordChangeValue}
-            passwordValidationState={this.state.passwordValidationState}
-            onConfirmPasswordChangeValue={this.onConfirmPasswordChangeValue}
-            confirmPasswordValidationState={this.state.confirmPasswordValidationState}
-            passwordsMatchValidationState={this.state.passwordsMatch}
-            onSubmitSignIn={this.submitSignIn}
-            onSubmitSignUp={this.submitSignUp}
-            onSubmitCreateAccount={this.submitCreateAccount}
+      <React.Fragment>
+        <FormInput
+          label="Login"
+          className={form.loginInput}
+          id="login-input"
+          type="text"
+          placeholder="LoLLiPoP"
+
+          value={this.state.values.login}
+          onChange={this.handleLoginChange}
+          errorMessage={this.state.errors.login}
+        />
+        <FormInput
+          label="Password"
+          className={form.passwordInput}
+          id="password-input"
+          type="password"
+          placeholder="Password"
+
+          value={this.state.values.password}
+          onChange={this.handlePasswordChange}
+          errorMessage={this.state.errors.password}
+        />
+        { confirmPassword &&
+          <FormInput
+            label="Confirm password"
+            className={form.passwordInput}
+            id="confirm-password-input"
+            type="password"
+            placeholder="Confirm password"
+
+            value={this.state.values.confirmPassword}
+            onChange={this.handleConfirmPasswordChange}
+            errorMessage={this.state.errors.confirmPassword}
           />
-        </form>
-      </section>
+        }
+        <button
+          className={form.buttonCreateAccount}
+          onClick={this.handleSubmit}
+        >
+          {buttonMessage}
+        </button>
+      </React.Fragment>
     );
   }
 }
+
+Form.propTypes = {
+  confirmPassword: PropTypes.bool.isRequired,
+  buttonMessage: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default Form;

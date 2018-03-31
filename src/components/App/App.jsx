@@ -1,8 +1,8 @@
 import React from 'react';
-import Form from '../Form/Form';
+import AuthForm from '../Form/AuthForm';
 
 const App = () =>
-  <Form />;
+  <AuthForm />;
 
 
 export default App;
