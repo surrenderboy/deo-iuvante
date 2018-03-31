@@ -8,13 +8,11 @@ function UsersList({ users, selectedUsers, switchUserSelection }) {
   return (
     <List>
       {users.map((user) => {
-        const switchThisUserSelection = switchUserSelection.bind(null, user._id);
-
         return (
           <UsersListItem
             {...user}
             key={user._id}
-            onClick={switchThisUserSelection}
+            onClick={() => switchUserSelection.call(user._id)}
             selected={selectedUsers.indexOf(user._id) !== -1}
           />
         );

@@ -5,7 +5,14 @@ import Avatar from '../Avatar/Avatar';
 import Icon from '../Icon/Icon';
 import styles from './UsersListItem.module.css';
 
-function UsersListItem({ email, name, phone, online, selected, onClick, }) {
+function UsersListItem({
+  email,
+  name,
+  phone,
+  online,
+  selected,
+  onClick,
+}) {
   const avatarUrl = 'https://i.ytimg.com/vi/8f7xJMShlZI/maxresdefault.jpg';
 
   return (
