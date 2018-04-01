@@ -175,7 +175,7 @@ storiesOf('MessageInput', module)
   .add(
     'default',
     withInfo('Hit "Enter" to send message')(() => (
-      <MessageInput sendMessage={msg => alert(msg)} />
+      <MessageInput sendMessage={() => {}} />
     )),
   );
 
@@ -213,9 +213,9 @@ storiesOf('Icon', module)
 storiesOf('ChatFooter', module)
   .add('default', withInfo('')(() => (
     <ChatFooter
-      handleAttachment={() => alert("I'm handling attachment")}
-      sendMessage={msg => alert(msg)}
-      handleVoice={() => alert("I'm handling voice")}
+      handleAttachment={() => {}}
+      sendMessage={() => {}}
+      handleVoice={() => {}}
     />
   )));
 

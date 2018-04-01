@@ -67,6 +67,7 @@ IconButton.propTypes = {
   component: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
+    PropTypes.func,
   ]),
   href: PropTypes.string,
   className: PropTypes.string,

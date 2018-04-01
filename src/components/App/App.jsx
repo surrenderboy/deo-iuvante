@@ -9,12 +9,9 @@ import {
 } from 'react-router-dom';
 import chatReducer from '../../reducers/chat';
 
-import List from '../List/List';
-import ChatListItem from '../ChatsListItem/ChatsListItem';
 import Chat from '../Chat/Chat';
-
-import rooms from './mockRooms';
-import ChatListLayout from '../ChatListLayout/ChatListLayout';
+import CreateChat from '../CreateChatLayout/CreateChatLayout';
+import ChatsList from '../ChatsListLayout/ChatsListLayout';
 import ChatLayout from '../ChatLayout/ChatLayout';
 
 const store = createStore(
@@ -23,39 +20,12 @@ const store = createStore(
 );
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUserId: 'pistch',
-      rooms,
-    };
-  }
-
   renderChat(id) {
     return (
       <Chat
         messages={this.state.rooms[id].messages}
         currentUserId={this.state.currentUserId}
       />
-    );
-  }
-
-  renderChatsList() {
-    const chatRooms = this.state.rooms.map((room, index) => ({
-      unreadMessages: room.messages.reduce((sum, { isRead }) => (!isRead ? sum + 1 : sum), 0),
-      lastActivity: room.messages[0] ? room.messages[room.messages.length - 1].time : 0,
-      lastMessage: room.messages[0] ? room.messages[room.messages.length - 1].message : undefined,
-      room: {
-        id: index,
-        name: room.name,
-        avatarUrl: room.avatarUrl,
-      },
-    }));
-
-    return (
-      <List>
-        {chatRooms.map(chatRoom => <ChatListItem key={chatRoom.room.id} {...chatRoom} />)}
-      </List>
     );
   }
 
@@ -66,11 +36,16 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
+              path="/create-chat"
+              render={() => (
+                <CreateChat />
+              )}
+            />
+            <Route
+              exact
               path="/"
               render={() => (
-                <ChatListLayout>
-                  {this.renderChatsList()}
-                </ChatListLayout>
+                <ChatsList />
               )}
             />
             <Route
