@@ -2,7 +2,6 @@ const { ObjectId } = require('mongodb');
 
 const { getSessionInfo, saveSessionInfo } = require('./session');
 const { pageableCollection, insertOrUpdateEntity } = require('./helpers');
-const faker = require('faker');
 
 const TABLE = 'users';
 
@@ -46,12 +45,12 @@ async function findUserBySid(db, sid) {
   const session = await getSessionInfo(db, sid);
 
   if (!session.userId) {
-    // Create fake user
+    // Create empty user
 
     let user = {
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      phone: faker.phone.phoneNumber(),
+      name: '',
+      email: '',
+      phone: '',
     };
 
     user = await saveUser(db, user);
