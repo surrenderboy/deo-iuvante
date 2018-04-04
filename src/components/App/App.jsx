@@ -19,55 +19,40 @@ const store = createStore(
   applyMiddleware(thunkMiddleware),
 );
 
-class App extends React.Component {
-  renderChat(id) {
-    return (
-      <Chat
-        messages={this.state.rooms[id].messages}
-        currentUserId={this.state.currentUserId}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <Router>
-          <Switch>
-            <Route
-              exact
-              path="/create-chat"
-              render={() => (
-                <CreateChat />
+const App = () =>
+  (
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route
+            exact
+            path="/create-chat"
+            render={() => (
+              <CreateChat />
               )}
-            />
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <ChatsList />
+          />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <ChatsList />
               )}
-            />
-            <Route
-              path="/chat/:id"
-              render={({ match }) => {
-                const { id } = match.params;
+          />
+          <Route
+            path="/chat/:roomId"
+            render={({ match }) => {
+                const { roomId } = match.params;
 
                 return (
-                  <ChatLayout
-                    chatName={this.state.rooms[id].name}
-                    avatarUrl={this.state.rooms[id].avatarUrl}
-                  >
-                    {this.renderChat(id)}
+                  <ChatLayout>
+                    <Chat roomId={roomId} />
                   </ChatLayout>
                 );
               }}
-            />
-          </Switch>
-        </Router>
-      </Provider>
-    );
-  }
-}
+          />
+        </Switch>
+      </Router>
+    </Provider>
+  );
 
 export default App;
