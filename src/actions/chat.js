@@ -2,10 +2,8 @@ import api from '../api';
 
 export const addMessage = describer => ({
   type: 'ADD_MESSAGE',
-  id: describer.id,
-  userId: describer.userId,
+  roomId: describer.roomId,
   message: describer.message,
-  createdAt: describer.createdAt,
 });
 
 export const REQUEST_MESSAGES = 'REQUEST_MESSAGES';
@@ -39,11 +37,6 @@ export function receiveCurrentUserId(currentUserId) {
   };
 }
 
-export const sendMessage = describer => (dispatch) => {
-  dispatch(addMessage(describer));
-  return api.sendMessage(describer.id, describer.message);
-};
-
 export function getRoomMessages(roomId) {
   return (dispatch) => {
     dispatch(requestMessages());
@@ -52,10 +45,15 @@ export function getRoomMessages(roomId) {
   };
 }
 
+export const sendMessage = (roomId, message) => (dispatch) => {
+  api.sendMessage(roomId, message);
+  return dispatch(getRoomMessages(roomId));
+};
+
 export function getCurrentUserId() {
   return (dispatch) => {
     dispatch(requestCurrentUserId());
     api.getCurrentUser()
-      .then(currentUser => dispatch(requestCurrentUserId(currentUser._id)));
+      .then(currentUser => dispatch(receiveCurrentUserId(currentUser._id)));
   };
 }
