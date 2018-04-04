@@ -69,13 +69,20 @@ async function pageableCollection(collection, {
  */
 async function insertOrUpdateEntity(collection, data) {
   if (data._id) {
+    const { _id, ...props } = data;
+
     const result = await collection.findOneAndUpdate(
-      { _id: data._id },
-      data,
+      { _id: ObjectId(_id) },
+      { $set: props },
+      { returnOriginal: false },
     );
+
     // eslint-disable-next-line no-console
     console.log(result);
+
+    return result.value;
   }
+
   const result = await collection.insertOne(data);
 
   return {
