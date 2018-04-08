@@ -1,0 +1,35 @@
+@keyframes bounce {
+    0% { transform: translateY(1.3rem); }
+    100% { transform: translateY(0); }
+}
+
+.container {
+    display: inline-block;
+    height: 1.3rem;
+}
+
+
+.Circle {
+    display: inline-block;
+    margin: 0 .1rem;
+}
+
+.Circle1 {
+    composes: Circle;
+    animation: bounce .6s cubic-bezier(.1,.25,.1,1) 0s infinite alternate both;
+}
+
+.Circle2 {
+    composes: Circle;
+    animation: bounce .6s cubic-bezier(.1,.25,.1,1) .15s infinite alternate both;
+}
+
+.Circle3 {
+    composes: Circle;
+    animation: bounce .6s cubic-bezier(.1,.25,.1,1) .3s infinite alternate both;
+}
+
+.Circle4 {
+    composes: Circle;
+    animation: bounce .6s cubic-bezier(.1,.25,.1,1) .45s infinite alternate both;
+}
