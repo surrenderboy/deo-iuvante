@@ -78,6 +78,7 @@ module.exports = function (db, io) {
          *
          * @param {string} roomId
          */
+    // eslint-disable-next-line no-empty-pattern
     function joinToRoomChannel({}, roomId) {
       socket.join(`room:${roomId}`);
     }
