@@ -9,8 +9,21 @@ import MessageBubble from '../Bubble/Bubble';
 import ChatFooter from '../ChatFooter/ChatFooter';
 
 class Chat extends Component {
+  constructor(props) {
+    super(props);
+
+    this.sendMessage = this.props.sendMessage.bind(this);
+    this.getRoomMessages = this.props.getRoomMessages.bind(this);
+    this.getCurrentUserId = this.props.getCurrentUserId.bind(this);
+  }
+
+  componentWillMount() {
+    this.getCurrentUserId();
+    this.getRoomMessages(this.props.roomId);
+  }
+
   renderMessages() {
-    if (!this.props.messages[0]) {
+    if (this.props.messages.length === 0) {
       return <div className={styles.emptyState}>В этом чате пока нет сообщений</div>;
     }
 
@@ -18,7 +31,7 @@ class Chat extends Component {
       <MessageBubble
         isOwner={message.userId === this.props.currentUserId}
         message={message.message}
-        isRead={message.isRead}
+        isRead={false}
         key={message._id}
       />
     );
@@ -34,9 +47,10 @@ class Chat extends Component {
         </div>
         <ChatFooter
           handleAttachment={() => {}}
-          sendMessage={this.props.sendMessage}
+          sendMessage={this.sendMessage}
           handleVoice={() => {}}
           className={styles.chatFooter}
+          roomId={this.props.roomId}
         />
       </div>
     );
@@ -45,22 +59,26 @@ class Chat extends Component {
 
 Chat.defaultProps = {
   sendMessage: () => undefined,
+  messages: [],
 };
 
 Chat.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  messages: PropTypes.arrayOf(PropTypes.object),
   currentUserId: PropTypes.string.isRequired,
   sendMessage: PropTypes.func,
+  roomId: PropTypes.string.isRequired,
+  getRoomMessages: PropTypes.func.isRequired,
+  getCurrentUserId: PropTypes.func.isRequired,
 };
 
 export default connect(
   state => ({
-    messages: state.messages,
-    currentUserId: state.currentUserId,
+    messages: state.chatReducer.messages.items,
+    currentUserId: state.chatReducer.currentUserId,
   }),
   dispatch => ({
-    sendMessage: ({ roomID, message }) => dispatch(sendMessage({ roomID, message })),
+    sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
     getCurrentUserId: () => dispatch(getCurrentUserId()),
-    getRoomMessages: id => dispatch(getRoomMessages(id)),
+    getRoomMessages: roomId => dispatch(getRoomMessages(roomId)),
   }),
 )(Chat);

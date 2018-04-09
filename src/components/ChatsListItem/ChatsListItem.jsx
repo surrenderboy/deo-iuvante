@@ -20,7 +20,7 @@ class ChatsListItem extends Component {
 
   render() {
     return (
-      <Link to={`/chat/${this.props.room.id}`} className={styles.listItem}>
+      <Link to={`/chat/${this.props.room._id}`} className={styles.listItem}>
         <Avatar size="m" src={this.props.room.avatarUrl} count={this.props.unreadMessages} className={styles.avatar} />
         <span className={styles.roomName}>
           {this.props.room.name}
@@ -40,7 +40,7 @@ ChatsListItem.propTypes = {
   unreadMessages: PropTypes.number,
   lastActivity: PropTypes.number,
   room: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avatarUrl: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,

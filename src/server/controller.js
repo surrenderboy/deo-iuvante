@@ -78,7 +78,8 @@ module.exports = function (db, io) {
          *
          * @param {string} roomId
          */
-    function joinToRoomChannel(roomId) {
+    // eslint-disable-next-line no-empty-pattern
+    function joinToRoomChannel({}, roomId) {
       socket.join(`room:${roomId}`);
     }
 
@@ -220,7 +221,6 @@ module.exports = function (db, io) {
 
       // Get of user groups
       const rooms = await getUserRooms(db, user._id);
-
       rooms.items.forEach((room) => {
         joinToRoomChannel(db, room._id);
       });

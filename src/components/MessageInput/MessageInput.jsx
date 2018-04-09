@@ -14,7 +14,7 @@ class MessageInput extends Component {
   }
 
   handleSubmit(event) {
-    this.props.sendMessage(this.state.value);
+    this.props.sendMessage(this.props.roomId, this.state.value);
 
     this.setState({ value: '' });
 
@@ -42,6 +42,7 @@ class MessageInput extends Component {
 MessageInput.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   className: PropTypes.string,
+  roomId: PropTypes.string.isRequired,
 };
 
 MessageInput.defaultProps = {

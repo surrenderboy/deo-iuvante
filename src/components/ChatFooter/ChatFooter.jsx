@@ -21,7 +21,11 @@ class ChatFooter extends React.PureComponent {
             glyph: 'attach_file',
           }}
         />
-        <MessageInput sendMessage={sendMessage} className={styles.messageInput} />
+        <MessageInput
+          sendMessage={sendMessage}
+          className={styles.messageInput}
+          roomId={this.props.roomId}
+        />
         <IconButton
           onClick={handleVoice}
           icon={{
@@ -39,6 +43,7 @@ ChatFooter.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   handleVoice: PropTypes.func.isRequired,
   className: PropTypes.string,
+  roomId: PropTypes.string.isRequired,
 };
 ChatFooter.defaultProps = {
   className: '',
