@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import styles from './Spinner.module.css';
 import bc from '../../assets/bc.svg';
 
-function Spinner({ size }) {
+function Spinner({ size, className }) {
   return (
-    <div className={styles[size]}>
+    <div className={`${styles[size]} ${className}`}>
       <div className={styles.Overlay}>
         <div className={styles.CircleContainer1}>
           <img src={bc} className={styles.Circle1} alt="" />
@@ -26,10 +26,12 @@ function Spinner({ size }) {
 
 Spinner.propTypes = {
   size: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Spinner.defaultProps = {
   size: 's',
+  className: '',
 };
 
 export default Spinner;

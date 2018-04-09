@@ -23,6 +23,11 @@
     height: 3rem;
 }
 
+.xl {
+    width: 6rem;
+    height: 6rem;
+}
+
 .Overlay {
     position: relative;
     width: 100%;
