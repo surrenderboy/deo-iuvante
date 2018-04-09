@@ -78,7 +78,7 @@ module.exports = function (db, io) {
          *
          * @param {string} roomId
          */
-    function joinToRoomChannel(null, roomId) {
+    function joinToRoomChannel({}, roomId) {
       socket.join(`room:${roomId}`);
     }
 
