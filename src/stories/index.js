@@ -11,6 +11,8 @@ import List from '../components/List/List';
 import ChatListItem from '../components/ChatsListItem/ChatsListItem';
 import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
+import Bouncer from '../components/Bouncer/Bouncer';
+import Spinner from '../components/Spinner/Spinner';
 import Chat from '../components/Chat/Chat';
 import MessageInput from '../components/MessageInput/MessageInput';
 
@@ -144,6 +146,25 @@ storiesOf('Bubble', module)
       <Bubble message="My long and interesting message5" isOwner />,
       <Bubble message="My long and interesting message6" isOwner={false} />,
   ])));
+
+storiesOf('Spinner', module)
+  .addDecorator(withKnobs)
+  .add('Spinner', withInfo(`
+        Вращающийся индикатор загрузки
+    `)(() =>
+    [
+      <Spinner size={text('Размер', 'l')} />,
+    ]));
+
+storiesOf('Bouncer', module)
+  .addDecorator(withKnobs)
+  .add('Bouncer', withInfo(`
+        "Прыгающий" индикатор загрузки
+    `)(() =>
+    [
+      <Bouncer />,
+    ]));
+
 
 storiesOf('Chat', module)
   .addDecorator(withKnobs)
