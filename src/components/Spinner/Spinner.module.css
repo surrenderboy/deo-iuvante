@@ -1,0 +1,93 @@
+@keyframes rotate0 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate1 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate2 {
+    0% { transform: rotate(180deg); }
+    100% { transform: rotate(-180deg); }
+}
+
+.s {
+    width: 2rem;
+    height: 2rem;
+}
+
+.l {
+    width: 3rem;
+    height: 3rem;
+}
+
+.Overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px #18a0e2 solid;
+    border-radius: 100%;
+    animation: rotate0 3s linear infinite;
+}
+
+.CircleContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.CircleContainer1 {
+    animation: rotate1 .8s ease infinite;
+    composes: CircleContainer;
+}
+
+.CircleContainer2 {
+    transform: rotate(180deg);
+    animation: rotate2 1.2s ease infinite;
+    composes: CircleContainer;
+}
+
+.Circle {
+    position: absolute;
+    right: 47.5%;
+    width: 7%;
+    height: 7%;
+}
+
+.Circle1 {
+    top: 5%;
+    composes: Circle;
+}
+
+.Circle2 {
+    top: 25%;
+    composes: Circle;
+}
+
+.Circle3 {
+    top: 45%;
+    composes: Circle;
+}
+
+.Circle4 {
+    top: 15%;
+    composes: Circle;
+}
+
+.Circle5 {
+    top: 35%;
+    composes: Circle;
+}
+
+.Circle6 {
+    bottom: calc(-3.5% - 1px);
+    composes: Circle;
+}
+.Circle7 {
+    top: calc(-3.5% - 1px);
+    composes: Circle;
+}
