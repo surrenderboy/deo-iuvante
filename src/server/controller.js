@@ -78,7 +78,7 @@ module.exports = function (db, io) {
          *
          * @param {string} roomId
          */
-    function joinToRoomChannel(roomId) {
+    function joinToRoomChannel(db, roomId) {
       socket.join(`room:${roomId}`);
     }
 
@@ -117,6 +117,7 @@ module.exports = function (db, io) {
          * @param {Message} message
          */
     function newMessage(message) {
+      console.log('new message', message);
       socket.to(`room:${message.roomId}`).emit(TYPES.MESSAGE, message);
     }
 
@@ -220,7 +221,7 @@ module.exports = function (db, io) {
 
       // Get of user groups
       const rooms = await getUserRooms(db, user._id);
-
+      console.log(user);
       rooms.items.forEach((room) => {
         joinToRoomChannel(db, room._id);
       });

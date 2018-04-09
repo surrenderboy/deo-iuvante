@@ -244,4 +244,4 @@ class Api {
   }
 }
 
-export default new Api();
+export default window.api = new Api();

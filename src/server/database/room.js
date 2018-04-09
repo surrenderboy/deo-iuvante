@@ -51,7 +51,7 @@ async function getRooms(db, filter) {
  */
 async function getUserRooms(db, userId, filter) {
   return pageableCollection(db.collection(TABLE), {
-    users: [ObjectId(userId.toString())],
+    users: userId.toString(),
     ...filter,
   });
 }
@@ -78,7 +78,7 @@ async function createRoom(db, currentUser, room) {
 
     // eslint-disable-next-line no-param-reassign
     room.users = room.users || [];
-    room.users.push(currentUser._id);
+    room.users.push(currentUser._id.toString());
 
     return insertOrUpdateEntity(collection, room);
   }
