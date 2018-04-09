@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import chatReducer from './reducers/chat';
+import reducer from './reducers';
 
 import './index.css';
 import App from './components/App/App';
 
 const store = createStore(
-  combineReducers({ chatReducer }),
+  reducer,
   applyMiddleware(thunkMiddleware),
 );
 
