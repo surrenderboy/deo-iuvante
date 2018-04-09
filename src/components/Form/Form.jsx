@@ -102,7 +102,6 @@ class Form extends React.PureComponent {
       <React.Fragment>
         <FormInput
           label="Login"
-          className={styles.loginInput}
           id="login-input"
           type="text"
           placeholder="LoLLiPoP"
@@ -113,7 +112,6 @@ class Form extends React.PureComponent {
         />
         <FormInput
           label="Password"
-          className={styles.passwordInput}
           id="password-input"
           type="password"
           placeholder="Password"
@@ -125,7 +123,6 @@ class Form extends React.PureComponent {
         { confirmPassword &&
           <FormInput
             label="Confirm password"
-            className={styles.passwordInput}
             id="confirm-password-input"
             type="password"
             placeholder="Confirm password"
