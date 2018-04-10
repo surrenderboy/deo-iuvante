@@ -11,4 +11,4 @@ deploy:
   provider: script
   script: bash heroku_deploy
   on:
-    branch: deployment
+    branch: master
