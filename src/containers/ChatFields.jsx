@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { fetchMessages, sendMessage } from '../actions/chat';
 
 import Chat from '../components/Chat/Chat';
-import Spinner from '../components/ViewportSpinner/ViewportSpinner';
 
 class ChatFields extends Component {
   constructor(props) {
