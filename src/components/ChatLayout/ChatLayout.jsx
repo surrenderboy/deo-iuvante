@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import AppLayout from '../AppLayout/AppLayout';
 import Avatar from '../Avatar/Avatar';
 import IconButton from '../IconButton/IconButton';
+import ChatFields from '../../containers/ChatFields';
 
 function renderAvatar(avatarUrl) {
   return <Avatar size="s" src={avatarUrl} />;
@@ -18,22 +19,22 @@ function renderGoBack() {
   );
 }
 
-function ChatLayout({ children, chatName, avatarUrl }) {
+function ChatLayout({ chatName, avatarUrl, roomId }) {
   return (
     <AppLayout
       headerText={chatName}
       headerLeft={renderGoBack()}
       headerRight={renderAvatar(avatarUrl)}
     >
-      {children}
+      <ChatFields roomId={roomId} />
     </AppLayout>
   );
 }
 
 ChatLayout.propTypes = {
-  children: PropTypes.element.isRequired,
   chatName: PropTypes.string,
   avatarUrl: PropTypes.string,
+  roomId: PropTypes.string.isRequired,
 };
 ChatLayout.defaultProps = {
   chatName: '',
