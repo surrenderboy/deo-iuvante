@@ -16,27 +16,26 @@ const { ObjectId } = require('mongodb');
  * @param filter
  */
 async function pageableCollection(collection, {
-  lastId, order, limit = 10, ...query
+  lastId, order, limit = 10, ...rest
 } = {}) {
-  const count = await collection.find(query).count();
+  const query = { ...rest };
 
   if (lastId) {
-    // eslint-disable-next-line no-param-reassign
     query._id = {
-      // eslint-disable-next-line no-undef
-      $gt: ObjectId(_id),
+      $gt: ObjectId(lastId),
     };
   }
+
+  if (query._id) {
+    query._id = ObjectId(query._id.toString());
+  }
+
+  const count = await collection.find(query).count();
 
   let queryBuilder = collection.find(query, { limit });
 
   if (order) {
     queryBuilder = queryBuilder.sort(order);
-  }
-
-  if (query._id) {
-    // eslint-disable-next-line no-param-reassign
-    query._id = ObjectId(query._id.toString());
   }
 
   const cursor = await queryBuilder,

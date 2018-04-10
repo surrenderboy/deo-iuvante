@@ -2,11 +2,11 @@ const express = require('express');
 
 const app = express();
 const http = require('http').Server(app);
+const path = require('path');
 const attachIO = require('socket.io');
 const cookieParser = require('socket.io-cookie-parser');
 const cookie = require('cookie-parser');
 const uuid = require('uuid/v4');
-const { createReadStream, stat } = require('fs');
 
 const { connect } = require('./database');
 const attachController = require('./controller');
@@ -23,10 +23,11 @@ const attachController = require('./controller');
 // eslint-disable-next-line func-names
 exports.createServer = function (serverConfig, databaseConfig) {
   return connect(databaseConfig).then(db => new Promise((resolve) => {
-    app.use(express.static('build'));
     app.use(cookie());
 
-    app.get('/api/auth', (req, res) => {
+    app.use(express.static(path.join(__dirname, '../../build')));
+
+    app.use('/api/auth', (req, res) => {
       if (!req.cookies.sid) {
         res.cookie('sid', uuid(), {
           httpOnly: true,
@@ -43,17 +44,6 @@ exports.createServer = function (serverConfig, databaseConfig) {
     io.use(cookieParser());
 
     attachController(db, io);
-
-    app.use((req, res, next) => {
-      const index = 'build/index.html';
-      stat(index, (err) => {
-        if (err) {
-          next();
-        } else {
-          createReadStream(index).pipe(res);
-        }
-      });
-    });
 
     http.listen(serverConfig.port, () => {
       // eslint-disable-next-line no-console
