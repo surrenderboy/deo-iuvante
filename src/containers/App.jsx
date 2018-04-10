@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import ChatsList from '../components/ChatsListLayout/ChatsListLayout';
 import CreateChat from '../components/CreateChatLayout/CreateChatLayout';
-import Chat from '../components/ChatLayout/ChatLayout';
+import Chat from './ChatWrapper';
 import FirstTime from '../components/FirstTime/FirstTime';
 import ViewportSpinner from '../components/ViewportSpinner/ViewportSpinner';
 
