@@ -65,7 +65,6 @@ async function sendMessage(db, { userId, roomId, message }) {
  * @return {Promise<Pagination<Message>>}
  */
 async function getMessages(db, filter) {
-  console.log(filter);
   ['roomId', 'userId'].forEach((key) => {
     if (filter[key]) {
       // eslint-disable-next-line no-param-reassign

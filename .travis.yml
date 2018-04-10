@@ -6,8 +6,6 @@ node_js:
 - node
 script:
 - npm run lint
-before_deploy:
-- docker build -t deo-iuvante .
 deploy:
   provider: script
   script: bash heroku_deploy
