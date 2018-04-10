@@ -1,59 +1,76 @@
 import api from '../api';
 
-export const addMessage = describer => ({
-  type: 'ADD_MESSAGE',
-  roomId: describer.roomId,
-  message: describer.message,
-});
+export const FETCH_MESSAGES_START = 'FETCH_MESSAGES_START';
+export const FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS';
+export const FETCH_MESSAGES_ERROR = 'FETCH_MESSAGES_ERROR';
+export const FETCH_MESSAGES_END = 'FETCH_MESSAGES_END';
 
-export const REQUEST_MESSAGES = 'REQUEST_MESSAGES';
-export function requestMessages() {
-  return {
-    type: REQUEST_MESSAGES,
-  };
-}
+export const fetchMessages = roomId => (
+  async (dispatch) => {
+    dispatch({
+      type: FETCH_MESSAGES_START,
+    });
 
-export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
-export function receiveMessages(messages) {
-  return {
-    type: RECEIVE_MESSAGES,
-    messages,
-  };
-}
+    try {
+      const messages = await api.getRoomMessages(roomId);
 
-export const REQUEST_CURRENT_USER_ID = 'REQUEST_CURRENT_USER_ID';
+      dispatch({
+        type: FETCH_MESSAGES_SUCCESS,
+        messages,
+      });
+    } catch (error) {
+      dispatch({
+        type: FETCH_MESSAGES_ERROR,
+        errorMessage: error.message,
+      });
+    } finally {
+      dispatch({
+        type: FETCH_MESSAGES_END,
+      });
+    }
+  }
+);
 
-export function requestCurrentUserId() {
-  return {
-    type: REQUEST_CURRENT_USER_ID,
-  };
-}
+export const FETCH_ROOM_START = 'FETCH_ROOM_START';
+export const FETCH_ROOM_SUCCESS = 'FETCH_ROOM_SUCCESS';
+export const FETCH_ROOM_ERROR = 'FETCH_ROOM_ERROR';
+export const FETCH_ROOM_END = 'FETCH_ROOM_END';
 
-export const RECEIVE_CURRENT_USER_ID = 'RECEIVE_CURRENT_USER_ID';
-export function receiveCurrentUserId(currentUserId) {
-  return {
-    type: RECEIVE_CURRENT_USER_ID,
-    currentUserId,
-  };
-}
+export const fetchRoom = roomId => (
+  async (dispatch) => {
+    dispatch({
+      type: FETCH_ROOM_START,
+    });
 
-export function getRoomMessages(roomId) {
-  return (dispatch) => {
-    dispatch(requestMessages());
-    api.getRoomMessages(roomId)
-      .then(messages => dispatch(receiveMessages(messages)));
-  };
-}
+    try {
+      const room = await api.getRoom(roomId);
 
-export const sendMessage = (roomId, message) => (dispatch) => {
-  api.sendMessage(roomId, message);
-  return dispatch(getRoomMessages(roomId));
-};
+      dispatch({
+        type: FETCH_ROOM_SUCCESS,
+        room,
+      });
+    } catch (error) {
+      dispatch({
+        type: FETCH_ROOM_ERROR,
+        errorMessage: error.message,
+      });
+    } finally {
+      dispatch({
+        type: FETCH_ROOM_END,
+      });
+    }
+  }
+);
 
-export function getCurrentUserId() {
-  return (dispatch) => {
-    dispatch(requestCurrentUserId());
-    api.getCurrentUser()
-      .then(currentUser => dispatch(receiveCurrentUserId(currentUser._id)));
-  };
-}
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+
+export const sendMessage = (roomId, message) => (
+  async (dispatch) => {
+    const newMessage = await api.sendMessage(roomId, message);
+    return dispatch({
+      type: ADD_MESSAGE,
+      newMessage,
+    });
+  }
+);
+
