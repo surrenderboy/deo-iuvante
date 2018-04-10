@@ -45,6 +45,8 @@ exports.createServer = function (serverConfig, databaseConfig) {
 
     attachController(db, io);
 
+    app.use('/*', express.static(path.join(__dirname, '../../build/index.html')));
+
     http.listen(serverConfig.port, () => {
       // eslint-disable-next-line no-console
       console.log(`API server listen at http://${serverConfig.host}:${serverConfig.port}`);
