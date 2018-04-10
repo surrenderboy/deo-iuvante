@@ -5,6 +5,7 @@ import styles from './Chat.module.css';
 
 import MessageBubble from '../Bubble/Bubble';
 import ChatFooter from '../ChatFooter/ChatFooter';
+import ViewportSpinner from '../ViewportSpinner/ViewportSpinner';
 
 export default class Chat extends Component {
   renderMessages() {
@@ -27,9 +28,12 @@ export default class Chat extends Component {
   render() {
     return (
       <div className={styles.chatContainer}>
-        <div className={styles.chatMessages}>
-          { this.renderMessages() }
-        </div>
+        {this.props.isFetchingMessages ?
+          <ViewportSpinner size="l" /> :
+          <div className={styles.chatMessages}>
+            { this.renderMessages() }
+          </div>
+          }
         <ChatFooter
           handleAttachment={() => {}}
           sendMessage={this.props.sendMessage}
@@ -45,6 +49,7 @@ export default class Chat extends Component {
 Chat.defaultProps = {
   sendMessage: () => undefined,
   messages: [],
+  isFetchingMessages: false,
 };
 
 Chat.propTypes = {
@@ -52,4 +57,5 @@ Chat.propTypes = {
   currentUserId: PropTypes.string.isRequired,
   sendMessage: PropTypes.func,
   roomId: PropTypes.string.isRequired,
+  isFetchingMessages: PropTypes.bool,
 };

@@ -20,15 +20,13 @@ class ChatFields extends Component {
   }
 
   render() {
-    if (this.props.isFetchingMessages) {
-      return <Spinner size="l" />;
-    }
     return (
       <Chat
         messages={this.props.messages}
         currentUserId={this.props.currentUserId}
         sendMessage={this.sendMessage}
         roomId={this.props.roomId}
+        isFetchingMessages={this.props.isFetchingMessages}
       />
     );
   }
