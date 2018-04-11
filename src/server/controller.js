@@ -1,6 +1,6 @@
 const { findUserBySid, getUsers, saveUser } = require('./database/user');
 const {
-  joinRoom, leaveRoom, getRooms, getUserRooms, createRoom,
+  joinRoom, leaveRoom, getUserRooms, createRoom,
 } = require('./database/room');
 const { getMessages, sendMessage } = require('./database/messages');
 const TYPES = require('./messages');
@@ -148,16 +148,11 @@ module.exports = function (db, io) {
       socket.emit(TYPES.CREATE_ROOM, await createRoom(db, currentUser, params));
     }));
 
-    // Create room
-    socket.on(TYPES.ROOMS, wrapCallback(async (params) => {
-      socket.emit(TYPES.ROOMS, await getRooms(db, params || {}));
-    }));
-
     // Rooms of current user
-    socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async (params) => {
+    socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async () => {
       const currentUser = await userPromise;
 
-      socket.emit(TYPES.CURRENT_USER_ROOMS, await getUserRooms(db, currentUser._id, params));
+      socket.emit(TYPES.CURRENT_USER_ROOMS, await getUserRooms(db, currentUser));
     }));
 
     // Join current user to room
@@ -169,7 +164,7 @@ module.exports = function (db, io) {
         userId: currentUser._id,
       };
 
-      socket.emit(TYPES.CURRENT_USER_JOIN_ROOM, await joinRoom(db, payload));
+      socket.emit(TYPES.CURRENT_USER_JOIN_ROOM, await joinRoom(db, currentUser, payload));
 
       joinToRoomChannel(roomId);
       userWasJoinedToRoom(payload);
@@ -177,7 +172,8 @@ module.exports = function (db, io) {
 
     // Join user to room
     socket.on(TYPES.USER_JOIN_ROOM, wrapCallback(async (payload) => {
-      socket.emit(TYPES.USER_JOIN_ROOM, await joinRoom(db, payload));
+      const currentUser = await userPromise;
+      socket.emit(TYPES.USER_JOIN_ROOM, await joinRoom(db, currentUser, payload));
 
       joinToRoomChannel(payload.roomId);
       userWasJoinedToRoom(payload);
@@ -192,7 +188,7 @@ module.exports = function (db, io) {
         userId: currentUser._id,
       };
 
-      socket.emit(TYPES.CURRENT_USER_LEAVE_ROOM, await leaveRoom(db, payload));
+      socket.emit(TYPES.CURRENT_USER_LEAVE_ROOM, await leaveRoom(db, currentUser, payload));
 
       leaveRoomChannel(roomId);
       userLeaveRoom(payload);
@@ -225,7 +221,7 @@ module.exports = function (db, io) {
       userChangeOnlineStatus(user._id);
 
       // Get of user groups
-      const rooms = await getUserRooms(db, user._id);
+      const rooms = await getUserRooms(db, user);
       rooms.items.forEach((room) => {
         joinToRoomChannel(db, room._id);
       });

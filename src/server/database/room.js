@@ -1,25 +1,36 @@
 const { ObjectId } = require('mongodb');
-const { insertOrUpdateEntity, pageableCollection } = require('./helpers');
+const { insertOrUpdateEntity } = require('./helpers');
 const { getUser } = require('./user');
 
-const TABLE = 'rooms';
+const COLL = 'rooms';
+
+/**
+ * @typedef {{
+ *  userId: string,
+ *  text: string,
+ *  [attachments]: string[],
+ *  time: number
+ * }} Message
+ */
 
 /**
  * @typedef {{
  *  [_id]: string,
  *  name: string,
- *  users: string[]
+ *  users: string[],
+ *  messages: Message[]
  * }} Room
  */
 
 /**
  * @param {Db} db
  * @param {string} id
+ * @param {{}} user
  *
  * @return {Promise<Room>}
  */
-async function getRoom(db, id) {
-  return db.collection(TABLE).findOne({ _id: ObjectId(id.toString()) });
+async function getRoom(db, id, user) {
+  return db.collection(COLL).findOne({ _id: ObjectId(id.toString()), users: user._id.toString() });
 }
 
 /**
@@ -29,31 +40,19 @@ async function getRoom(db, id) {
  * @return {Promise<Room>}
  */
 async function saveRoom(db, room) {
-  return insertOrUpdateEntity(db.collection(TABLE), room);
+  return insertOrUpdateEntity(db.collection(COLL), room);
 }
 
 /**
  * @param {Db} db
- * @param {{}} filter
+ * @param {object} user
  *
- * @return {Promise<Pagination<Room>>}
+ * @return {Promise<Room>}
  */
-async function getRooms(db, filter) {
-  return pageableCollection(db.collection(TABLE), filter);
-}
-
-/**
- * @param {Db} db
- * @param {string} userId
- * @param {{}} [filter]
- *
- * @return {Promise<Pagination<Room>>}
- */
-async function getUserRooms(db, userId, filter) {
-  return pageableCollection(db.collection(TABLE), {
-    users: userId.toString(),
-    ...filter,
-  });
+async function getUserRooms(db, user) {
+  return db.collection(COLL).find({
+    users: user._id.toString(),
+  }, { messages: { $slice: -5 } }).toArray();
 }
 
 /**
@@ -68,7 +67,7 @@ async function createRoom(db, currentUser, room) {
     throw new Error('Cannot create room without name');
   }
 
-  const collection = db.collection(TABLE),
+  const collection = db.collection(COLL),
     existsRoom = await collection.findOne({ name: room.name });
 
   if (!existsRoom) {
@@ -80,7 +79,7 @@ async function createRoom(db, currentUser, room) {
     room.users = room.users || [];
     room.users.push(currentUser._id.toString());
 
-    return insertOrUpdateEntity(collection, room);
+    return insertOrUpdateEntity(collection, { ...room, messages: [] });
   }
 
   return {
@@ -92,12 +91,13 @@ async function createRoom(db, currentUser, room) {
 /**
  *
  * @param {Db} db
+ * @param {User} currentUser
  * @param {string} roomId
  * @param {string} userId
  *
  * @return {Promise<Room>}
  */
-async function joinRoom(db, { roomId, userId }) {
+async function joinRoom(db, currentUser, { roomId, userId }) {
   if (!roomId) {
     throw new Error('You must specify roomId to join');
   }
@@ -106,8 +106,8 @@ async function joinRoom(db, { roomId, userId }) {
     throw new Error('You must specify userId to join');
   }
 
-  const collection = db.collection(TABLE),
-    [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
+  const collection = db.collection(COLL),
+    [room, user] = await Promise.all([getRoom(db, roomId, currentUser), getUser(db, userId)]);
 
   if (!room) {
     throw new Error(`Cannot find room with id=${roomId}`);
@@ -116,31 +116,22 @@ async function joinRoom(db, { roomId, userId }) {
   if (!user) {
     throw new Error(`Unknown user with id=${userId}`);
   }
-  const users = room.users.map(oneUser => oneUser.toString());
-
-  if (users.indexOf(userId.toString()) > -1) {
-    return room;
-  }
-
-  users.push(userId.toString());
-
-  // Make array unique
-  room.users = [...new Set(users)].map(oneUserId => ObjectId(oneUserId));
 
   // Save users to database
-  await collection.updateOne({ _id: room._id }, { $set: { users: room.users } });
+  await collection.updateOne({ _id: room._id }, { $addToSet: { users: user._id.toString() } });
 
   return room;
 }
 
 /**
  * @param {Db} db
+ * @param {User} currentUser
  * @param {string} roomId
  * @param {string} userId
  *
  * @return {Promise<Room>}
  */
-async function leaveRoom(db, { roomId, userId }) {
+async function leaveRoom(db, currentUser, { roomId, userId }) {
   if (!roomId) {
     throw new Error('You must specify roomId to join');
   }
@@ -149,8 +140,8 @@ async function leaveRoom(db, { roomId, userId }) {
     throw new Error('You must specify userId to join');
   }
 
-  const collection = db.collection(TABLE),
-    [room, user] = await Promise.all([getRoom(db, roomId), getUser(db, userId)]);
+  const collection = db.collection(COLL),
+    [room, user] = await Promise.all([getRoom(db, currentUser, roomId), getUser(db, userId)]);
 
   if (!room) {
     throw new Error(`Cannot find room with id=${roomId}`);
@@ -161,7 +152,7 @@ async function leaveRoom(db, { roomId, userId }) {
   }
 
   room.users = room.users
-    .filter(oneUser => oneUser.toString() !== userId.toString());
+    .filter(oneUser => oneUser !== userId.toString());
 
   // Save users to database
   await collection.updateOne({ _id: room._id }, { $set: { users: room.users } });
@@ -171,7 +162,6 @@ async function leaveRoom(db, { roomId, userId }) {
 
 module.exports = {
   saveRoom,
-  getRooms,
   getUserRooms,
   createRoom,
   getRoom,
