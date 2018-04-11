@@ -65,6 +65,9 @@ async function getRooms(db, user) {
     users: user._id.toString(),
   }).project({ messages: { $slice: 5 } }).toArray();
 
+  return rooms;
+
+  /*
   return Promise.all(rooms.map(async (room) => {
     const messages = await db.collection('messages')
       .find({ _id: { $in: room.messages.map(id => ObjectId(id)) } })
@@ -75,6 +78,7 @@ async function getRooms(db, user) {
       messages,
     };
   }));
+  */
 }
 
 /**
