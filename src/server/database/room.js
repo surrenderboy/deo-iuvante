@@ -18,7 +18,8 @@ const COLL = 'rooms';
  *  [_id]: string,
  *  name: string,
  *  users: string[],
- *  messages: Message[]
+ *  messages: Message[],
+ *  [avatarUrl]: string
  * }} Room
  */
 
