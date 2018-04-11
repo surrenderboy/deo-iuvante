@@ -8,6 +8,22 @@ import ChatFooter from '../ChatFooter/ChatFooter';
 import ViewportSpinner from '../ViewportSpinner/ViewportSpinner';
 
 export default class Chat extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      scrollTop: 0,
+    };
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ scrollTop: this.container.scrollHeight });
+  }
+
+  componentDidUpdate() {
+    this.container.scrollTop = this.state.scrollTop;
+  }
+
   renderMessages() {
     if (this.props.messages.length === 0) {
       return <div className={styles.emptyState}>В этом чате пока нет сообщений</div>;
@@ -28,12 +44,15 @@ export default class Chat extends Component {
   render() {
     return (
       <div className={styles.chatContainer}>
-        {this.props.isFetchingMessages ?
-          <ViewportSpinner size="l" /> :
-          <div className={styles.chatMessages}>
-            { this.renderMessages() }
-          </div>
+        <div
+          className={styles.chatMessages}
+          ref={(container) => { this.container = container; }}
+        >
+          {this.props.isFetchingMessages ?
+            <ViewportSpinner size="l" /> :
+            this.renderMessages()
           }
+        </div>
         <ChatFooter
           handleAttachment={() => {}}
           sendMessage={this.props.sendMessage}
