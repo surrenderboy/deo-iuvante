@@ -211,7 +211,7 @@ module.exports = function (db, io) {
 
       const mark = await markAsRead(db, currentUser, messageId);
 
-      socket.emit(TYPES.MARK_AS_READ, mark);
+      socket.to(`room:${mark.roomId}`).emit(TYPES.MARK_AS_READ, mark);
     }));
 
     // Send message

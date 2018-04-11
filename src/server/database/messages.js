@@ -79,7 +79,7 @@ async function markAsRead(db, user, messageId) {
   }
 
   await db.collection('messages').updateOne({ _id: ObjectId(messageId) }, { $set: { read: true } });
-  return messageId;
+  return { messageId, roomId: room._id.toString() };
 }
 
 /**
