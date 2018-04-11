@@ -78,4 +78,9 @@ module.exports = {
      * Server error
      */
   ERROR: 'ERROR',
+
+  /**
+     * Message read
+     */
+  MARK_AS_READ: 'MARK_AS_READ',
 };

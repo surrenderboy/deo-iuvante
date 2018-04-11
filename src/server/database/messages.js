@@ -1,86 +1,105 @@
 const { ObjectId } = require('mongodb');
-const { pageableCollection } = require('./helpers');
-const { getUser } = require('./user');
-const { getRoom } = require('./room');
 
-const TABLE = 'messages';
+const { getRoom } = require('./room');
 
 /**
  * @typedef {{
- *  [_id]: string,
  *  userId: string,
- *  roomId: string,
- *  created_at: number
+ *  text: string,
+ *  [attachments]: string[],
+ *  time: number,
+ *  read: boolean
  * }} Message
  */
 
 /**
  * @param {Db} db
- * @param {string} userId
- * @param {string} roomId
+ * @param {User} user
  * @param {string} message
  *
  * @return {Promise<Message>}
  */
-async function sendMessage(db, { userId, roomId, message }) {
-  if (!userId) {
+async function sendMessage(db, user, message) {
+  if (!user) {
     throw new Error('userId required');
   }
 
-  if (!roomId) {
+  if (!message.roomId) {
     throw new Error('roomId required');
   }
 
-  if (!message) {
+  if (!message.text) {
     throw new Error('Cannot send empty message');
   }
 
-  const [user, room] = await Promise.all([getUser(db, userId), getRoom(db, roomId)]);
+  const room = await getRoom(db, message.roomId, user);
 
-  if (!user) {
-    throw new Error(`Cannot find user with id=${userId}`);
+  if (!room) {
+    throw new Error(`Cannot find room with id=${message.roomId}`);
   }
+
+  const messageEntity = {
+    userId: user._id.toString(),
+    text: message.text,
+    time: Date.now(),
+    attachments: message.attachments || null,
+    read: false,
+  };
+
+  const { insertedId } = await db.collection('messages').insertOne(messageEntity);
+
+  await db.collection('rooms').updateOne({ _id: room._id }, {
+    $push: {
+      messages: {
+        $each: [insertedId.toString()],
+        $position: 0,
+      },
+    },
+    $inc: { messagesCount: 1 },
+  });
+
+  return {
+    ...messageEntity,
+    _id: insertedId,
+  };
+}
+
+/**
+ * @param {Db} db
+ * @param {User} user
+ * @param {string} messageId
+ *
+ * @return object
+ */
+async function markAsRead(db, user, messageId) {
+  const room = db.collection('rooms').findOne({ messages: messageId, users: user._id.toString() });
+  if (!room) {
+    throw new Error('Message not found');
+  }
+
+  await db.collection('messages').updateOne({ _id: ObjectId(messageId) }, { $set: { read: true } });
+  return messageId;
+}
+
+/**
+ * @param {Db} db
+ * @param {User} currentUser
+ * @param {{}} [filter]
+ *
+ * @return {Promise<Pagination<Message>>}
+ */
+async function getMessages(db, currentUser, { roomId, limit = 10, offset = 0 }) {
+  const room = await getRoom(db, roomId, currentUser, [offset, limit]);
 
   if (!room) {
     throw new Error(`Cannot find room with id=${roomId}`);
   }
 
-  const messageEntity = {
-    userId: user._id,
-    roomId: room._id,
-    message,
-    created_at: Date.now(),
-  };
-
-  const result = await db.collection(TABLE).insertOne(messageEntity);
-  messageEntity._id = result.insertedId;
-
-  return messageEntity;
-}
-
-/**
- * @param {Db} db
- * @param {{}} [filter]
- *
- * @return {Promise<Pagination<Message>>}
- */
-async function getMessages(db, filter) {
-  ['roomId', 'userId'].forEach((key) => {
-    if (filter[key]) {
-      // eslint-disable-next-line no-param-reassign
-      filter[key] = ObjectId(filter[key].toString());
-    }
-  });
-
-  return pageableCollection(db.collection(TABLE), {
-    ...filter,
-    order: {
-      _id: 1,
-    },
-  });
+  return room.messages;
 }
 
 module.exports = {
   sendMessage,
   getMessages,
+  markAsRead,
 };

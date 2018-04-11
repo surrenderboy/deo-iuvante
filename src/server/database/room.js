@@ -6,19 +6,11 @@ const COLL = 'rooms';
 
 /**
  * @typedef {{
- *  userId: string,
- *  text: string,
- *  [attachments]: string[],
- *  time: number
- * }} Message
- */
-
-/**
- * @typedef {{
  *  [_id]: string,
  *  name: string,
  *  users: string[],
- *  messages: Message[],
+ *  messages: string[],
+ *  messagesCount: number,
  *  [avatarUrl]: string
  * }} Room
  */
@@ -26,12 +18,30 @@ const COLL = 'rooms';
 /**
  * @param {Db} db
  * @param {string} id
- * @param {{}} user
+ * @param {User} user
+ * @param [[number, number]] messagesParams
  *
  * @return {Promise<Room>}
  */
-async function getRoom(db, id, user) {
-  return db.collection(COLL).findOne({ _id: ObjectId(id.toString()), users: user._id.toString() });
+async function getRoom(db, id, user, messagesParams) {
+  const projection = { messages: { $slice: 5 } };
+  if (messagesParams) {
+    projection.messages.$slice = messagesParams;
+  }
+
+  const room = await db.collection(COLL).find({
+    _id: ObjectId(id.toString()),
+    users: user._id.toString(),
+  }).project(projection).toArray();
+
+  const messages = await db.collection('messages')
+    .find({ _id: { $in: room[0].messages.map(mId => ObjectId(mId)) } })
+    .toArray();
+
+  return {
+    ...room[0],
+    messages,
+  };
 }
 
 /**
@@ -50,10 +60,21 @@ async function saveRoom(db, room) {
  *
  * @return {Promise<Room>}
  */
-async function getUserRooms(db, user) {
-  return db.collection(COLL).find({
+async function getRooms(db, user) {
+  let rooms = await db.collection(COLL).find({
     users: user._id.toString(),
-  }, { messages: { $slice: -5 } }).toArray();
+  }).project({ messages: { $slice: 5 } }).toArray();
+
+  return Promise.all(rooms.map(async (room) => {
+    const messages = await db.collection('messages')
+      .find({ _id: { $in: room.messages.map(id => ObjectId(id)) } })
+      .toArray();
+
+    return {
+      ...room,
+      messages,
+    };
+  }));
 }
 
 /**
@@ -64,6 +85,7 @@ async function getUserRooms(db, user) {
  * @return {Promise<Room>}
  */
 async function createRoom(db, currentUser, room) {
+  console.log(currentUser, room);
   if (!room.name) {
     throw new Error('Cannot create room without name');
   }
@@ -80,7 +102,7 @@ async function createRoom(db, currentUser, room) {
     room.users = room.users || [];
     room.users.push(currentUser._id.toString());
 
-    return insertOrUpdateEntity(collection, { ...room, messages: [] });
+    return collection.insertOne({ ...room, messages: [], messagesCount: 0 });
   }
 
   return {
@@ -163,7 +185,7 @@ async function leaveRoom(db, currentUser, { roomId, userId }) {
 
 module.exports = {
   saveRoom,
-  getUserRooms,
+  getRooms,
   createRoom,
   getRoom,
   joinRoom,

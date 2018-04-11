@@ -1,8 +1,8 @@
 const { findUserBySid, getUsers, saveUser } = require('./database/user');
 const {
-  joinRoom, leaveRoom, getUserRooms, createRoom,
+  joinRoom, leaveRoom, getRooms, createRoom,
 } = require('./database/room');
-const { getMessages, sendMessage } = require('./database/messages');
+const { getMessages, sendMessage, markAsRead } = require('./database/messages');
 const TYPES = require('./messages');
 
 /**
@@ -152,7 +152,7 @@ module.exports = function (db, io) {
     socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async () => {
       const currentUser = await userPromise;
 
-      socket.emit(TYPES.CURRENT_USER_ROOMS, await getUserRooms(db, currentUser));
+      socket.emit(TYPES.CURRENT_USER_ROOMS, await getRooms(db, currentUser));
     }));
 
     // Join current user to room
@@ -198,19 +198,25 @@ module.exports = function (db, io) {
     socket.on(TYPES.SEND_MESSAGE, wrapCallback(async (payload) => {
       const currentUser = await userPromise;
 
-      const message = await sendMessage(db, {
-        ...payload,
-        userId: currentUser._id,
-      });
+      const message = await sendMessage(db, currentUser, payload);
 
       socket.emit(TYPES.SEND_MESSAGE, message);
 
       newMessage(message);
     }));
 
+    socket.on(TYPES.MARK_AS_READ, wrapCallback(async (messageId) => {
+      const currentUser = await userPromise;
+
+      const mark = await markAsRead(db, currentUser, messageId);
+
+      socket.emit(TYPES.MARK_AS_READ, mark);
+    }));
+
     // Send message
     socket.on(TYPES.MESSAGES, wrapCallback(async (payload) => {
-      socket.emit(TYPES.MESSAGES, await getMessages(db, payload));
+      const currentUser = await userPromise;
+      socket.emit(TYPES.MESSAGES, await getMessages(db, currentUser, payload));
     }));
 
     userPromise.then(async (user) => {
@@ -221,8 +227,8 @@ module.exports = function (db, io) {
       userChangeOnlineStatus(user._id);
 
       // Get of user groups
-      const rooms = await getUserRooms(db, user);
-      rooms.items.forEach((room) => {
+      const rooms = await getRooms(db, user);
+      rooms.forEach((room) => {
         joinToRoomChannel(db, room._id);
       });
     });
