@@ -22,19 +22,16 @@ class ChatsList extends Component {
   }
 
   async getRooms() {
-    const roomsData = await api.getRooms();
-    let rooms = roomsData.items;
-
-    rooms = rooms.map(room => ({
-      ...room,
-      // stubs next 3 lines
-      unreadMessages: 3,
-      lastActivity: Date.now() - 3000000,
-      lastMessage: 'Мессадж богов, услышьте и внемлите!',
-    }));
+    const rooms = await api.getRooms();
 
     this.setState({
-      rooms,
+      rooms: rooms.map(room => ({
+        ...room,
+        // stubs next 3 lines
+        unreadMessages: 3,
+        lastActivity: Date.now() - 3000000,
+        lastMessage: 'Мессадж богов, услышьте и внемлите!',
+      })),
     });
   }
 
