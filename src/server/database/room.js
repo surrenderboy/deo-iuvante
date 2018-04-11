@@ -89,7 +89,7 @@ async function getRooms(db, user) {
  * @return {Promise<Room>}
  */
 async function createRoom(db, currentUser, room) {
-  if (!room.name) {
+  if (room.users && room.users[0] && room.users.length > 1 && !room.name) {
     throw new Error('Cannot create room without name');
   }
 
