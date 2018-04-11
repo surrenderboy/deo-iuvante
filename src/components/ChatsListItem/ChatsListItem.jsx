@@ -6,10 +6,8 @@ import Avatar from '../Avatar/Avatar';
 import styles from './ChatsListItem.module.css';
 
 class ChatsListItem extends Component {
-  prettifyLastActivity() {
-    const { lastActivity } = this.props;
-
-    if (lastActivity === 0) return '';
+  prettifyLastActivity(lastActivity) {
+    if (!lastActivity) return '';
     return new Date(lastActivity).toLocaleString('ru', {
       month: 'long',
       day: 'numeric',
@@ -19,22 +17,26 @@ class ChatsListItem extends Component {
   }
 
   render() {
+    const lastMessage = this.props.room.messages &&
+      this.props.room.messages[0] &&
+      this.props.room.messages[this.props.room.messages.length - 1],
+      lastActivity = lastMessage && lastMessage.time;
     return (
       <Link to={`/chat/${this.props.room._id}`} className={styles.listItem}>
         <Avatar
           size="m"
           avatarName={this.props.room.name}
-          count={this.props.unreadMessages}
+          count={0}
           className={styles.avatar}
         />
         <span className={styles.roomName}>
           {this.props.room.name}
         </span>
         <span className={styles.lastMessage}>
-          {this.props.lastMessage}
+          {lastMessage && lastMessage.text}
         </span>
         <span className={styles.lastActivity}>
-          {this.prettifyLastActivity()}
+          {this.prettifyLastActivity(lastActivity)}
         </span>
       </Link>
     );
@@ -42,20 +44,12 @@ class ChatsListItem extends Component {
 }
 
 ChatsListItem.propTypes = {
-  unreadMessages: PropTypes.number,
-  lastActivity: PropTypes.number,
   room: PropTypes.shape({
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     avatarUrl: PropTypes.string,
     name: PropTypes.string,
+    messages: PropTypes.array,
   }).isRequired,
-  lastMessage: PropTypes.string,
-};
-
-ChatsListItem.defaultProps = {
-  lastMessage: 'Ваш чат пока пуст',
-  unreadMessages: 0,
-  lastActivity: 0,
 };
 
 export default ChatsListItem;
