@@ -16,6 +16,10 @@
 	border-radius: 3px;
 }
 
+.Bubble__message .Bubble__message-text {
+	word-break: break-word;
+}
+
 .Bubble .Bubble_owner_yes {
 	flex-direction: row-reverse;
 }

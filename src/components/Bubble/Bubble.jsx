@@ -7,7 +7,7 @@ const Bubble = props =>
     <div className="Bubble" key={Date.now()} >
       <div className={props.isOwner ? 'Bubble_owner_yes' : ''}>
         <span className="Bubble__message">
-          {props.message}
+          <span className="Bubble__message-text">{props.message}</span>
           <span className="Bubble_created-at">
             {new Date(props.created_at).toLocaleString(
         'ru',
@@ -27,6 +27,7 @@ Bubble.propTypes = {
   isOwner: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   isRead: PropTypes.bool.isRequired,
+  created_at: PropTypes.number.isRequired,
 };
 
 export default Bubble;
