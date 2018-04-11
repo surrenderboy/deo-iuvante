@@ -4,6 +4,7 @@ const { getRoom } = require('./room');
 
 /**
  * @typedef {{
+ *  _id: object,
  *  userId: string,
  *  text: string,
  *  [attachments]: string[],
