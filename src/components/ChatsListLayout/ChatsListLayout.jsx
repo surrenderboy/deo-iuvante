@@ -18,27 +18,65 @@ class ChatsList extends Component {
   }
 
   componentWillMount() {
-    this.getRooms();
+    this.getRooms()
+      .then(this.getRoomsLastMessage.bind(this));
   }
 
   async getRooms() {
-    const rooms = await api.getRooms();
+    const roomsUnordered = await api.getRooms();
+
+    const rooms = {},
+      roomsIds = [];
+
+    roomsUnordered.forEach((room) => {
+      roomsIds.push(room._id);
+      rooms[room._id] = room;
+    });
 
     this.setState({
-      rooms: rooms.map(room => ({
-        ...room,
-        // stubs next 3 lines
-        unreadMessages: 3,
-        lastActivity: Date.now() - 3000000,
-        lastMessage: 'Мессадж богов, услышьте и внемлите!',
-      })),
+      rooms,
+      roomsIds,
     });
+
+    return Promise.resolve(roomsIds);
+  }
+
+  getRoomsLastMessage(roomsIds) {
+    roomsIds.forEach((roomId) => {
+      api.getMessages({ roomId, limit: 1 })
+        .then((messages) => {
+          console.log(messages);
+          this.setState({
+            rooms: {
+              ...this.state.rooms,
+              [roomId]: {
+                ...this.state.rooms[roomId],
+                messages,
+              },
+            },
+          });
+        });
+    });
+  }
+
+  renderChatsListItems() {
+    if (!this.state.roomsIds) return null;
+    return this.state.roomsIds
+      .sort((rid1, rid2) => {
+        const m1 = this.state.rooms[rid1].messages,
+          m2 = this.state.rooms[rid2].messages;
+        if (!m1[0] || !m2[0]) return 0;
+        return m1[m1.length - 1].time - m2[m2.length - 1].time;
+      })
+      .map(roomId => (
+        <ChatsListItem room={this.state.rooms[roomId]} key={roomId} />
+      ));
   }
 
   render() {
     return (
       <AppLayout
-        headerText="Чаты"
+        headerText="Your chats"
         headerRight={(
           <IconButton
             onClick={() => {}}
@@ -49,9 +87,7 @@ class ChatsList extends Component {
         )}
       >
         <List>
-          {this.state.rooms.map(room => (
-            <ChatsListItem room={room} {...room} key={room._id} />
-          ))}
+          {this.renderChatsListItems()}
         </List>
       </AppLayout>
     );
