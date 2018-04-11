@@ -109,17 +109,6 @@ class Api {
   }
 
   /**
-     * Return list of ALL rooms
-     *
-     * @param {{ [limit]: number, [_id]: string }} [filter]
-     *
-     * @return {Promise<Pagination<Room>>}
-     */
-  async getRooms(filter) {
-    return this._requestResponse(MESSAGES.ROOMS, filter);
-  }
-
-  /**
      * Return room by id
      *
      * @param {string} roomId
@@ -127,7 +116,9 @@ class Api {
      * @return {Promise<Room>}
      */
   async getRoom(roomId) {
-    return this.getRooms({ _id: roomId }).then(result => result.items[0]);
+    const allRooms = await this.getRooms();
+
+    return allRooms.filter(room => room._id === roomId)[0];
   }
 
   /**
@@ -137,19 +128,8 @@ class Api {
      *
      * @return {Promise<Pagination<Room>>}
      */
-  async getCurrentUserRooms(filter) {
-    return this._requestResponse(MESSAGES.CURRENT_USER_ROOMS, filter);
-  }
-
-  /**
-     * Join current user to the room
-     *
-     * @param {string} roomId
-     *
-     * @return {Promise<Room>}
-     */
-  async currentUserJoinRoom(roomId) {
-    return this._requestResponse(MESSAGES.CURRENT_USER_JOIN_ROOM, { roomId });
+  async getRooms() {
+    return this._requestResponse(MESSAGES.CURRENT_USER_ROOMS);
   }
 
   /**
@@ -183,8 +163,19 @@ class Api {
      *
      * @return {Promise<Message>}
      */
-  async sendMessage(roomId, message) {
-    return this._requestResponse(MESSAGES.SEND_MESSAGE, { roomId, message });
+  async sendMessage(message) {
+    return this._requestResponse(MESSAGES.SEND_MESSAGE, message);
+  }
+
+  /**
+   * Mark message as read
+   *
+   * @param {string} messageId
+   *
+   * @return object
+   */
+  async markMessageAsRead(messageId) {
+    return this._requestResponse(MESSAGES.MARK_AS_READ, messageId);
   }
 
   /**
@@ -196,17 +187,6 @@ class Api {
      */
   async getMessages(filter) {
     return this._requestResponse(MESSAGES.MESSAGES, filter);
-  }
-
-  /**
-     * Return list of messages in room
-     *
-     * @param {{}} roomId
-     *
-     * @return {Promise<Pagination<Message>>}
-     */
-  async getRoomMessages(roomId) {
-    return this.getMessages({ roomId });
   }
 
   /**
@@ -261,8 +241,15 @@ class Api {
     this.io.on(MESSAGES.MESSAGE, callback);
   }
 
+
   offMessage() {
     this.io.off(MESSAGES.MESSAGE);
+  }
+
+  async onMessageRead(callback) {
+    await this._connectPromise;
+
+    this.io.on(MESSAGES.MARK_AS_READ, callback);
   }
 }
 

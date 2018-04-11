@@ -61,7 +61,7 @@ async function saveRoom(db, room) {
  * @return {Promise<Room>}
  */
 async function getRooms(db, user) {
-  let rooms = await db.collection(COLL).find({
+  const rooms = await db.collection(COLL).find({
     users: user._id.toString(),
   }).project({ messages: { $slice: 5 } }).toArray();
 
@@ -85,7 +85,6 @@ async function getRooms(db, user) {
  * @return {Promise<Room>}
  */
 async function createRoom(db, currentUser, room) {
-  console.log(currentUser, room);
   if (!room.name) {
     throw new Error('Cannot create room without name');
   }
