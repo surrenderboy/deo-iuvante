@@ -143,9 +143,10 @@ module.exports = function (db, io) {
 
     // Create room
     socket.on(TYPES.CREATE_ROOM, wrapCallback(async (params) => {
-      const currentUser = await userPromise;
+      const currentUser = await userPromise,
+        { insertedId } = await createRoom(db, currentUser, params);
 
-      socket.emit(TYPES.CREATE_ROOM, await createRoom(db, currentUser, params));
+      socket.emit(TYPES.CREATE_ROOM, { _id: insertedId });
     }));
 
     // Rooms of current user
