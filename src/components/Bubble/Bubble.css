@@ -7,10 +7,15 @@
 	flex-direction: row;
 }
 .Bubble__message {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 200px;
 	padding: 10px;
 	background-color: #f4f4f4;
-	border-radius: 5px;
+	border-radius: 3px;
 }
+
 .Bubble .Bubble_owner_yes {
 	flex-direction: row-reverse;
 }
@@ -30,5 +35,16 @@
 }
 .Bubble_owner_yes .Bubble__message{
 	background-color: #00bef3;
+	color: #fff;
+}
+
+.Bubble_created-at {
+	color: #000;
+	font-size: 8px;
+	align-self: flex-end;
+	padding-left: 10px;
+}
+
+.Bubble_owner_yes .Bubble_created-at {
 	color: #fff;
 }

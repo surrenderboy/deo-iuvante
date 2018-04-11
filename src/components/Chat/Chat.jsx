@@ -35,6 +35,7 @@ export default class Chat extends Component {
         message={message.message}
         isRead={false}
         key={message._id}
+        created_at={message.created_at}
       />
     );
 

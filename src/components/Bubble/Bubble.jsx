@@ -6,7 +6,18 @@ const Bubble = props =>
   (
     <div className="Bubble" key={Date.now()} >
       <div className={props.isOwner ? 'Bubble_owner_yes' : ''}>
-        <span className="Bubble__message">{props.message}</span>
+        <span className="Bubble__message">
+          {props.message}
+          <span className="Bubble_created-at">
+            {new Date(props.created_at).toLocaleString(
+        'ru',
+        {
+          hour: 'numeric',
+          minute: 'numeric',
+        },
+)}
+          </span>
+        </span>
         <span className={props.isRead ? 'Bubble_read_yes' : ''} />
       </div>
     </div>
