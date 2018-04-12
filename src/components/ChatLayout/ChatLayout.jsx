@@ -8,7 +8,7 @@ import IconButton from '../IconButton/IconButton';
 import RoomMessages from '../../containers/RoomMessages';
 
 function renderAvatar(chatName) {
-  return <Avatar size="s" chatName={chatName} />;
+  return <Avatar size="s" avatarName={chatName} />;
 }
 
 function renderGoBack() {

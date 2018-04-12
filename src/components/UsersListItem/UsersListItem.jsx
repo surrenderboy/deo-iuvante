@@ -13,11 +13,9 @@ function UsersListItem({
   selected,
   onClick,
 }) {
-  const avatarUrl = 'https://i.ytimg.com/vi/8f7xJMShlZI/maxresdefault.jpg';
-
   return (
     <div className={`${styles.listItem} ${selected ? styles.selectedItem : ''}`} onClick={onClick}>
-      <Avatar size="m" src={avatarUrl} className={styles.avatar} />
+      <Avatar size="m" avatarName={name} className={styles.avatar} />
       <span className={styles.username}>
         {name}
       </span>

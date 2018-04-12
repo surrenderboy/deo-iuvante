@@ -21,7 +21,12 @@ class ChatsListItem extends Component {
   render() {
     return (
       <Link to={`/chat/${this.props.room._id}`} className={styles.listItem}>
-        <Avatar size="m" chatName={this.props.room.name} count={this.props.unreadMessages} className={styles.avatar} />
+        <Avatar
+          size="m"
+          avatarName={this.props.room.name}
+          count={this.props.unreadMessages}
+          className={styles.avatar}
+        />
         <span className={styles.roomName}>
           {this.props.room.name}
         </span>
