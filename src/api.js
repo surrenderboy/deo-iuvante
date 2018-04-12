@@ -257,16 +257,7 @@ class Api {
 
     this.io.on(MESSAGES.MARK_AS_READ, callback);
   }
-
-  async test(callback) {
-    await this._connectPromise;
-
-    this.io.on(MESSAGES.MESSAGES, callback);
-  }
 }
 
-window.api = new Api();
 
-//window.api.test(d => console.log(d));
-
-export default window.api;
+export default window.api = new Api();

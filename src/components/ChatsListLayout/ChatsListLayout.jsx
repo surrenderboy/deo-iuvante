@@ -45,7 +45,6 @@ class ChatsList extends Component {
     roomsIds.forEach((roomId) => {
       api.getMessages({ roomId, limit: 1 })
         .then((messages) => {
-          console.log(messages);
           this.setState({
             rooms: {
               ...this.state.rooms,

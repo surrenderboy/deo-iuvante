@@ -218,9 +218,6 @@ module.exports = function (db, io) {
     socket.on(TYPES.MESSAGES, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise,
         messages = await getMessages(db, currentUser, payload);
-
-      console.log(messages);
-
       socket.emit(TYPES.MESSAGES, { requestId, payload: messages });
     }));
 
