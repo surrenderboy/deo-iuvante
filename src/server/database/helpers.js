@@ -16,7 +16,7 @@ const { ObjectId } = require('mongodb');
  * @param filter
  */
 async function pageableCollection(collection, {
-  lastId, order, limit = 10, ...rest
+  lastId, order, limit = 500, ...rest
 } = {}) {
   const query = { ...rest };
 
