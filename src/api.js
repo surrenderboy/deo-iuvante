@@ -11,6 +11,7 @@ class Api {
 
         throw err;
       });
+    this.queues = {};
   }
 
   /**
@@ -38,10 +39,16 @@ class Api {
   async _requestResponse(type, payload) {
     await this._connectPromise;
 
-    return new Promise((resolve) => {
-      this.io.once(type, resolve);
-      this.io.emit(type, payload);
-    });
+    const requestId = Math.random();
+
+    const resolver = (resolve) => {
+      this.io.on(type, (data) => {
+        if (data.requestId === requestId) resolve(data.payload);
+      });
+    };
+
+    this.io.emit(type, { requestId, payload });
+    return new Promise(resolver);
   }
 
   /**
@@ -158,7 +165,6 @@ class Api {
   /**
      * Send message to the room
      *
-     * @param {string} roomId
      * @param {string} message
      *
      * @return {Promise<Message>}
@@ -251,6 +257,16 @@ class Api {
 
     this.io.on(MESSAGES.MARK_AS_READ, callback);
   }
+
+  async test(callback) {
+    await this._connectPromise;
+
+    this.io.on(MESSAGES.MESSAGES, callback);
+  }
 }
 
-export default window.api = new Api();
+window.api = new Api();
+
+//window.api.test(d => console.log(d));
+
+export default window.api;

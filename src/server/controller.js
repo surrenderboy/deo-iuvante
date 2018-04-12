@@ -127,97 +127,101 @@ module.exports = function (db, io) {
     });
 
     // Receive current user information
-    socket.on(TYPES.CURRENT_USER, wrapCallback(async () => {
-      socket.emit(TYPES.CURRENT_USER, await userPromise);
+    socket.on(TYPES.CURRENT_USER, wrapCallback(async ({ requestId }) => {
+      socket.emit(TYPES.CURRENT_USER, { requestId, payload: await userPromise });
     }));
 
     // Update user information
-    socket.on(TYPES.UPDATE_USER, wrapCallback(async (params) => {
-      socket.emit(TYPES.UPDATE_USER, await saveUser(db, params));
+    socket.on(TYPES.UPDATE_USER, wrapCallback(async ({ requestId, payload }) => {
+      socket.emit(TYPES.UPDATE_USER, { requestId, payload: await saveUser(db, payload) });
     }));
 
     // Return list of all users with
-    socket.on(TYPES.USERS, wrapCallback(async (params) => {
-      socket.emit(TYPES.USERS, fillUsersWithStatus(await getUsers(db, params || {})));
+    socket.on(TYPES.USERS, wrapCallback(async ({ requestId, payload }) => {
+      socket.emit(TYPES.USERS, { requestId, payload: fillUsersWithStatus(await getUsers(db, payload || {})) });
     }));
 
     // Create room
-    socket.on(TYPES.CREATE_ROOM, wrapCallback(async (params) => {
+    socket.on(TYPES.CREATE_ROOM, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise,
-        { insertedId } = await createRoom(db, currentUser, params);
+        { insertedId } = await createRoom(db, currentUser, payload);
 
-      socket.emit(TYPES.CREATE_ROOM, { _id: insertedId });
+      socket.emit(TYPES.CREATE_ROOM, { requestId, payload: { _id: insertedId } });
     }));
 
     // Rooms of current user
-    socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async () => {
+    socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async ({ requestId }) => {
       const currentUser = await userPromise;
 
-      socket.emit(TYPES.CURRENT_USER_ROOMS, await getRooms(db, currentUser));
+      socket.emit(TYPES.CURRENT_USER_ROOMS, { requestId, payload: await getRooms(db, currentUser) });
     }));
 
     // Join current user to room
-    socket.on(TYPES.CURRENT_USER_JOIN_ROOM, wrapCallback(async ({ roomId }) => {
+    socket.on(TYPES.CURRENT_USER_JOIN_ROOM, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise;
 
-      const payload = {
-        roomId,
+      const params = {
+        roomId: payload.roomId,
         userId: currentUser._id,
       };
 
-      socket.emit(TYPES.CURRENT_USER_JOIN_ROOM, await joinRoom(db, currentUser, payload));
+      socket.emit(TYPES.CURRENT_USER_JOIN_ROOM, { requestId, payload: await joinRoom(db, currentUser, params) });
 
-      joinToRoomChannel(roomId);
-      userWasJoinedToRoom(payload);
+      joinToRoomChannel(payload.roomId);
+      userWasJoinedToRoom(params);
     }));
 
     // Join user to room
-    socket.on(TYPES.USER_JOIN_ROOM, wrapCallback(async (payload) => {
+    socket.on(TYPES.USER_JOIN_ROOM, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise;
-      socket.emit(TYPES.USER_JOIN_ROOM, await joinRoom(db, currentUser, payload));
+      socket.emit(TYPES.USER_JOIN_ROOM, { requestId, payload: await joinRoom(db, currentUser, payload) });
 
       joinToRoomChannel(payload.roomId);
       userWasJoinedToRoom(payload);
     }));
 
     // Leave current user to room
-    socket.on(TYPES.CURRENT_USER_LEAVE_ROOM, wrapCallback(async ({ roomId }) => {
+    socket.on(TYPES.CURRENT_USER_LEAVE_ROOM, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise;
 
-      const payload = {
-        roomId,
+      const params = {
+        roomId: payload.roomId,
         userId: currentUser._id,
       };
 
-      socket.emit(TYPES.CURRENT_USER_LEAVE_ROOM, await leaveRoom(db, currentUser, payload));
+      socket.emit(TYPES.CURRENT_USER_LEAVE_ROOM, { requestId, payload: await leaveRoom(db, currentUser, params) });
 
-      leaveRoomChannel(roomId);
-      userLeaveRoom(payload);
+      leaveRoomChannel(payload.roomId);
+      userLeaveRoom(params);
     }));
 
     // Send message
-    socket.on(TYPES.SEND_MESSAGE, wrapCallback(async (payload) => {
+    socket.on(TYPES.SEND_MESSAGE, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise;
 
       const message = await sendMessage(db, currentUser, payload);
 
-      socket.emit(TYPES.SEND_MESSAGE, message);
+      socket.emit(TYPES.SEND_MESSAGE, { requestId, payload: message });
 
       newMessage(message);
     }));
 
-    socket.on(TYPES.MARK_AS_READ, wrapCallback(async (messageId) => {
+    socket.on(TYPES.MARK_AS_READ, wrapCallback(async ({ requestId, payload }) => {
       const currentUser = await userPromise;
 
-      const mark = await markAsRead(db, currentUser, messageId);
+      const mark = await markAsRead(db, currentUser, payload);
 
-      socket.to(`room:${mark.roomId}`).emit(TYPES.MARK_AS_READ, mark);
+      socket.to(`room:${mark.roomId}`).emit(TYPES.MARK_AS_READ, { requestId, payload: mark });
     }));
 
     // Send message
-    socket.on(TYPES.MESSAGES, wrapCallback(async (payload) => {
-      const currentUser = await userPromise;
-      socket.emit(TYPES.MESSAGES, await getMessages(db, currentUser, payload));
+    socket.on(TYPES.MESSAGES, wrapCallback(async ({ requestId, payload }) => {
+      const currentUser = await userPromise,
+        messages = await getMessages(db, currentUser, payload);
+
+      console.log(messages);
+
+      socket.emit(TYPES.MESSAGES, { requestId, payload: messages });
     }));
 
     userPromise.then(async (user) => {
