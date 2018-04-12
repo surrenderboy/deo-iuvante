@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
 import { fetchMessages, sendMessage } from '../actions/chat';
 
 import Chat from '../components/Chat/Chat';
+import subscribeOnMessage from '../helpers/subscribeOnMessage';
 
 class RoomMessages extends Component {
   constructor(props) {
@@ -40,8 +40,9 @@ export default connect(
   dispatch => ({
     sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
     fetchMessages: roomId => dispatch(fetchMessages(roomId)),
+    dispatch,
   }),
-)(RoomMessages);
+)(subscribeOnMessage(RoomMessages));
 
 RoomMessages.defaultProps = {
   isFetchingMessages: false,

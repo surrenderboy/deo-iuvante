@@ -74,3 +74,7 @@ export const sendMessage = (roomId, message) => (
   }
 );
 
+export const receiveMessage = message => ({
+  type: ADD_MESSAGE,
+  newMessage: message,
+});

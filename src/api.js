@@ -260,6 +260,10 @@ class Api {
 
     this.io.on(MESSAGES.MESSAGE, callback);
   }
+
+  offMessage() {
+    this.io.off(MESSAGES.MESSAGE);
+  }
 }
 
 export default window.api = new Api();
