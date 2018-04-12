@@ -18,7 +18,6 @@ export default class Chat extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.messages.length > this.props.messages.length) {
-      console.log(this.container.scrollHeight,this.container.clientHeight);
       this.setState({
         scrollTop: this.container.scrollHeight !== this.container.clientHeight ?
           this.container.scrollHeight : 1000000,
