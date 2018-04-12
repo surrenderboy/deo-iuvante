@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import ChatsList from '../components/ChatsListLayout/ChatsListLayout';
 import CreateChat from '../components/CreateChatLayout/CreateChatLayout';
-import Chat from './ChatWrapper';
+import Room from './Room';
 import FirstTime from '../components/FirstTime/FirstTime';
 import ViewportSpinner from '../components/ViewportSpinner/ViewportSpinner';
 
@@ -17,7 +17,7 @@ class App extends React.Component {
 
     this.renderChatsList = this.redirectIfCurrentUserIsEmpty.bind(this, ChatsList);
     this.renderCreateChat = this.redirectIfCurrentUserIsEmpty.bind(this, CreateChat);
-    this.renderChat = this.redirectIfCurrentUserIsEmpty.bind(this, Chat);
+    this.renderChat = this.redirectIfCurrentUserIsEmpty.bind(this, Room);
     this.renderFirstTime = this.redirectIfCurrentUserIsPresent.bind(this, FirstTime);
   }
 

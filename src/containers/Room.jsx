@@ -5,7 +5,7 @@ import { fetchRoom } from '../actions/chat';
 
 import ChatLayout from '../components/ChatLayout/ChatLayout';
 
-class ChatWrapper extends Component {
+class Room extends Component {
   constructor(props) {
     super(props);
 
@@ -42,13 +42,13 @@ export default connect(
   dispatch => ({
     fetchRoom: roomId => dispatch(fetchRoom(roomId)),
   }),
-)(ChatWrapper);
+)(Room);
 
-ChatWrapper.defaultProps = {
+Room.defaultProps = {
   isFetchingRoom: false,
 };
 
-ChatWrapper.propTypes = {
+Room.propTypes = {
   fetchRoom: PropTypes.func.isRequired,
   isFetchingRoom: PropTypes.bool,
   room: PropTypes.shape({

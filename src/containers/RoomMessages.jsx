@@ -6,7 +6,7 @@ import { fetchMessages, sendMessage } from '../actions/chat';
 
 import Chat from '../components/Chat/Chat';
 
-class ChatFields extends Component {
+class RoomMessages extends Component {
   constructor(props) {
     super(props);
 
@@ -41,14 +41,14 @@ export default connect(
     sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
     fetchMessages: roomId => dispatch(fetchMessages(roomId)),
   }),
-)(ChatFields);
+)(RoomMessages);
 
-ChatFields.defaultProps = {
+RoomMessages.defaultProps = {
   isFetchingMessages: false,
   messages: [],
 };
 
-ChatFields.propTypes = {
+RoomMessages.propTypes = {
   fetchMessages: PropTypes.func.isRequired,
   sendMessage: PropTypes.func.isRequired,
   roomId: PropTypes.string.isRequired,
