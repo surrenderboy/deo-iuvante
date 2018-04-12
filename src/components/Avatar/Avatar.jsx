@@ -8,16 +8,24 @@ function classNameWithSize(className, size) {
   return styles[`${className}${size.toUpperCase()}`];
 }
 
+function renderAvatarName(chatName) {
+  const arrayOfChatName = chatName.split(' ');
+  const avatarName = arrayOfChatName.map(name => name.charAt(0).toUpperCase());
+  return avatarName.join('');
+}
+
 function Avatar({
-  size, src, alt, count, className,
+  size, src, alt, count, className, chatName,
 }) {
   const withCount = count > 0;
   const sanitizedCount = count > 99 ? '99+' : count;
 
   return (
     <div className={`${styles.avatar} ${className}`}>
-      <img src={src} className={classNameWithSize('image', size)} alt={alt} />
-
+      {chatName ?
+        <div className={classNameWithSize('avatarName', size)}>{renderAvatarName(chatName)}</div> :
+        <img src={src} className={classNameWithSize('image', size)} alt={alt} />
+      }
       {
         withCount &&
           <div className={classNameWithSize('count', size)}>{sanitizedCount}</div>
@@ -32,6 +40,7 @@ Avatar.propTypes = {
   alt: PropTypes.string,
   count: PropTypes.number,
   className: PropTypes.string,
+  chatName: PropTypes.string,
 };
 
 Avatar.defaultProps = {
@@ -39,6 +48,7 @@ Avatar.defaultProps = {
   src: testAvatar,
   alt: 'avatar',
   count: 0,
+  chatName: ' ',
 };
 
 export default Avatar;

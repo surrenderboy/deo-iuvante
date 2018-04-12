@@ -12,7 +12,7 @@ class ChatWrapper extends Component {
     this.fetchRoom = this.props.fetchRoom.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchRoom(this.props.match.params.id);
   }
 
@@ -28,6 +28,7 @@ class ChatWrapper extends Component {
       <ChatLayout
         chatName={this.props.room.name}
         roomId={this.props.match.params.id}
+        chatNameAvatar={this.props.room.name}
       />
     );
   }

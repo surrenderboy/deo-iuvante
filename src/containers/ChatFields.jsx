@@ -14,7 +14,7 @@ class ChatFields extends Component {
     this.sendMessage = this.props.sendMessage.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchMessages(this.props.roomId);
   }
 

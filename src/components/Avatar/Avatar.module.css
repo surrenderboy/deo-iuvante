@@ -3,6 +3,37 @@
   display: inline-block;
 }
 
+.avatarName {
+  background-color: #c3c3c3;
+  color: #fff;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.avatarNameS {
+  composes: avatarName;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+}
+
+.avatarNameM {
+  composes: avatarName;
+  width: 5rem;
+  height: 5rem;
+  font-size: 2rem;
+}
+
+.avatarNameL {
+  composes: avatarName;
+  width: 8rem;
+  height: 8rem;
+  font-size: 3rem;
+}
+
 .image {
   border-radius: 50%;
   object-fit: cover;

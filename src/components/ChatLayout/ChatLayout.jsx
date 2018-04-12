@@ -7,8 +7,8 @@ import Avatar from '../Avatar/Avatar';
 import IconButton from '../IconButton/IconButton';
 import ChatFields from '../../containers/ChatFields';
 
-function renderAvatar(avatarUrl) {
-  return <Avatar size="s" src={avatarUrl} />;
+function renderAvatar(chatName) {
+  return <Avatar size="s" chatName={chatName} />;
 }
 
 function renderGoBack() {
@@ -19,12 +19,12 @@ function renderGoBack() {
   );
 }
 
-function ChatLayout({ chatName, avatarUrl, roomId }) {
+function ChatLayout({ chatName, roomId, chatNameAvatar }) {
   return (
     <AppLayout
       headerText={chatName}
       headerLeft={renderGoBack()}
-      headerRight={renderAvatar(avatarUrl)}
+      headerRight={renderAvatar(chatNameAvatar)}
     >
       <ChatFields roomId={roomId} />
     </AppLayout>
@@ -33,12 +33,12 @@ function ChatLayout({ chatName, avatarUrl, roomId }) {
 
 ChatLayout.propTypes = {
   chatName: PropTypes.string,
-  avatarUrl: PropTypes.string,
+  chatNameAvatar: PropTypes.string,
   roomId: PropTypes.string.isRequired,
 };
 ChatLayout.defaultProps = {
   chatName: '',
-  avatarUrl: '',
+  chatNameAvatar: ' ',
 };
 
 export default ChatLayout;
