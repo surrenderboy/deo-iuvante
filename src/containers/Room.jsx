@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchRoom } from '../actions/chat';
+import { fetchRoom, clearState } from '../actions/chat';
 
 import ChatLayout from '../components/ChatLayout/ChatLayout';
 
@@ -10,10 +10,15 @@ class Room extends Component {
     super(props);
 
     this.fetchRoom = this.props.fetchRoom.bind(this);
+    this.clearState = this.props.clearState.bind(this);
   }
 
   componentDidMount() {
     this.fetchRoom(this.props.match.params.id);
+  }
+
+  componentWillUnmount() {
+    this.clearState();
   }
 
   render() {
@@ -41,6 +46,7 @@ export default connect(
   }),
   dispatch => ({
     fetchRoom: roomId => dispatch(fetchRoom(roomId)),
+    clearState: () => dispatch(clearState()),
   }),
 )(Room);
 
@@ -50,6 +56,7 @@ Room.defaultProps = {
 
 Room.propTypes = {
   fetchRoom: PropTypes.func.isRequired,
+  clearState: PropTypes.func.isRequired,
   isFetchingRoom: PropTypes.bool,
   room: PropTypes.shape({
     name: PropTypes.string,
