@@ -33,7 +33,7 @@ class RoomMessages extends Component {
 
 export default connect(
   state => ({
-    messages: state.chatReducer.messages.items,
+    messages: state.chatReducer.messages,
     currentUserId: state.currentUser.data._id,
     isFetchingMessages: state.chatReducer.isFetchingMessages,
   }),

@@ -59,13 +59,15 @@ class ChatsList extends Component {
   }
 
   renderChatsListItems() {
-    if (!this.state.roomsIds) return null;
+    if (!this.state.roomsIds) return '';
     return this.state.roomsIds
       .sort((rid1, rid2) => {
         const m1 = this.state.rooms[rid1].messages,
           m2 = this.state.rooms[rid2].messages;
+        if (!m1[0] && m2[0]) return 1;
+        if (m1[0] && !m2[0]) return -1;
         if (!m1[0] || !m2[0]) return 0;
-        return m1[m1.length - 1].time - m2[m2.length - 1].time;
+        return m2[m2.length - 1].time - m1[m1.length - 1].time;
       })
       .map(roomId => (
         <ChatsListItem room={this.state.rooms[roomId]} key={roomId} />

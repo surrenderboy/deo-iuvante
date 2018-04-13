@@ -203,7 +203,7 @@ module.exports = function (db, io) {
 
       socket.emit(TYPES.SEND_MESSAGE, { requestId, payload: message });
 
-      newMessage(message);
+      newMessage({ ...message, roomId: payload.roomId });
     }));
 
     socket.on(TYPES.MARK_AS_READ, wrapCallback(async ({ requestId, payload }) => {

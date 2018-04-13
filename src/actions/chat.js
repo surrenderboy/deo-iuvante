@@ -12,7 +12,7 @@ export const fetchMessages = roomId => (
     });
 
     try {
-      const messages = await api.getRoomMessages(roomId);
+      const messages = await api.getMessages({ roomId, limit: 500 });
 
       dispatch({
         type: FETCH_MESSAGES_SUCCESS,
@@ -66,7 +66,7 @@ export const ADD_MESSAGE = 'ADD_MESSAGE';
 
 export const sendMessage = (roomId, message) => (
   async (dispatch) => {
-    const newMessage = await api.sendMessage(roomId, message);
+    const newMessage = await api.sendMessage({ roomId, text: message });
     return dispatch({
       type: ADD_MESSAGE,
       newMessage,
@@ -77,4 +77,10 @@ export const sendMessage = (roomId, message) => (
 export const receiveMessage = message => ({
   type: ADD_MESSAGE,
   newMessage: message,
+});
+
+export const CLEAR_STATE = 'CLEAR_STATE';
+
+export const clearState = () => ({
+  type: CLEAR_STATE,
 });

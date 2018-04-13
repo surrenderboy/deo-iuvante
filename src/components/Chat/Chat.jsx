@@ -30,17 +30,17 @@ export default class Chat extends Component {
   }
 
   renderMessages() {
-    if (this.props.messages.length === 0) {
+    if (!this.props.messages.length) {
       return <div className={styles.emptyState}>В этом чате пока нет сообщений</div>;
     }
 
     const aggregateMessage = message => (
       <MessageBubble
         isOwner={message.userId === this.props.currentUserId}
-        message={message.message}
-        isRead={false}
+        message={message.text}
+        isRead={message.read}
         key={message._id}
-        created_at={message.created_at}
+        created_at={message.time}
       />
     );
 
