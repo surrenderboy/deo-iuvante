@@ -9,9 +9,9 @@ export const fetchMessages = roomId => (
 
     try {
       const state = getState();
-      const offset = state.rooms.byId[roomId].messages.length;
+      // const offset = state.rooms.byId[roomId].messages.length - 1;
 
-      const payload = await api.getMessages({ roomId, offset });
+      const payload = await api.getMessages({ roomId, limit: 500 });
 
       dispatch({
         type: ActionTypes.FETCH_MESSAGES_SUCCESS,
@@ -23,6 +23,7 @@ export const fetchMessages = roomId => (
     } catch (e) {
       dispatch({
         type: ActionTypes.FETCH_MESSAGES_FAILURE,
+        payload: e.message,
       });
     } finally {
       dispatch({
@@ -32,7 +33,15 @@ export const fetchMessages = roomId => (
   }
 );
 
-export const addMessage = message => ({
+export const addMessage = payload => ({
   type: ActionTypes.ADD_MESSAGE,
-  payload: message,
+  payload,
 });
+
+export const sendMessage = (roomId, message) => (
+  async (dispatch) => {
+    const payload = await api.sendMessage({ roomId, text: message });
+
+    dispatch(addMessage(payload));
+  }
+);

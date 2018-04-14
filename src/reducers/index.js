@@ -4,7 +4,7 @@ import rooms from './rooms';
 import messages from './messages';
 
 export default combineReducers({
-  messages,
   currentUser,
+  messages,
   rooms,
 });

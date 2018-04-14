@@ -8,15 +8,15 @@ const flattenMessages = rooms => (
     .reduce((acc, val) => acc.concat(val), [])
 );
 
-const normalizeMessages = (messages) => {
+const normalizeMessages = messages => (
   messages.reduce(
     (byId, message) => ({
       ...byId,
-      [message.id]: message,
+      [message._id]: message,
     }),
     {},
-  );
-};
+  )
+);
 
 const addMessagesFromRooms = (state, action) => ({
   ...state,
@@ -25,7 +25,7 @@ const addMessagesFromRooms = (state, action) => ({
 
 const addMessage = (state, action) => ({
   ...state,
-  [action.payload.id]: action.payload,
+  [action.payload._id]: action.payload,
 });
 
 const addMessages = (state, action) => ({

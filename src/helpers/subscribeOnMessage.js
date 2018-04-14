@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { receiveMessage } from '../actions/chat';
+import { addMessage } from '../actions/messages';
 import api from '../api';
 
 export default (WrappedComponent) => {
@@ -20,7 +20,7 @@ export default (WrappedComponent) => {
     }
 
     receiveMessage(message) {
-      this.props.dispatch(receiveMessage(message));
+      this.props.dispatch(addMessage(message));
     }
 
     render() {
@@ -28,7 +28,7 @@ export default (WrappedComponent) => {
     }
   }
   SubscribeOnMessage.displayName =
-    `SubscribeOnMessage(${WrappedComponent.displayName || WrappedComponent.name || 'Component'}`;
+    `SubscribeOnMessage(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
   SubscribeOnMessage.propTypes = {
     dispatch: PropTypes.func.isRequired,
   };

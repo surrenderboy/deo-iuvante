@@ -19,14 +19,14 @@ function renderGoBack() {
   );
 }
 
-function ChatLayout({ chatName, roomId, chatNameAvatar }) {
+function ChatLayout({ chatName, roomId, chatNameAvatar, roomIsFetching }) {
   return (
     <AppLayout
       headerText={chatName}
       headerLeft={renderGoBack()}
       headerRight={renderAvatar(chatNameAvatar)}
     >
-      <RoomMessages roomId={roomId} />
+      { !roomIsFetching && <RoomMessages roomId={roomId} /> }
     </AppLayout>
   );
 }
@@ -39,6 +39,7 @@ ChatLayout.propTypes = {
 ChatLayout.defaultProps = {
   chatName: '',
   chatNameAvatar: ' ',
+  roomIsFetching: false,
 };
 
 export default ChatLayout;
