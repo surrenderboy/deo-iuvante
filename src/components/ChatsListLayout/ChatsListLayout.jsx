@@ -17,9 +17,8 @@ class ChatsList extends Component {
     };
   }
 
-  componentWillMount() {
-    this.getRooms()
-      .then(this.getRoomsLastMessage.bind(this));
+  componentDidMount() {
+    this.getRooms();
   }
 
   async getRooms() {
@@ -39,23 +38,6 @@ class ChatsList extends Component {
     });
 
     return Promise.resolve(roomsIds);
-  }
-
-  getRoomsLastMessage(roomsIds) {
-    roomsIds.forEach((roomId) => {
-      api.getMessages({ roomId, limit: 1 })
-        .then((messages) => {
-          this.setState({
-            rooms: {
-              ...this.state.rooms,
-              [roomId]: {
-                ...this.state.rooms[roomId],
-                messages,
-              },
-            },
-          });
-        });
-    });
   }
 
   renderChatsListItems() {
