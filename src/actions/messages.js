@@ -2,13 +2,13 @@ import * as ActionTypes from './types';
 import api from '../api';
 
 export const fetchMessages = roomId => (
-  async (dispatch, getState) => {
+  async (dispatch) => {
     dispatch({
       type: ActionTypes.FETCH_MESSAGES_START,
     });
 
     try {
-      const state = getState();
+      // const state = getState();
       // const offset = state.rooms.byId[roomId].messages.length - 1;
 
       const payload = await api.getMessages({ roomId, limit: 500 });

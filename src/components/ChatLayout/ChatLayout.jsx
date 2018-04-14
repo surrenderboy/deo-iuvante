@@ -19,7 +19,9 @@ function renderGoBack() {
   );
 }
 
-function ChatLayout({ chatName, roomId, chatNameAvatar, roomIsFetching }) {
+function ChatLayout({
+  chatName, roomId, chatNameAvatar, roomIsFetching,
+}) {
   return (
     <AppLayout
       headerText={chatName}
@@ -35,6 +37,7 @@ ChatLayout.propTypes = {
   chatName: PropTypes.string,
   chatNameAvatar: PropTypes.string,
   roomId: PropTypes.string.isRequired,
+  roomIsFetching: PropTypes.bool,
 };
 ChatLayout.defaultProps = {
   chatName: '',
