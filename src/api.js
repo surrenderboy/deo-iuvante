@@ -48,7 +48,11 @@ class Api {
     };
 
     this.io.emit(type, { requestId, payload });
-    return new Promise(resolver);
+    return new Promise(resolver)
+      .then((data) => {
+        this.io.off(type, resolver);
+        return data;
+      });
   }
 
   /**
