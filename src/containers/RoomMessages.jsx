@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchMessages, sendMessage } from '../actions/chat';
+import { fetchMessages, sendMessage } from '../actions/messages';
 
 import Chat from '../components/Chat/Chat';
 import subscribeOnMessage from '../helpers/subscribeOnMessage';
 
 class RoomMessages extends Component {
-  constructor(props) {
-    super(props);
-
-    this.fetchMessages = this.props.fetchMessages.bind(this);
-    this.sendMessage = this.props.sendMessage.bind(this);
-  }
-
   componentDidMount() {
-    this.fetchMessages(this.props.roomId);
+    this.props.fetchMessages(this.props.roomId);
   }
 
   render() {
@@ -23,7 +16,7 @@ class RoomMessages extends Component {
       <Chat
         messages={this.props.messages}
         currentUserId={this.props.currentUserId}
-        sendMessage={this.sendMessage}
+        sendMessage={this.props.sendMessage}
         roomId={this.props.roomId}
         isFetchingMessages={this.props.isFetchingMessages}
       />
@@ -31,18 +24,26 @@ class RoomMessages extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    messages: state.chatReducer.messages,
+const mapStateToProps = (state, { roomId }) => {
+  const messages =
+    state.rooms.byId[roomId].messages
+      .map(messageId => state.messages.byId[messageId])
+      .filter(message => typeof message !== 'undefined');
+
+  return {
+    messages,
     currentUserId: state.currentUser.data._id,
-    isFetchingMessages: state.chatReducer.isFetchingMessages,
-  }),
-  dispatch => ({
-    sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
-    fetchMessages: roomId => dispatch(fetchMessages(roomId)),
-    dispatch,
-  }),
-)(subscribeOnMessage(RoomMessages));
+    isFetchingMessages: false,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
+  fetchMessages: roomId => dispatch(fetchMessages(roomId)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(subscribeOnMessage(RoomMessages));
 
 RoomMessages.defaultProps = {
   isFetchingMessages: false,

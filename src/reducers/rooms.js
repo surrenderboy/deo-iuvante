@@ -27,7 +27,7 @@ const rooms = (
       return ({
         ...state,
         allIds: [...state.allIds, action.payload._id],
-        byId: { ...state.byId, [action.payload.id]: mapRoom(action.payload) },
+        byId: { ...state.byId, [action.payload._id]: mapRoom(action.payload) },
       });
     }
     case types.FETCH_MESSAGES_SUCCESS: {
@@ -49,7 +49,7 @@ const rooms = (
           ...state.byId,
           [action.payload.roomId]: {
             ...state.byId[action.payload.roomId],
-            messages: [...state.byId[action.payload.roomId].messages, action.payload],
+            messages: [...state.byId[action.payload.roomId].messages, action.payload._id],
           },
         },
       });
