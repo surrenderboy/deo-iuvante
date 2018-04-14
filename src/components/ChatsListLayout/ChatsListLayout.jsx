@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import api from '../../api';
+import { fetchRooms } from '../../actions/rooms';
 
 import List from '../List/List';
 import ChatsListItem from '../ChatsListItem/ChatsListItem';
@@ -9,50 +11,23 @@ import IconButton from '../IconButton/IconButton';
 import AppLayout from '../AppLayout/AppLayout';
 
 class ChatsList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      rooms: [],
-    };
-  }
-
   componentDidMount() {
-    this.getRooms();
-  }
-
-  async getRooms() {
-    const roomsUnordered = await api.getRooms();
-
-    const rooms = {},
-      roomsIds = [];
-
-    roomsUnordered.forEach((room) => {
-      roomsIds.push(room._id);
-      rooms[room._id] = room;
-    });
-
-    this.setState({
-      rooms,
-      roomsIds,
-    });
-
-    return Promise.resolve(roomsIds);
+    this.props.fetchRooms();
   }
 
   renderChatsListItems() {
-    if (!this.state.roomsIds) return '';
-    return this.state.roomsIds
+    if (!this.props.roomsIds) return '';
+    return this.props.roomsIds
       .sort((rid1, rid2) => {
-        const m1 = this.state.rooms[rid1].messages,
-          m2 = this.state.rooms[rid2].messages;
+        const m1 = this.props.rooms[rid1].messages,
+          m2 = this.props.rooms[rid2].messages;
         if (!m1[0] && m2[0]) return 1;
         if (m1[0] && !m2[0]) return -1;
         if (!m1[0] || !m2[0]) return 0;
         return m2[m2.length - 1].time - m1[m1.length - 1].time;
       })
       .map(roomId => (
-        <ChatsListItem room={this.state.rooms[roomId]} key={roomId} />
+        <ChatsListItem room={this.props.rooms[roomId]} key={roomId} />
       ));
   }
 
@@ -77,4 +52,15 @@ class ChatsList extends Component {
   }
 }
 
-export default ChatsList;
+ChatsList.propTypes = {
+  rooms: PropTypes.objectOf(PropTypes.object).isRequired,
+  roomsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchRooms: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  rooms: state.rooms.byId,
+  roomsIds: state.rooms.allIds,
+});
+
+export default connect(mapStateToProps, { fetchRooms })(ChatsList);
