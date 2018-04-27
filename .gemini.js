@@ -3,6 +3,7 @@ module.exports = {
   gridUrl: 'http://localhost:4444/wd/hub',
   compositeImage: true,
   windowSize: '360x772',
+  retry: 3,
 
   browsers: {
     chrome: {
