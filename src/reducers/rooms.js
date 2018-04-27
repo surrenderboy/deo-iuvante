@@ -19,7 +19,7 @@ const rooms = (
       });
       return ({
         ...state,
-        allIds: [...allIds],
+        allIds,
         byId: { ...state.byId, ...byId },
       });
     }
