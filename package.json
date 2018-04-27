@@ -34,6 +34,7 @@
     "start": "concurrently \"npm run client\" \"npm run server\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:integration": "gemini test",
     "enzyme": "jest",
     "eject": "react-scripts eject",
     "client": "react-scripts start",

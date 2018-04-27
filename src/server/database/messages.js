@@ -41,6 +41,7 @@ async function sendMessage(db, user, message) {
 
   const messageEntity = {
     userId: user._id.toString(),
+    roomId: message.roomId,
     text: message.text,
     time: Date.now(),
     attachments: message.attachments || null,

@@ -1,63 +1,47 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchRoom, clearState } from '../actions/chat';
+import { fetchRoom } from '../actions/rooms';
 
 import ChatLayout from '../components/ChatLayout/ChatLayout';
 
 class Room extends Component {
-  constructor(props) {
-    super(props);
-
-    this.fetchRoom = this.props.fetchRoom.bind(this);
-    this.clearState = this.props.clearState.bind(this);
-  }
-
   componentDidMount() {
-    this.fetchRoom(this.props.match.params.id);
-  }
+    const { room, match } = this.props;
 
-  componentWillUnmount() {
-    this.clearState();
+    if (!room) this.props.fetchRoom(match.params.id);
   }
 
   render() {
-    if (this.props.isFetchingRoom) {
+    const { room } = this.props;
+
+    if (room) {
       return (
         <ChatLayout
-          roomId={this.props.match.params.id}
+          chatName={room.name}
+          roomId={room._id}
+          chatNameAvatar={room.name}
         />
       );
     }
+
     return (
       <ChatLayout
-        chatName={this.props.room.name}
+        roomIsFetching
         roomId={this.props.match.params.id}
-        chatNameAvatar={this.props.room.name}
       />
     );
   }
 }
 
-export default connect(
-  state => ({
-    room: state.chatReducer.room,
-    isFetchingRoom: state.chatReducer.isFetchingRoom,
-  }),
-  dispatch => ({
-    fetchRoom: roomId => dispatch(fetchRoom(roomId)),
-    clearState: () => dispatch(clearState()),
-  }),
-)(Room);
+const mapStateToProps = (state, { match }) => ({
+  room: state.rooms.byId[match.params.id],
+});
 
-Room.defaultProps = {
-  isFetchingRoom: false,
-};
+export default connect(mapStateToProps, { fetchRoom })(Room);
 
 Room.propTypes = {
   fetchRoom: PropTypes.func.isRequired,
-  clearState: PropTypes.func.isRequired,
-  isFetchingRoom: PropTypes.bool,
   room: PropTypes.shape({
     name: PropTypes.string,
   }).isRequired,

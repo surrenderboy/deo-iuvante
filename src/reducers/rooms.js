@@ -1,6 +1,6 @@
 import * as types from '../actions/types';
 
-const mapRoom = room => ({ ...room, messages: room.messages.map(message => message._id) });
+export const mapRoom = room => ({ ...room, messages: room.messages.map(message => message._id) });
 
 const rooms = (
   state = {
@@ -19,7 +19,7 @@ const rooms = (
       });
       return ({
         ...state,
-        allIds: [...state.allIds, ...allIds],
+        allIds,
         byId: { ...state.byId, ...byId },
       });
     }
@@ -27,7 +27,7 @@ const rooms = (
       return ({
         ...state,
         allIds: [...state.allIds, action.payload._id],
-        byId: { ...state.byId, [action.payload.id]: mapRoom(action.payload) },
+        byId: { ...state.byId, [action.payload._id]: mapRoom(action.payload) },
       });
     }
     case types.FETCH_MESSAGES_SUCCESS: {
@@ -49,7 +49,7 @@ const rooms = (
           ...state.byId,
           [action.payload.roomId]: {
             ...state.byId[action.payload.roomId],
-            messages: [...state.byId[action.payload.roomId].messages, action.payload],
+            messages: [...state.byId[action.payload.roomId].messages, action.payload._id],
           },
         },
       });
