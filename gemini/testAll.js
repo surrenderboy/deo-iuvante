@@ -2,17 +2,13 @@
 
 gemini.suite('loginPage', (suite) => {
   suite
-    .setUrl('/')
-    .setCaptureElements('#root')
-    .capture('plain')
-    .capture('focusedNickname', (actions, find) => {
-      actions.click(find('#name'));
+    .setUrl('/first-time')
+    .setCaptureElements('html')
+    .capture('plain', actions => actions.wait(2000))
+    .capture('focusedNickname', (actions) => {
+      actions.focus('#name');
     })
     .capture('withNameEntered', (actions) => {
-      actions.sendKeys('#name', 'pewpew');
-    })
-    .capture('createdUser', (actions) => {
-      actions.wait(1000);
-      actions.click('.src-components-UserForm-__UserForm-module___buttonCreateAccount');
+      actions.sendKeys('pewpew');
     });
 });
