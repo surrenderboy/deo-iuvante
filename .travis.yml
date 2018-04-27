@@ -3,10 +3,14 @@ services:
   - docker
 language: node_js
 node_js:
-- node
+  - node
+node_js:
+  - "lts/*"
 script:
-- npm run lint
-- npm run build
+  - bash heroku_deploy_test_stand
+  - npm run lint
+  - npm run build
+  - npm run test:integration
 deploy:
   provider: script
   script: bash heroku_deploy
