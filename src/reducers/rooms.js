@@ -1,6 +1,6 @@
 import * as types from '../actions/types';
 
-const mapRoom = room => ({ ...room, messages: room.messages.map(message => message._id) });
+export const mapRoom = room => ({ ...room, messages: room.messages.map(message => message._id) });
 
 const rooms = (
   state = {
@@ -19,7 +19,7 @@ const rooms = (
       });
       return ({
         ...state,
-        allIds: [...state.allIds, ...allIds],
+        allIds: [...allIds],
         byId: { ...state.byId, ...byId },
       });
     }
