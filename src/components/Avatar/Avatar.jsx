@@ -30,7 +30,6 @@ Avatar.propTypes = {
   size: PropTypes.oneOf(['s', 'm', 'l']).isRequired,
   src: PropTypes.string,
   alt: PropTypes.string,
-  hasRead: PropTypes.bool,
   className: PropTypes.string,
   avatarName: PropTypes.string,
 };
@@ -39,7 +38,6 @@ Avatar.defaultProps = {
   className: '',
   src: testAvatar,
   alt: 'avatar',
-  hasRead: true,
   avatarName: ' ',
 };
 
