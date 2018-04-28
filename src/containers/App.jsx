@@ -10,6 +10,7 @@ import FirstTime from '../components/FirstTime/FirstTime';
 import ViewportSpinner from '../components/ViewportSpinner/ViewportSpinner';
 
 import { fetchCurrentUser } from '../actions/currentUser';
+import { fetchUsers } from '../actions/users';
 
 import subscribeOnMessage from '../helpers/subscribeOnMessage';
 
@@ -25,6 +26,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(fetchCurrentUser());
+    this.props.fetchUsers();
   }
 
   currentUserIsEmpty() {
@@ -66,6 +68,7 @@ App.propTypes = {
     phone: PropTypes.string,
   }).isRequired,
   isFetching: PropTypes.bool.isRequired,
+  fetchUsers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -77,4 +80,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(subscribeOnMessage(App)));
+const mapDispatchToProps = dispatch => ({
+  fetchUsers: filter => dispatch(fetchUsers(filter)),
+  dispatch,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(subscribeOnMessage(App)));

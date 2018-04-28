@@ -41,7 +41,7 @@ export default class Chat extends Component {
         viewState={message.read ? 'read' : 'delivered'} // should aslo handle pending and delivered state
         key={message._id}
         time={message.time}
-        username={this.props.currentUserName}
+        username={this.props.users.byId[message.userId] ? this.props.users.byId[message.userId].name : ''}
       />
     );
 
@@ -81,8 +81,8 @@ Chat.defaultProps = {
 Chat.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object),
   currentUserId: PropTypes.string.isRequired,
-  currentUserName: PropTypes.string.isRequired,
   sendMessage: PropTypes.func,
   roomId: PropTypes.string.isRequired,
   isFetchingMessages: PropTypes.bool,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
