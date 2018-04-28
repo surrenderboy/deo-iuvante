@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchMessages, sendMessage } from '../actions/messages';
+import { fetchUser, fetchUsers } from '../actions/users';
 
 import Chat from '../components/Chat/Chat';
-import subscribeOnMessage from '../helpers/subscribeOnMessage';
 
 class RoomMessages extends Component {
   componentDidMount() {
@@ -33,6 +33,7 @@ const mapStateToProps = (state, { roomId }) => {
   return {
     messages,
     currentUserId: state.currentUser.data._id,
+    users: state.users,
     isFetchingMessages: false,
   };
 };
@@ -40,10 +41,12 @@ const mapStateToProps = (state, { roomId }) => {
 const mapDispatchToProps = dispatch => ({
   sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
   fetchMessages: roomId => dispatch(fetchMessages(roomId)),
+  fetchUser: _id => dispatch(fetchUser(_id)),
+  fetchUsers: filter => dispatch(fetchUsers(filter)),
   dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(subscribeOnMessage(RoomMessages));
+export default connect(mapStateToProps, mapDispatchToProps)(RoomMessages);
 
 RoomMessages.defaultProps = {
   isFetchingMessages: false,

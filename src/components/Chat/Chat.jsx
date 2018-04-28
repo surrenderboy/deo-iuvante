@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './Chat.module.css';
 
-import MessageBubble from '../Bubble/Bubble';
+import MessageBubble from '../BubbleNew/Bubble';
 import ChatFooter from '../ChatFooter/ChatFooter';
 import ViewportSpinner from '../ViewportSpinner/ViewportSpinner';
 
@@ -38,9 +38,10 @@ export default class Chat extends Component {
       <MessageBubble
         isOwner={message.userId === this.props.currentUserId}
         message={message.text}
-        isRead={message.read}
+        viewState={message.read ? 'read' : 'delivered'} // should aslo handle pending and delivered state
         key={message._id}
-        created_at={message.time}
+        time={message.time}
+        username={this.props.currentUserName}
       />
     );
 
@@ -80,6 +81,7 @@ Chat.defaultProps = {
 Chat.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object),
   currentUserId: PropTypes.string.isRequired,
+  currentUserName: PropTypes.string.isRequired,
   sendMessage: PropTypes.func,
   roomId: PropTypes.string.isRequired,
   isFetchingMessages: PropTypes.bool,

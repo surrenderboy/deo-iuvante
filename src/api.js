@@ -82,7 +82,9 @@ class Api {
      * @return {Promise<User>}
      */
   async getUser(userId) {
-    return this.getUsers({ _id: userId }).then(result => result.items[0]);
+    const userArray = await this.getUsers({ _id: [userId] });
+
+    return userArray[0];
   }
 
   /**
@@ -110,7 +112,7 @@ class Api {
      */
   async createRoom(room) {
     return this._requestResponse(MESSAGES.CREATE_ROOM, room)
-      .then((roomResult) => {
+      .then(async (roomResult) => {
         if (roomResult.error) {
           throw new Error(roomResult.error);
         }
@@ -151,8 +153,8 @@ class Api {
      *
      * @return {Promise<Room>}
      */
-  async userJoinRoom(userId, roomId) {
-    return this._requestResponse(MESSAGES.USER_JOIN_ROOM, { userId, roomId });
+  async userJoinRoom(roomId) {
+    return this._requestResponse(MESSAGES.CURRENT_USER_JOIN_ROOM, { roomId });
   }
 
   /**

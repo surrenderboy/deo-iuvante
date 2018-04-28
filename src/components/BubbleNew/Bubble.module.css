@@ -1,0 +1,96 @@
+p {
+  margin: 0;
+}
+
+.Bubble {
+  padding: .5rem;
+  font-size: 1rem;
+}
+
+.Owner {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.NotOwner{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.BubbleMessage {
+  padding: .8rem;
+  background-color: #f3f3f3;
+  border-radius: .4rem;
+  position: relative;
+  max-width: calc(100% - 9.5rem);
+}
+
+.Owner .BubbleMessage {
+  background-color: #00bef3;
+  color: #fff;
+  margin-right: 5px;
+}
+
+.NotOwner .BubbleMessage {
+  margin-left: 5px;
+}
+
+.Owner .BubbleMessage:after {
+  content: '';
+  display: block;
+  border: 5px solid transparent;
+  border-left: 5px solid #00bef3;
+  position: absolute;
+  bottom: 10px;
+  right: -10px;
+}
+
+.NotOwner .BubbleMessage:before {
+  content: '';
+  display: block;
+  border: 5px solid transparent;
+  border-right: 5px solid #f3f3f3;
+  position: absolute;
+  bottom: 10px;
+  left: -10px;
+}
+
+.Checkmark{
+  display: none;
+}
+
+.UserName {
+  font-weight: bold;
+  color: #fe8203;
+  margin-bottom: .4rem;
+}
+
+.Owner .UserName {
+  color: #fff;
+}
+
+.Owner .Checkmark{
+  display: inline-block;
+  padding-right: .4rem;
+  margin-bottom: 1rem;
+}
+.Avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.Avatar img {
+  width: 110%;
+}
+
+.MessageDate {
+  font-size: .7rem;
+  text-align: right;
+  margin-top: 5px;
+}
