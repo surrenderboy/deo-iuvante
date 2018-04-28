@@ -285,7 +285,7 @@ class Api {
   offMessagesRead() {
     this.io.off(MESSAGES.MARK_ALL_UNREAD);
   }
-  
+
   async onNewRoom(callback) {
     await this._connectPromise;
 
