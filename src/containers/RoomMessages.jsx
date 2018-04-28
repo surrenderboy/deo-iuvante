@@ -9,6 +9,7 @@ import Chat from '../components/Chat/Chat';
 class RoomMessages extends Component {
   componentDidMount() {
     this.props.fetchMessages(this.props.roomId);
+    this.props.fetchUsers();
   }
 
   render() {
@@ -62,4 +63,5 @@ RoomMessages.propTypes = {
   isFetchingMessages: PropTypes.bool,
   messages: PropTypes.arrayOf(PropTypes.object),
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchUsers: PropTypes.func.isRequired,
 };

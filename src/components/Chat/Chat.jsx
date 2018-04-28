@@ -41,7 +41,7 @@ export default class Chat extends Component {
         viewState={message.read ? 'read' : 'delivered'} // should aslo handle pending and delivered state
         key={message._id}
         time={message.time}
-        username={this.props.users.byId[message.userId]}
+        username={this.props.users.byId[message.userId] ? this.props.users.byId[message.userId].name : ''}
       />
     );
 
