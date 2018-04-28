@@ -9,6 +9,7 @@ import Chat from '../components/Chat/Chat';
 class RoomMessages extends Component {
   componentDidMount() {
     this.props.fetchMessages(this.props.roomId);
+    this.props.fetchUsers();
   }
 
   render() {
@@ -19,6 +20,7 @@ class RoomMessages extends Component {
         sendMessage={this.props.sendMessage}
         roomId={this.props.roomId}
         isFetchingMessages={this.props.isFetchingMessages}
+        users={this.props.users}
       />
     );
   }
@@ -60,4 +62,6 @@ RoomMessages.propTypes = {
   currentUserId: PropTypes.string.isRequired,
   isFetchingMessages: PropTypes.bool,
   messages: PropTypes.arrayOf(PropTypes.object),
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchUsers: PropTypes.func.isRequired,
 };

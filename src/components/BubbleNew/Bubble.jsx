@@ -30,7 +30,7 @@ const Bubble = props => (
     <div className={props.isOwner ? styles.Owner : styles.NotOwner}>
       <div className={styles.Checkmark}>{renderMessageState(props.viewState)}</div>
       <div className={styles.BubbleMessage}>
-        <p className={styles.UserName}>{props.username}</p>
+        {!props.isOwner && <p className={styles.UserName}>{props.username}</p>}
         <p>{props.message}</p>
         <p className={styles.MessageDate}>{renderDate(props.time)}</p>
       </div>
@@ -46,11 +46,11 @@ const Bubble = props => (
 Bubble.propTypes = {
   username: PropTypes.string,
   time: PropTypes.number.isRequired,
-  viewState: PropTypes.oneOf('pending', 'delivered', 'read', 'error'),
+  viewState: PropTypes.oneOf(['pending', 'delivered', 'read', 'error']),
   avatarUrl: PropTypes.string,
   message: PropTypes.string.isRequired,
   isOwner: PropTypes.bool,
-  key: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
+  key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 Bubble.defaultProps = {
