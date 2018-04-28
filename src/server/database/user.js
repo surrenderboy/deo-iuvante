@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongodb');
 
 const { getSessionInfo, saveSessionInfo } = require('./session');
-const { pageableCollection, insertOrUpdateEntity } = require('./helpers');
+const { insertOrUpdateEntity } = require('./helpers');
 
 const TABLE = 'users';
 
@@ -71,7 +71,13 @@ async function findUserBySid(db, sid) {
  * @return {Promise<Pagination<User>>}
  */
 async function getUsers(db, filter) {
-  return pageableCollection(db.collection(TABLE), filter);
+  const queryParams = { ...filter };
+
+  if (queryParams._id) {
+    queryParams._id = { $in: queryParams._id.map(id => ObjectId(id)) };
+  }
+
+  return db.collection(TABLE).find(queryParams).toArray();
 }
 
 module.exports = {
