@@ -16,7 +16,6 @@ class RoomMessages extends Component {
       <Chat
         messages={this.props.messages}
         currentUserId={this.props.currentUserId}
-        currentUserName={this.props.currentUserName}
         sendMessage={this.props.sendMessage}
         roomId={this.props.roomId}
         isFetchingMessages={this.props.isFetchingMessages}
@@ -34,7 +33,6 @@ const mapStateToProps = (state, { roomId }) => {
   return {
     messages,
     currentUserId: state.currentUser.data._id,
-    currentUserName: state.currentUser.data.name,
     users: state.users,
     isFetchingMessages: false,
   };
@@ -60,7 +58,6 @@ RoomMessages.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   roomId: PropTypes.string.isRequired,
   currentUserId: PropTypes.string.isRequired,
-  currentUserName: PropTypes.string.isRequired,
   isFetchingMessages: PropTypes.bool,
   messages: PropTypes.arrayOf(PropTypes.object),
 };
