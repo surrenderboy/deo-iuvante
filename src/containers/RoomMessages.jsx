@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchMessages, sendMessage } from '../actions/messages';
 
 import Chat from '../components/Chat/Chat';
-import subscribeOnMessage from '../helpers/subscribeOnMessage';
 
 class RoomMessages extends Component {
   componentDidMount() {
@@ -43,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(subscribeOnMessage(RoomMessages));
+export default connect(mapStateToProps, mapDispatchToProps)(RoomMessages);
 
 RoomMessages.defaultProps = {
   isFetchingMessages: false,

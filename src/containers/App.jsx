@@ -11,6 +11,8 @@ import ViewportSpinner from '../components/ViewportSpinner/ViewportSpinner';
 
 import { fetchCurrentUser } from '../actions/currentUser';
 
+import subscribeOnMessage from '../helpers/subscribeOnMessage';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -75,4 +77,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(connect(mapStateToProps)(subscribeOnMessage(App)));
