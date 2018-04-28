@@ -85,29 +85,27 @@ async function getRooms(db, user) {
  * @return {Promise<Room>}
  */
 async function createRoom(db, currentUser, room) {
-  if (room.users && room.users[0] && room.users.length > 1 && !room.name) {
-    throw new Error('Cannot create room without name');
-  }
+  // If we clone room
+  // eslint-disable-next-line no-param-reassign
+  delete room._id;
 
-  const collection = db.collection(COLL),
-    existsRoom = await collection.findOne({ name: room.name });
+  // eslint-disable-next-line no-param-reassign
+  room.users = room.users || [];
+  room.users.push(currentUser._id.toString());
 
-  if (!existsRoom) {
-    // If we clone room
-    // eslint-disable-next-line no-param-reassign
-    delete room._id;
+  const users = await db.collection('users')
+    .find({ _id: { $in: room.users.map(id => ObjectId(id)) } })
+    .toArray();
 
-    // eslint-disable-next-line no-param-reassign
-    room.users = room.users || [];
-    room.users.push(currentUser._id.toString());
-
-    return collection.insertOne({ ...room, messages: [], messagesCount: 0 });
-  }
-
-  return {
-    error: 'Room with same name already exists',
-    code: 409,
+  const toInsert = {
+    ...room,
+    messages: [],
+    messagesCount: 0,
   };
+
+  if (users.length > 2) toInsert.name = users.map(user => user.name).join(', ');
+
+  return db.collection(COLL).insertOne(toInsert);
 }
 
 /**

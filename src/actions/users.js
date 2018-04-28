@@ -27,7 +27,7 @@ export const fetchUsers = () => (
   }
 );
 
-export const fetchUser = (id) => (
+export const fetchUser = id => (
   async (dispatch) => {
     dispatch({
       type: types.FETCH_USERS_START,
@@ -49,6 +49,6 @@ export const fetchUser = (id) => (
       dispatch({
         type: types.FETCH_USERS_END,
       });
-    };
+    }
   }
 );

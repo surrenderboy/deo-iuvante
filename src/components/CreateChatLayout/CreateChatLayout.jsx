@@ -61,7 +61,7 @@ class CreateChat extends Component {
   render() {
     return (
       <AppLayout
-        headerText={this.state.screen}
+        headerText="Выберите пользователей"
         headerRight={(<IconButton
           icon={{ glyph: 'check', color: '#00a000' }}
           onClick={this.createRoom}
@@ -73,11 +73,11 @@ class CreateChat extends Component {
         />)}
       >
         <React.Fragment>
-          {this.props.users[0] && (<UsersList
+          <UsersList
             switchUserSelection={this.switchUserSelection}
             selectedUsers={this.state.selectedUsers}
             users={this.props.users}
-          />)}
+          />
           {this.renderRedirect()}
         </React.Fragment>
       </AppLayout>
