@@ -31,3 +31,19 @@ export const fetchRoom = roomId => (
     }
   }
 );
+
+export const markAllUnreadMessages = roomId => (
+  async () => {
+    await api.markAllUnreadMessages(roomId);
+  }
+);
+
+export const openRoom = roomId => (
+  (dispatch, getState) => {
+    const { rooms } = getState();
+    const room = rooms.byId[roomId];
+
+    if (!room) { dispatch(fetchRoom(roomId)); }
+    dispatch(markAllUnreadMessages(roomId));
+  }
+);

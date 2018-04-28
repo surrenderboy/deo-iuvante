@@ -85,4 +85,9 @@ module.exports = {
      * Message read
      */
   MARK_AS_READ: 'MARK_AS_READ',
+
+  /**
+   * Read all unread messages
+   */
+  MARK_ALL_UNREAD: 'MARK_ALL_UNREAD',
 };

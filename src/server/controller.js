@@ -2,7 +2,9 @@ const { findUserBySid, getUsers, saveUser } = require('./database/user');
 const {
   joinRoom, leaveRoom, getRooms, createRoom,
 } = require('./database/room');
-const { getMessages, sendMessage, markAsRead } = require('./database/messages');
+const {
+  getMessages, sendMessage, markAsRead, markAllUnread,
+} = require('./database/messages');
 const TYPES = require('./messages');
 
 /**
@@ -219,6 +221,14 @@ module.exports = function (db, io) {
       const mark = await markAsRead(db, currentUser, payload);
 
       socket.to(`room:${mark.roomId}`).emit(TYPES.MARK_AS_READ, { requestId, payload: mark });
+    }));
+
+    socket.on(TYPES.MARK_ALL_UNREAD, wrapCallback(async ({ payload }) => {
+      const currentUser = await userPromise;
+
+      const roomId = await markAllUnread(db, currentUser, payload);
+
+      socket.to(`room:${roomId}`).emit(TYPES.MARK_ALL_UNREAD, roomId);
     }));
 
     // Send message

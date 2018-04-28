@@ -191,6 +191,17 @@ class Api {
   }
 
   /**
+   * Mark all unread messages in a Room as read;
+   *
+   * @param {string} roomId
+   *
+   * @return {Promise<>}
+   */
+  async markAllUnreadMessages(roomId) {
+    return this._requestResponse(MESSAGES.MARK_ALL_UNREAD, roomId);
+  }
+
+  /**
      * Return list of messages
      *
      * @param {{}} [filter]
@@ -264,6 +275,17 @@ class Api {
     this.io.on(MESSAGES.MARK_AS_READ, callback);
   }
 
+
+  async onMessagesRead(callback) {
+    await this._connectPromise;
+
+    this.io.on(MESSAGES.MARK_ALL_UNREAD, callback);
+  }
+
+  offMessagesRead() {
+    this.io.off(MESSAGES.MARK_ALL_UNREAD);
+  }
+  
   async onNewRoom(callback) {
     await this._connectPromise;
 
