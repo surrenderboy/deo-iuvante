@@ -15,24 +15,30 @@ function prettifyLastActivity(lastActivity) {
   });
 }
 
+function classNameMessage(hasReadMessage) {
+  const classes = hasReadMessage ? ' ' : styles.hasReadMessage;
+  return `${classes} ${styles.lastMessage}`;
+}
+
 function ChatsListItem(props) {
   const lastMessage = props.room.messages &&
     props.room.messages[0] &&
-    props.room.messages[props.room.messages.length - 1],
-    lastActivity = lastMessage && lastMessage.time;
+    props.room.messages[props.room.messages.length - 1] &&
+    props.messages[props.room.messages[props.room.messages.length - 1]];
+  const lastActivity = lastMessage ? lastMessage.time : null,
+    hasReadMessage = lastMessage ? lastMessage.read : true;
   return (
     <Link to={`/chat/${props.room._id}`} className={styles.listItem}>
       <Avatar
         size="m"
         avatarName={props.room.name ? props.room.name.slice(0, 2) : 'R'}
-        count={0}
         className={styles.avatar}
       />
       <span className={styles.roomName}>
         {props.room.name}
       </span>
-      <span className={styles.lastMessage}>
-        {lastMessage && lastMessage.text}
+      <span className={classNameMessage(hasReadMessage)}>
+        {(lastMessage && lastMessage.text) || 'В этом чате пока нет сообщений'}
       </span>
       <span className={styles.lastActivity}>
         {prettifyLastActivity(lastActivity)}
@@ -48,6 +54,11 @@ ChatsListItem.propTypes = {
     name: PropTypes.string,
     messages: PropTypes.array,
   }).isRequired,
+  messages: PropTypes.objectOf(PropTypes.object),
+};
+
+ChatsListItem.defaultProps = {
+  messages: {},
 };
 
 export default ChatsListItem;

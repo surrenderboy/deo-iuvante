@@ -24,6 +24,9 @@
     grid-row: 2 / 3;
     color: #777;
     align-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .lastActivity {
@@ -33,4 +36,11 @@
     align-self: center;
     font-size: 0.7rem;
     color: #aaa;
+}
+
+.hasReadMessage {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #c3c3c3;
+    color: #fff;
 }
