@@ -280,6 +280,10 @@ class Api {
 
     this.io.on(MESSAGES.MARK_ALL_UNREAD, callback);
   }
+
+  offMessagesRead() {
+    this.io.off(MESSAGES.MARK_ALL_UNREAD);
+  }
 }
 
 

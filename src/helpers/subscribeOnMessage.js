@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addMessage } from '../actions/messages';
+import { addMessage, readMessages } from '../actions/messages';
 import api from '../api';
 
 export default (WrappedComponent) => {
@@ -9,18 +9,25 @@ export default (WrappedComponent) => {
       super(props);
 
       this.receiveMessage = this.receiveMessage.bind(this);
+      this.readMessages = this.readMessages.bind(this);
     }
 
     componentDidMount() {
       api.onMessage(this.receiveMessage);
+      api.onMessagesRead(this.readMessages);
     }
 
     componentWillUnmount() {
       api.offMessage();
+      api.offMessagesRead();
     }
 
     receiveMessage(message) {
       this.props.dispatch(addMessage(message));
+    }
+
+    readMessages(roomId) {
+      this.props.dispatch(readMessages(roomId));
     }
 
     render() {

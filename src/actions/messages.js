@@ -45,3 +45,15 @@ export const sendMessage = (roomId, message) => (
     dispatch(addMessage(payload));
   }
 );
+
+export const readMessages = roomId => (
+  (dispatch, getState) => {
+    const { rooms } = getState();
+    const room = rooms.byId[roomId];
+
+    dispatch({
+      type: ActionTypes.READ_MESSAGES,
+      payload: room.messages,
+    });
+  }
+);
