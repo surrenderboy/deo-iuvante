@@ -101,9 +101,8 @@ async function createRoom(db, currentUser, room) {
     ...room,
     messages: [],
     messagesCount: 0,
+    name: users.map(user => user.name).join(', '),
   };
-
-  if (users.length > 2) toInsert.name = users.map(user => user.name).join(', ');
 
   return db.collection(COLL).insertOne(toInsert);
 }

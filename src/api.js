@@ -263,6 +263,12 @@ class Api {
 
     this.io.on(MESSAGES.MARK_AS_READ, callback);
   }
+
+  async onNewRoom(callback) {
+    await this._connectPromise;
+
+    this.io.on(MESSAGES.NEW_ROOM, callback);
+  }
 }
 
 

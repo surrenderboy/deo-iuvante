@@ -20,7 +20,7 @@ class Room extends Component {
         <ChatLayout
           chatName={room.name}
           roomId={room._id}
-          chatNameAvatar={room.name}
+          chatNameAvatar={room.name ? room.name.slice(0, 2) : 'R'}
         />
       );
     }

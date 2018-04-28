@@ -87,7 +87,7 @@ class CreateChat extends Component {
 
 function mapStateToProps(state) {
   const currentUserId = state.currentUser.data._id,
-    users = Object.keys(state.users.byId).map(_id => state.users.byId[_id]).filter(_id => _id !== currentUserId);
+    users = Object.keys(state.users.byId).filter(_id => _id !== currentUserId).map(_id => state.users.byId[_id]);
 
   return ({
     users,

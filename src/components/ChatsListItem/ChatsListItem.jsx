@@ -31,7 +31,7 @@ function ChatsListItem(props) {
     <Link to={`/chat/${props.room._id}`} className={styles.listItem}>
       <Avatar
         size="m"
-        avatarName={props.room.name}
+        avatarName={props.room.name ? props.room.name.slice(0, 2) : 'R'}
         className={styles.avatar}
       />
       <span className={styles.roomName}>
