@@ -146,6 +146,9 @@ module.exports = function (db, io) {
         { insertedId } = await createRoom(db, currentUser, payload);
 
       joinToRoomChannel(insertedId);
+      
+      socket.broadcast.emit(TYPES.NEW_ROOM, insertedId);
+
       socket.emit(TYPES.CREATE_ROOM, { requestId, payload: { _id: insertedId } });
     }));
 
@@ -153,7 +156,13 @@ module.exports = function (db, io) {
     socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async ({ requestId }) => {
       const currentUser = await userPromise;
 
-      socket.emit(TYPES.CURRENT_USER_ROOMS, { requestId, payload: await getRooms(db, currentUser) });
+      const rooms = await getRooms(db, currentUser);
+
+      rooms.forEach(({ _id }) => {
+        if (!socket[`room:${_id}`]) joinToRoomChannel(_id);
+      });
+
+      socket.emit(TYPES.CURRENT_USER_ROOMS, { requestId, payload: rooms });
     }));
 
     // Join current user to room

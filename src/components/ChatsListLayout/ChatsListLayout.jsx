@@ -24,10 +24,10 @@ class ChatsList extends Component {
         if (!m1[0] && m2[0]) return 1;
         if (m1[0] && !m2[0]) return -1;
         if (!m1[0] || !m2[0]) return 0;
-        return m2[m2.length - 1].time - m1[m1.length - 1].time;
+        return this.props.messages[m2[m2.length - 1]].time - this.props.messages[m1[m1.length - 1]].time;
       })
       .map(roomId => (
-        <ChatsListItem room={this.props.rooms[roomId]} key={roomId} />
+        <ChatsListItem room={this.props.rooms[roomId]} messages={this.props.messages} key={roomId} />
       ));
   }
 
@@ -56,11 +56,17 @@ ChatsList.propTypes = {
   rooms: PropTypes.objectOf(PropTypes.object).isRequired,
   roomsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchRooms: PropTypes.func.isRequired,
+  messages: PropTypes.objectOf(PropTypes.object),
+};
+
+ChatsList.defaultProps = {
+  messages: {},
 };
 
 const mapStateToProps = state => ({
   rooms: state.rooms.byId,
   roomsIds: state.rooms.allIds,
+  messages: state.messages.byId,
 });
 
 export default connect(mapStateToProps, { fetchRooms })(ChatsList);

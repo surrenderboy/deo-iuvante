@@ -275,6 +275,7 @@ class Api {
     this.io.on(MESSAGES.MARK_AS_READ, callback);
   }
 
+
   async onMessagesRead(callback) {
     await this._connectPromise;
 
@@ -283,6 +284,12 @@ class Api {
 
   offMessagesRead() {
     this.io.off(MESSAGES.MARK_ALL_UNREAD);
+  }
+  
+  async onNewRoom(callback) {
+    await this._connectPromise;
+
+    this.io.on(MESSAGES.NEW_ROOM, callback);
   }
 }
 
