@@ -23,7 +23,7 @@ class ChatFooter extends React.PureComponent {
           onClick={sendMessage}
           icon={{
             color: '#a9d18b',
-            glyph: 'mic_none',
+            glyph: 'send',
           }}
         />
       </div>
