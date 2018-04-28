@@ -9,25 +9,18 @@ import styles from './ChatFooter.module.css';
 class ChatFooter extends React.PureComponent {
   render() {
     const {
-      handleAttachment, sendMessage, handleVoice, className,
+      sendMessage, className,
     } = this.props;
 
     return (
       <div className={`${styles.footer} ${className}`}>
-        <IconButton
-          onClick={handleAttachment}
-          icon={{
-            color: '#a9d18b',
-            glyph: 'attach_file',
-          }}
-        />
         <MessageInput
           sendMessage={sendMessage}
           className={styles.messageInput}
           roomId={this.props.roomId}
         />
         <IconButton
-          onClick={handleVoice}
+          onClick={sendMessage}
           icon={{
             color: '#a9d18b',
             glyph: 'mic_none',
@@ -39,9 +32,9 @@ class ChatFooter extends React.PureComponent {
 }
 
 ChatFooter.propTypes = {
-  handleAttachment: PropTypes.func.isRequired,
+  // handleAttachment: PropTypes.func.isRequired,
   sendMessage: PropTypes.func.isRequired,
-  handleVoice: PropTypes.func.isRequired,
+  // handleVoice: PropTypes.func.isRequired,
   className: PropTypes.string,
   roomId: PropTypes.string.isRequired,
 };
