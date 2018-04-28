@@ -26,7 +26,7 @@ function ChatsListItem(props) {
     props.room.messages[props.room.messages.length - 1] &&
     props.messages[props.room.messages[props.room.messages.length - 1]];
   const lastActivity = lastMessage ? lastMessage.time : null,
-    hasReadMessage = lastMessage ? lastMessage.read : false;
+    hasReadMessage = lastMessage ? lastMessage.read : true;
   return (
     <Link to={`/chat/${props.room._id}`} className={styles.listItem}>
       <Avatar
@@ -38,7 +38,7 @@ function ChatsListItem(props) {
         {props.room.name}
       </span>
       <span className={classNameMessage(hasReadMessage)}>
-        {lastMessage && lastMessage.text}
+        {(lastMessage && lastMessage.text) || 'В этом чате пока нет сообщений'}
       </span>
       <span className={styles.lastActivity}>
         {prettifyLastActivity(lastActivity)}
