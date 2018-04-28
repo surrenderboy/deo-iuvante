@@ -19,6 +19,7 @@ class RoomMessages extends Component {
         sendMessage={this.props.sendMessage}
         roomId={this.props.roomId}
         isFetchingMessages={this.props.isFetchingMessages}
+        users={this.props.users}
       />
     );
   }
@@ -60,4 +61,5 @@ RoomMessages.propTypes = {
   currentUserId: PropTypes.string.isRequired,
   isFetchingMessages: PropTypes.bool,
   messages: PropTypes.arrayOf(PropTypes.object),
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
