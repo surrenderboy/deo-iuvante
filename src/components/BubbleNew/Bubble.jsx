@@ -37,7 +37,7 @@ const Bubble = props => (
       {!props.isOwner && <Avatar
         className={styles.Avatar}
         src={props.avatarUrl}
-        size="m"
+        size="s"
       />}
     </div>
   </div>
