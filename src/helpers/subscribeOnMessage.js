@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { addMessage } from '../actions/messages';
+import { fetchRoom } from '../actions/rooms';
+
 import api from '../api';
 
 export default (WrappedComponent) => {
@@ -13,6 +15,7 @@ export default (WrappedComponent) => {
 
     componentDidMount() {
       api.onMessage(this.receiveMessage);
+      api.onNewRoom(roomId => this.props.dispatch(fetchRoom(roomId)));
     }
 
     componentWillUnmount() {
