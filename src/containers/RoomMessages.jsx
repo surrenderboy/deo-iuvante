@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchMessages, sendMessage } from '../actions/messages';
+import { fetchUser, fetchUsers } from '../actions/users';
 
 import Chat from '../components/Chat/Chat';
 
@@ -15,6 +16,7 @@ class RoomMessages extends Component {
       <Chat
         messages={this.props.messages}
         currentUserId={this.props.currentUserId}
+        currentUserName={this.props.currentUserName}
         sendMessage={this.props.sendMessage}
         roomId={this.props.roomId}
         isFetchingMessages={this.props.isFetchingMessages}
@@ -32,6 +34,8 @@ const mapStateToProps = (state, { roomId }) => {
   return {
     messages,
     currentUserId: state.currentUser.data._id,
+    currentUserName: state.currentUser.data.name,
+    users: state.users,
     isFetchingMessages: false,
   };
 };
@@ -39,6 +43,8 @@ const mapStateToProps = (state, { roomId }) => {
 const mapDispatchToProps = dispatch => ({
   sendMessage: (roomId, message) => dispatch(sendMessage(roomId, message)),
   fetchMessages: roomId => dispatch(fetchMessages(roomId)),
+  fetchUser: _id => dispatch(fetchUser(_id)),
+  fetchUsers: filter => dispatch(fetchUsers(filter)),
   dispatch,
 });
 
@@ -54,6 +60,7 @@ RoomMessages.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   roomId: PropTypes.string.isRequired,
   currentUserId: PropTypes.string.isRequired,
+  currentUserName: PropTypes.string.isRequired,
   isFetchingMessages: PropTypes.bool,
   messages: PropTypes.arrayOf(PropTypes.object),
 };
