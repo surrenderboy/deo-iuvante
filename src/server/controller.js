@@ -151,7 +151,13 @@ module.exports = function (db, io) {
     socket.on(TYPES.CURRENT_USER_ROOMS, wrapCallback(async ({ requestId }) => {
       const currentUser = await userPromise;
 
-      socket.emit(TYPES.CURRENT_USER_ROOMS, { requestId, payload: await getRooms(db, currentUser) });
+      const rooms = await getRooms(db, currentUser);
+
+      rooms.forEach(({ _id }) => {
+        if (!socket[`room:${_id}`]) joinToRoomChannel(_id);
+      });
+
+      socket.emit(TYPES.CURRENT_USER_ROOMS, { requestId, payload: rooms });
     }));
 
     // Join current user to room
@@ -229,7 +235,7 @@ module.exports = function (db, io) {
       // Get of user groups
       const rooms = await getRooms(db, user);
       rooms.forEach((room) => {
-        joinToRoomChannel(db, room._id);
+        joinToRoomChannel(room._id);
       });
     });
 
