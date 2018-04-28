@@ -18,7 +18,8 @@ function prettifyLastActivity(lastActivity) {
 function ChatsListItem(props) {
   const lastMessage = props.room.messages &&
     props.room.messages[0] &&
-    props.room.messages[props.room.messages.length - 1],
+    props.room.messages[props.room.messages.length - 1] &&
+    props.messages[props.room.messages[props.room.messages.length - 1]],
     lastActivity = lastMessage && lastMessage.time;
   return (
     <Link to={`/chat/${props.room._id}`} className={styles.listItem}>
@@ -48,6 +49,11 @@ ChatsListItem.propTypes = {
     name: PropTypes.string,
     messages: PropTypes.array,
   }).isRequired,
+  messages: PropTypes.objectOf(PropTypes.object),
+};
+
+ChatsListItem.defaultProps = {
+  messages: {},
 };
 
 export default ChatsListItem;
