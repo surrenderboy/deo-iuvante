@@ -144,6 +144,9 @@ module.exports = function (db, io) {
         { insertedId } = await createRoom(db, currentUser, payload);
 
       joinToRoomChannel(insertedId);
+      
+      socket.broadcast.emit(TYPES.NEW_ROOM, insertedId);
+
       socket.emit(TYPES.CREATE_ROOM, { requestId, payload: { _id: insertedId } });
     }));
 

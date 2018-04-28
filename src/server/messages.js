@@ -19,6 +19,8 @@ module.exports = {
      */
   ONLINE: 'ONLINE',
 
+  NEW_ROOM: 'NEW_ROOM',
+
   /**
      * Create new room
      */
