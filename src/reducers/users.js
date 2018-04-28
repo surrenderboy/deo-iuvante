@@ -1,8 +1,6 @@
 import * as types from '../actions/types';
 
-export const mapRoom = room => ({ ...room, messages: room.messages.map(message => message._id) });
-
-const rooms = (
+export default (
   state = {
     byId: {},
     fetching: false,
@@ -29,6 +27,15 @@ const rooms = (
         errorMsg: action.error,
       });
     }
+    case types.FETCH_USER_SUCCESS: {
+      return ({
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload._id]: action.payload,
+        },
+      });
+    }
     case types.FETCH_USERS_SUCCESS: {
       return ({
         ...state,
@@ -42,4 +49,3 @@ const rooms = (
   }
 };
 
-export default rooms;
