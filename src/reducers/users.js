@@ -30,13 +30,12 @@ const rooms = (
       });
     }
     case types.FETCH_USERS_SUCCESS: {
-      const byId = action.payload.reduce((accum, user) => ({
-        ...accum,
-        [user._id]: user,
-      }), { ...state.byId });
       return ({
         ...state,
-        byId: { ...state.byId, ...byId },
+        byId: action.payload.reduce((accum, user) => ({
+          ...accum,
+          [user._id]: user,
+        }), { ...state.byId }),
       });
     }
     default: return state;
