@@ -8,25 +8,10 @@ import ChatFooter from '../ChatFooter/ChatFooter';
 import ViewportSpinner from '../ViewportSpinner/ViewportSpinner';
 
 export default class Chat extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      scrollTop: 10000,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.messages.length > this.props.messages.length) {
-      this.setState({
-        scrollTop: this.container.scrollHeight !== this.container.clientHeight ?
-          this.container.scrollHeight : 1000000,
-      });
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages.length !== this.props.messages.length) {
+      if (this.container) this.container.scrollTop = this.container.scrollHeight;
     }
-  }
-
-  componentDidUpdate() {
-    this.container.scrollTop = this.state.scrollTop;
   }
 
   renderMessages() {
@@ -53,7 +38,9 @@ export default class Chat extends Component {
       <div className={styles.chatContainer}>
         <div
           className={styles.chatMessages}
-          ref={(container) => { this.container = container; }}
+          ref={(container) => {
+            this.container = container;
+          }}
         >
           {this.props.isFetchingMessages ?
             <ViewportSpinner size="l" /> :
