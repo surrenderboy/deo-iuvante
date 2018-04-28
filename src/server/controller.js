@@ -20,10 +20,7 @@ module.exports = function (db, io) {
   function fillUsersWithStatus(users) {
     // eslint-disable-next-line no-param-reassign
 
-    return {
-      ...users,
-      items: users.items.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) })),
-    };
+    return users.map(user => ({ ...user, online: Boolean(ONLINE[user._id]) }));
   }
 
   /**
@@ -79,7 +76,7 @@ module.exports = function (db, io) {
          * @param {string} roomId
          */
     // eslint-disable-next-line no-empty-pattern
-    function joinToRoomChannel({}, roomId) {
+    function joinToRoomChannel(roomId) {
       socket.join(`room:${roomId}`);
     }
 
@@ -146,6 +143,7 @@ module.exports = function (db, io) {
       const currentUser = await userPromise,
         { insertedId } = await createRoom(db, currentUser, payload);
 
+      joinToRoomChannel(insertedId);
       socket.emit(TYPES.CREATE_ROOM, { requestId, payload: { _id: insertedId } });
     }));
 
