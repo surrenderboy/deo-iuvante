@@ -83,6 +83,24 @@ async function markAsRead(db, user, messageId) {
   return { messageId, roomId: room._id.toString() };
 }
 
+async function markAllUnread(db, user, roomId) {
+  const room = await db.collection('rooms').findOne({ _id: ObjectId(roomId) });
+
+  await db
+    .collection('messages')
+    .updateMany({
+      _id: { $in: room.messages.map(id => ObjectId(id)) },
+      userId: { $ne: user._id.toString() },
+      read: false,
+    }, {
+      $set: {
+        read: true,
+      },
+    });
+
+  return roomId;
+}
+
 /**
  * @param {Db} db
  * @param {User} currentUser
@@ -104,4 +122,5 @@ module.exports = {
   sendMessage,
   getMessages,
   markAsRead,
+  markAllUnread,
 };
