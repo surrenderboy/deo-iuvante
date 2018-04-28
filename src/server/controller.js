@@ -239,7 +239,7 @@ module.exports = function (db, io) {
       // Get of user groups
       const rooms = await getRooms(db, user);
       rooms.forEach((room) => {
-        joinToRoomChannel(db, room._id);
+        joinToRoomChannel(room._id);
       });
     });
 

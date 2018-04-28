@@ -39,8 +39,11 @@ export const markAllUnreadMessages = roomId => (
 );
 
 export const openRoom = roomId => (
-  (dispatch) => {
-    dispatch(fetchRoom(roomId));
+  (dispatch, getState) => {
+    const { rooms } = getState();
+    const room = rooms.byId[roomId];
+
+    if (!room) { dispatch(fetchRoom(roomId)); }
     dispatch(markAllUnreadMessages(roomId));
   }
 );

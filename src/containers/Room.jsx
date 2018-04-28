@@ -7,9 +7,9 @@ import ChatLayout from '../components/ChatLayout/ChatLayout';
 
 class Room extends Component {
   componentDidMount() {
-    const { room, match } = this.props;
+    const { match } = this.props;
 
-    if (!room) this.props.openRoom(match.params.id);
+    this.props.openRoom(match.params.id);
   }
 
   render() {
