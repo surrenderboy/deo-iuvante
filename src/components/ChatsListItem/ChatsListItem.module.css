@@ -37,3 +37,10 @@
     font-size: 0.7rem;
     color: #aaa;
 }
+
+.hasReadMessage {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #c3c3c3;
+    color: #fff;
+}

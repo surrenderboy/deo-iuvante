@@ -16,7 +16,6 @@ class ChatsList extends Component {
   }
 
   renderChatsListItems() {
-    console.log(this.props);
     if (!this.props.roomsIds) return '';
     return this.props.roomsIds
       .sort((rid1, rid2) => {
