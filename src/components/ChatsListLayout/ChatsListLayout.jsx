@@ -25,7 +25,7 @@ class ChatsList extends Component {
         if (!m1[0] && m2[0]) return 1;
         if (m1[0] && !m2[0]) return -1;
         if (!m1[0] || !m2[0]) return 0;
-        return m2[m2.length - 1].time - m1[m1.length - 1].time;
+        return this.props.messages[m2[m2.length - 1]].time - this.props.messages[m1[m1.length - 1]].time;
       })
       .map(roomId => (
         <ChatsListItem room={this.props.rooms[roomId]} messages={this.props.messages} key={roomId} />
