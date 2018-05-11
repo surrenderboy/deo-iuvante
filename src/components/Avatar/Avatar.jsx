@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import randomColor from 'randomcolor';
 
 import testAvatar from './test-avatar.jpg';
 import styles from './Avatar.module.css';
@@ -9,7 +10,7 @@ function classNameWithSize(className, size) {
 }
 
 function renderAvatarName(avatarName) {
-  const arrayOfChatName = avatarName.split(' ');
+  const arrayOfChatName = avatarName.split(' ').slice(0, 2);
   return arrayOfChatName.map(name => name.charAt(0).toUpperCase()).join('');
 }
 
@@ -19,7 +20,14 @@ function Avatar({
   return (
     <div className={`${styles.avatar} ${className}`}>
       {avatarName ?
-        <div className={classNameWithSize('avatarName', size)}>{renderAvatarName(avatarName)}</div> :
+        <div
+          className={classNameWithSize('avatarName', size)}
+          style={{
+            backgroundColor: randomColor({ seed: avatarName }),
+          }}
+        >
+          { renderAvatarName(avatarName) }
+        </div> :
         <img src={src} className={classNameWithSize('image', size)} alt={alt} />
       }
     </div>

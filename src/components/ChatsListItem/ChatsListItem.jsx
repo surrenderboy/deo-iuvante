@@ -29,7 +29,7 @@ const ChatsListItem = ({
       {name}
     </span>
     <span className={classNameMessage(true)}>
-      { (lastMessage.length > 0 && lastMessage) || 'В этом чате пока нет сообщений' }
+      { (lastMessage && lastMessage.length > 0 && lastMessage) || 'No messages yet' }
     </span>
     <span className={styles.lastActivity}>
       { prettifyLastActivity(lastActivity) }

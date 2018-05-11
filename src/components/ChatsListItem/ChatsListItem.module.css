@@ -17,6 +17,7 @@
     grid-row: 1 / 2;
     font-weight: bold;
     font-size: 1.1rem;
+    align-self: center;
 }
 
 .lastMessage {

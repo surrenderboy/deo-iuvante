@@ -38,7 +38,7 @@ class ChatsList extends React.Component {
 const mapStateToProps = ({ rooms }) => ({
   chats: rooms.allIds.map((id) => {
     const room = rooms.byId[id];
-    const lastMessage = (room.last_message && room.last_message.body) || '';
+    const lastMessage = (room.last_message && room.last_message.body);
 
     return {
       id,

@@ -4,13 +4,12 @@
 }
 
 .avatarName {
-  background-color: #c3c3c3;
   color: #fff;
   border-radius: 50%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 
 .avatarNameS {
