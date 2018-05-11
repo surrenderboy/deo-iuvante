@@ -70,6 +70,16 @@ class Api {
   fetchCurrentUser() {
     return this.fetchUser('current');
   }
+
+  async fetchRooms() {
+    try {
+      const response = await this.handle.get('api/rooms');
+
+      return response.data;
+    } catch (error) {
+      throw handleUnknownError(error);
+    }
+  }
 }
 
 const api = new Api();

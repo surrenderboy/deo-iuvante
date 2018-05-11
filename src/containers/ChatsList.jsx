@@ -4,48 +4,50 @@ import { connect } from 'react-redux';
 
 import List from '../components/List/List';
 import ChatsListItem from '../components/ChatsListItem/ChatsListItem';
-import { fetchRooms } from '../actions/rooms';
+import { fetchRoomsIfNeeded } from '../actions/rooms';
 
 class ChatsList extends React.Component {
   static propTypes = {
-    fetchRooms: PropTypes.func.isRequired,
+    fetchRoomsIfNeeded: PropTypes.func.isRequired,
     chats: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
       lastMessage: PropTypes.string,
       lastActivity: PropTypes.string,
     })).isRequired,
+    isFetching: PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
     // eslint-disable-next-line no-shadow
-    const { chats, fetchRooms } = this.props;
+    const { fetchRoomsIfNeeded } = this.props;
 
-    if (chats.length === 0) fetchRooms();
+    fetchRoomsIfNeeded();
   }
 
   render() {
+    const { chats, isFetching } = this.props;
     return (
-      <List>
-        { this.props.chats.map(chat => <ChatsListItem key={chat.id} {...chat} />) }
+      <List isFetching={isFetching} emptyMessage="You have no chats yet">
+        { chats.map(chat => <ChatsListItem key={chat.id} {...chat} />) }
       </List>
     );
   }
 }
 
-const mapStateToProps = ({ rooms, messages: allMessages }) => ({
+const mapStateToProps = ({ rooms }) => ({
   chats: rooms.allIds.map((id) => {
     const room = rooms.byId[id];
-    const { messages } = room;
-    const lastMessage = allMessages.byId[messages[messages.length - 1]];
+    const lastMessage = (room.last_message && room.last_message.body) || '';
 
     return {
       id,
       name: room.name,
-      lastMessage: lastMessage && lastMessage.text,
-      lastActivity: lastMessage && lastMessage.time,
+      lastMessage,
+      lastActivity: room.updated_at,
     };
   }),
+  isFetching: (typeof rooms.cursor === 'undefined') || rooms.isFetching,
 });
 
-export default connect(mapStateToProps, { fetchRooms })(ChatsList);
+export default connect(mapStateToProps, { fetchRoomsIfNeeded })(ChatsList);

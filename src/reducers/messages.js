@@ -48,7 +48,7 @@ export const readMessages = (state, action) => {
 
 export const messagesById = (state = {}, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_ROOMS_SUCCESS: return addMessagesFromRooms(state, action);
+    // case ActionTypes.FETCH_ROOMS_SUCCESS: return addMessagesFromRooms(state, action);
     case ActionTypes.ADD_MESSAGE: return addMessage(state, action);
     case ActionTypes.FETCH_MESSAGES_SUCCESS: return addMessages(state, action);
     case ActionTypes.READ_MESSAGES: return readMessages(state, action);

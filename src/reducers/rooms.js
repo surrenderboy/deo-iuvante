@@ -1,26 +1,46 @@
 import * as types from '../actions/types';
 
-export const mapRoom = room => ({ ...room, messages: room.messages.map(message => message._id) });
+export const mapRoom = room => ({
+  ...room,
+  messages: {
+    allIds: [],
+  },
+});
 
 const rooms = (
   state = {
     byId: {},
     allIds: [],
+    isFetching: false,
   },
   action,
 ) => {
   switch (action.type) {
-    case types.FETCH_ROOMS_SUCCESS: {
-      const byId = {},
-        allIds = [];
-      action.payload.forEach((room) => {
-        allIds.push(room._id);
-        byId[room._id] = mapRoom(room);
+    case types.FETCH_ROOMS_START:
+      return ({
+        ...state,
+        isFetching: true,
       });
+    case types.FETCH_ROOMS_END:
+      return ({
+        ...state,
+        isFetching: false,
+      });
+    case types.FETCH_ROOMS_SUCCESS: {
+      const { payload } = action;
+      const byId = {};
+      const allIds = [];
+
+      payload.rooms.forEach((room) => {
+        allIds.push(room.id);
+        byId[room.id] = mapRoom(room);
+      });
+
       return ({
         ...state,
         allIds,
         byId: { ...state.byId, ...byId },
+        cursor: payload.cursor,
       });
     }
     case types.FETCH_ROOM_SUCCESS: {

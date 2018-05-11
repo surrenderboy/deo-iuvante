@@ -7,7 +7,7 @@ import styles from './ChatsListItem.module.css';
 
 const prettifyLastActivity = (lastActivity) => {
   if (!lastActivity) return '';
-  return new Date(lastActivity).toLocaleString('ru', {
+  return new Date(lastActivity).toLocaleString('en', {
     month: 'long',
     day: 'numeric',
     hour: 'numeric',

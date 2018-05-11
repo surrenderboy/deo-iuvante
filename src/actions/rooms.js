@@ -1,10 +1,41 @@
 import * as ActionTypes from './types';
-import api from '../api';
+import api from '../apiV2';
 
-export const fetchRooms = () => (dispatch) => {
-  api.getRooms()
-    .then(rooms => dispatch({ type: ActionTypes.FETCH_ROOMS_SUCCESS, payload: rooms }));
-};
+export const fetchRooms = () => (
+  async (dispatch) => {
+    dispatch({
+      type: ActionTypes.FETCH_ROOMS_START,
+    });
+
+    try {
+      const payload = await api.fetchRooms();
+
+      dispatch({
+        type: ActionTypes.FETCH_ROOMS_SUCCESS,
+        payload,
+      });
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.FETCH_ROOMS_FAILURE,
+        payload: e,
+      });
+    } finally {
+      dispatch({
+        type: ActionTypes.FETCH_ROOMS_END,
+      });
+    }
+  }
+);
+
+export const fetchRoomsIfNeeded = () => (
+  (dispatch, getState) => {
+    const { cursor } = getState().rooms;
+
+    if (typeof cursor === 'undefined') {
+      dispatch(fetchRooms());
+    }
+  }
+);
 
 export const fetchRoom = roomId => (
   async (dispatch) => {
