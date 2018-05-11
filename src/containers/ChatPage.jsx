@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import authorize, { KNOWN_USERS_ONLY } from '../hocs/authorize';
+import authorize, { SIGNED_IN_USERS_ONLY } from '../hocs/authorize';
 import ChatLayout from '../components/ChatLayout/ChatLayout';
 import { fetchRoomIfNeeded } from '../actions/rooms';
 
@@ -39,6 +39,6 @@ const mapDispatchToProps = (dispatch, { match }) => ({
 });
 
 export default compose(
-  authorize(KNOWN_USERS_ONLY),
+  authorize(SIGNED_IN_USERS_ONLY),
   connect(mapStateToProps, mapDispatchToProps),
 )(ChatPage);

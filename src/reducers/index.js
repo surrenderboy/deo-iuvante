@@ -4,6 +4,7 @@ import rooms from './rooms';
 import messages from './messages';
 import users from './users';
 import isFetching from './isFetching';
+import loginForm from './loginForm';
 
 export default combineReducers({
   currentUser,
@@ -11,4 +12,5 @@ export default combineReducers({
   rooms,
   users,
   isFetching,
+  loginForm,
 });

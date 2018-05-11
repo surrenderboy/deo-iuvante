@@ -1,3 +1,9 @@
+.form {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
 .buttonSignIn:focus,
 .buttonCreateAccount:focus {
     outline: none;
@@ -14,4 +20,5 @@
     border-radius: 5px;
     margin-bottom: 10px;
     cursor: pointer;
+    margin-top: 10px;
 }

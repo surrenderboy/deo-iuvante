@@ -16,7 +16,6 @@ import Spinner from '../components/Spinner/Spinner';
 import MessageForm from '../components/MessageForm/MessageForm';
 
 import Icon from '../components/Icon/Icon';
-import AuthForm from '../components/AuthForm/AuthForm';
 
 import IconButton from '../components/IconButton/IconButton';
 
@@ -202,10 +201,4 @@ storiesOf('Icon', module)
       style={{ height: 40 }}
       src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
     />
-  )));
-
-storiesOf('Form', module)
-  .addDecorator(withKnobs)
-  .add('Форма авторизации/регистрации', withInfo('')(() => (
-    <AuthForm />
   )));

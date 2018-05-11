@@ -1,35 +1,37 @@
-import * as actionTypes from '../actions/currentUser';
+import * as ActionTypes from '../actions/types';
 
-export default (state = { data: {}, isFetching: false, isUpdating: false }, action) => {
+export default (state = { id: null, isFetching: false, isUpdating: false }, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_CURRENT_USER_START:
+    case ActionTypes.FETCH_CURRENT_USER_START:
       return {
         ...state,
         isFetching: true,
       };
-    case actionTypes.UPDATE_CURRENT_USER_START:
+    case ActionTypes.UPDATE_CURRENT_USER_START:
       return {
         ...state,
         isUpdating: true,
       };
-    case actionTypes.FETCH_CURRENT_USER_SUCCESS:
-    case actionTypes.UPDATE_CURRENT_USER_SUCCESS:
+    case ActionTypes.FETCH_CURRENT_USER_SUCCESS:
+    case ActionTypes.UPDATE_CURRENT_USER_SUCCESS:
+    case ActionTypes.SIGN_UP_SUCCESS:
+    case ActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
-        data: action.data,
+        id: action.payload.id,
       };
-    case actionTypes.FETCH_CURRENT_USER_FAILURE:
-    case actionTypes.UPDATE_CURRENT_USER_FAILURE:
+    case ActionTypes.FETCH_CURRENT_USER_FAILURE:
+    case ActionTypes.UPDATE_CURRENT_USER_FAILURE:
       return {
         ...state,
-        errorMessage: action.errorMessage,
+        errorMessage: action.payload,
       };
-    case actionTypes.FETCH_CURRENT_USER_END:
+    case ActionTypes.FETCH_CURRENT_USER_END:
       return {
         ...state,
         isFetching: false,
       };
-    case actionTypes.UPDATE_CURRENT_USER_END:
+    case ActionTypes.UPDATE_CURRENT_USER_END:
       return {
         ...state,
         isUpdating: false,

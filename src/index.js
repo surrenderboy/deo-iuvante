@@ -10,6 +10,9 @@ import reducer from './reducers';
 import './index.css';
 import App from './containers/App';
 
+import './actioncable';
+import './apiV2';
+
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

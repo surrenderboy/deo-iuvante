@@ -27,15 +27,17 @@ export default (
         errorMsg: action.error,
       });
     }
-    case types.FETCH_USER_SUCCESS: {
+    case types.FETCH_USER_SUCCESS:
+    case types.FETCH_CURRENT_USER_SUCCESS:
+    case types.SIGN_IN_SUCCESS:
+    case types.SIGN_UP_SUCCESS:
       return ({
         ...state,
         byId: {
           ...state.byId,
-          [action.payload._id]: action.payload,
+          [action.payload.id]: action.payload,
         },
       });
-    }
     case types.FETCH_USERS_SUCCESS: {
       return ({
         ...state,
