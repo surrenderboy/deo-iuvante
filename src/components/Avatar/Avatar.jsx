@@ -15,8 +15,10 @@ function renderAvatarName(avatarName) {
 }
 
 function Avatar({
-  size, src, alt, className, avatarName,
+  size, src, alt, className, avatarName, count,
 }) {
+  const normalizedCount = count > 100 ? 99 : count;
+
   return (
     <div className={`${styles.avatar} ${className}`}>
       {avatarName ?
@@ -30,6 +32,10 @@ function Avatar({
         </div> :
         <img src={src} className={classNameWithSize('image', size)} alt={alt} />
       }
+      { normalizedCount > 0 &&
+        <div className={classNameWithSize('count', size)}>
+          { normalizedCount }
+        </div> }
     </div>
   );
 }
@@ -40,6 +46,7 @@ Avatar.propTypes = {
   alt: PropTypes.string,
   className: PropTypes.string,
   avatarName: PropTypes.string,
+  count: PropTypes.number,
 };
 
 Avatar.defaultProps = {
@@ -47,6 +54,7 @@ Avatar.defaultProps = {
   src: testAvatar,
   alt: 'avatar',
   avatarName: ' ',
+  count: 0,
 };
 
 export default Avatar;

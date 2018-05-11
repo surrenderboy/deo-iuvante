@@ -21,10 +21,10 @@ const classNameMessage = (hasReadMessage) => {
 };
 
 const ChatsListItem = ({
-  id, name, lastMessage, lastActivity,
+  id, name, lastMessage, lastActivity, count,
 }) => (
   <Link to={`/chat/${id}`} className={styles.listItem}>
-    <Avatar size="m" avatarName={name} className={styles.avatar} />
+    <Avatar size="m" avatarName={name} className={styles.avatar} count={count} />
     <span className={styles.roomName}>
       {name}
     </span>
@@ -42,10 +42,12 @@ ChatsListItem.propTypes = {
   name: PropTypes.string.isRequired,
   lastMessage: PropTypes.string,
   lastActivity: PropTypes.string,
+  count: PropTypes.number,
 };
 ChatsListItem.defaultProps = {
   lastMessage: '',
   lastActivity: '',
+  count: 0,
 };
 
 export default ChatsListItem;
