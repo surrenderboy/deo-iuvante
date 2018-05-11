@@ -2,13 +2,13 @@
     display: grid;
     padding: .3rem;
     grid-template-columns: 100px auto auto;
-    grid-template-rows: 2rem auto 2rem;
+    grid-template-rows: 1rem auto 1rem;
     grid-gap: .5rem;
-    border-bottom: 1px #ccc solid;
+    border-bottom: 1px #f3f3f3 solid;
 }
 
 .selectedItem {
-    background-color: #f3f3f3;
+    background-color: #fbfbfb;
 }
 
 .avatar {
@@ -20,9 +20,13 @@
 
 .username {
     grid-column: 2 / 3;
-    grid-row: 1 / 3;
+    grid-row: 2 / 3;
+    align-self: center;
     font-weight: bold;
     font-size: 1.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .phone {

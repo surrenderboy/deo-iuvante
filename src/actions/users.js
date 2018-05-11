@@ -8,42 +8,16 @@ export const fetchUsers = () => (
     });
 
     try {
-      const payload = await api.getUsers();
+      const { users } = await api.fetchUsers();
 
       dispatch({
         type: ActionTypes.FETCH_USERS_SUCCESS,
-        payload,
+        payload: users,
       });
     } catch (error) {
       dispatch({
         type: ActionTypes.FETCH_USERS_ERROR,
-        error,
-      });
-    } finally {
-      dispatch({
-        type: ActionTypes.FETCH_USERS_END,
-      });
-    }
-  }
-);
-
-export const fetchUser = id => (
-  async (dispatch) => {
-    dispatch({
-      type: ActionTypes.FETCH_USERS_START,
-    });
-
-    try {
-      const payload = await api.getUser(id);
-
-      dispatch({
-        type: ActionTypes.FETCH_USER_SUCCESS,
-        payload,
-      });
-    } catch (error) {
-      dispatch({
-        type: ActionTypes.FETCH_USERS_ERROR,
-        error,
+        payload: error,
       });
     } finally {
       dispatch({

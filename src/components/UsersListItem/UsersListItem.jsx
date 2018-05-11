@@ -6,27 +6,16 @@ import Icon from '../Icon/Icon';
 import styles from './UsersListItem.module.css';
 
 function UsersListItem({
-  email,
   name,
-  phone,
-  online,
+  username,
   selected,
   onClick,
 }) {
   return (
     <div className={`${styles.listItem} ${selected ? styles.selectedItem : ''}`} onClick={onClick}>
-      <Avatar size="m" avatarName={name} className={styles.avatar} />
+      <Avatar size="m" avatarName={name || username} className={styles.avatar} />
       <span className={styles.username}>
-        {name}
-      </span>
-      <span className={styles.onlineMark}>
-        {online ? 'online' : ''}
-      </span>
-      <span className={styles.phone}>
-        {phone}
-      </span>
-      <span className={styles.email}>
-        {email}
+        {name || username}
       </span>
       <Icon
         className={styles.selectedIcon}
@@ -38,18 +27,15 @@ function UsersListItem({
 }
 
 UsersListItem.propTypes = {
-  email: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  phone: PropTypes.string,
-  online: PropTypes.bool,
+  name: PropTypes.string,
+  username: PropTypes.string,
   selected: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
 UsersListItem.defaultProps = {
-  phone: '',
-  email: '',
-  online: false,
+  name: '',
+  username: '',
   selected: false,
   onClick: () => {},
 };

@@ -91,9 +91,34 @@ class Api {
     }
   }
 
+  async createRoom(data) {
+    try {
+      const response = await this.handle.post('api/rooms', data);
+
+      return response.data;
+    } catch (error) {
+      const { response } = error;
+      if (response && response.status === 422) {
+        throw response.data;
+      } else {
+        throw handleUnknownError(error);
+      }
+    }
+  }
+
   async fetchMessages(roomId) {
     try {
       const response = await this.handle.get(`api/rooms/${roomId}/messages`);
+
+      return response.data;
+    } catch (error) {
+      throw handleUnknownError(error);
+    }
+  }
+
+  async fetchUsers() {
+    try {
+      const response = await this.handle.get('api/users');
 
       return response.data;
     } catch (error) {

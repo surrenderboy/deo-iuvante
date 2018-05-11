@@ -24,7 +24,7 @@ export default (
     case types.FETCH_USERS_ERROR: {
       return ({
         ...state,
-        errorMsg: action.error,
+        errorMsg: action.payload,
       });
     }
     case types.FETCH_USER_SUCCESS:
@@ -43,8 +43,8 @@ export default (
         ...state,
         byId: action.payload.reduce((accum, user) => ({
           ...accum,
-          [user._id]: user,
-        }), { ...state.byId }),
+          [user.id]: user,
+        }), state.byId),
       });
     }
     case types.FETCH_ROOMS_SUCCESS: {

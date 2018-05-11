@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import api from '../../api';
+import api from '../../apiV2';
 
 import { fetchUsers } from '../../actions/users';
 
@@ -42,32 +42,47 @@ class CreateChat extends Component {
     }
   }
 
+  roomName() {
+    const users = this.state.selectedUsers;
+
+    return users.map((id) => {
+      const user = this.props.usersById[id];
+
+      return user.name || user.username;
+    }).join(', ');
+  }
+
   createRoom() {
+    if (this.state.selectedUsers.length === 0) return;
+
     api.createRoom({
-      users: this.state.selectedUsers,
-    })
-      .then(({ _id }) => {
-        this.setState({
-          newRoomId: _id,
-        });
+      room: {
+        user_ids: this.state.selectedUsers,
+        name: this.roomName(),
+      },
+    }).then(({ room }) => {
+      this.setState({
+        newRoomId: room.id,
       });
+    });
   }
 
   renderRedirect() {
     if (!this.state.newRoomId) return null;
-    return <Redirect to={`/chat/${this.state.newRoomId}`} push />;
+
+    return <Redirect to={`/chat/${this.state.newRoomId}`} />;
   }
 
   render() {
     return (
       <AppLayout
-        headerText="Выберите пользователей"
+        headerText="Select users"
         headerRight={(<IconButton
-          icon={{ glyph: 'check', color: '#00a000' }}
+          icon={{ glyph: 'check', color: '#fff' }}
           onClick={this.createRoom}
         />)}
         headerLeft={(<IconButton
-          icon={{ glyph: 'keyboard_arrow_left', color: '#fff' }}
+          icon={{ glyph: 'arrow_back', color: '#fff' }}
           component={Link}
           to="/"
         />)}
@@ -86,17 +101,27 @@ class CreateChat extends Component {
 }
 
 function mapStateToProps(state) {
-  const currentUserId = state.currentUser.data._id,
-    users = Object.keys(state.users.byId).filter(_id => _id !== currentUserId).map(_id => state.users.byId[_id]);
+  const currentUserId = state.currentUser.id,
+    users =
+      Object
+        .keys(state.users.byId)
+        .filter(id => id !== currentUserId)
+        .map(id => state.users.byId[id]);
 
   return ({
     users,
+    usersById: state.users.byId,
   });
 }
 
 CreateChat.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchUsers: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  usersById: PropTypes.object,
+};
+CreateChat.defaultProps = {
+  usersById: {},
 };
 
 export default connect(mapStateToProps, { fetchUsers })(CreateChat);

@@ -10,9 +10,9 @@ function UsersList({ users, selectedUsers, switchUserSelection }) {
       {users.map(user => (
         <UsersListItem
           {...user}
-          key={user._id}
-          onClick={() => switchUserSelection.call(null, user._id)}
-          selected={selectedUsers.indexOf(user._id) !== -1}
+          key={user.id}
+          onClick={() => switchUserSelection.call(null, user.id)}
+          selected={selectedUsers.indexOf(user.id) !== -1}
         />
       ))}
     </List>
@@ -21,10 +21,8 @@ function UsersList({ users, selectedUsers, switchUserSelection }) {
 
 UsersList.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
-    email: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    phone: PropTypes.string,
-    online: PropTypes.bool,
+    name: PropTypes.string,
+    username: PropTypes.string,
   })).isRequired,
   switchUserSelection: PropTypes.func.isRequired,
   selectedUsers: PropTypes.arrayOf(PropTypes.string).isRequired,
