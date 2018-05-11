@@ -47,6 +47,19 @@ export default (
         }), { ...state.byId }),
       });
     }
+    case types.FETCH_ROOMS_SUCCESS: {
+      const { rooms } = action.payload;
+      const users = rooms.reduce((allUsers, room) => [...allUsers, ...room.users], []);
+
+      return {
+        ...state,
+        byId:
+          users.reduce((byId, user) => ({
+            ...byId,
+            [user.id]: user,
+          }), state.byId),
+      };
+    }
     default: return state;
   }
 };
