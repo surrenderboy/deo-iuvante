@@ -14,13 +14,12 @@ import Bubble from '../components/Bubble/Bubble';
 import Bouncer from '../components/Bouncer/Bouncer';
 import Spinner from '../components/Spinner/Spinner';
 import Chat from '../components/Chat/Chat';
-import MessageInput from '../components/MessageInput/MessageInput';
+import MessageForm from '../components/MessageForm/MessageForm';
 
 import Icon from '../components/Icon/Icon';
 import AuthForm from '../components/AuthForm/AuthForm';
 
 import IconButton from '../components/IconButton/IconButton';
-import ChatFooter from '../components/ChatFooter/ChatFooter';
 
 // default behavior for component info
 setDefaults({
@@ -191,12 +190,12 @@ storiesOf('Chat', module)
       />,
     ]));
 
-storiesOf('MessageInput', module)
+storiesOf('MessageForm', module)
   .addDecorator(withKnobs)
   .add(
     'default',
     withInfo('Hit "Enter" to send message')(() => (
-      <MessageInput sendMessage={() => {}} />
+      <MessageForm sendMessage={() => {}} />
     )),
   );
 
@@ -228,15 +227,6 @@ storiesOf('Icon', module)
     <Icon
       style={{ height: 40 }}
       src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-    />
-  )));
-
-storiesOf('ChatFooter', module)
-  .add('default', withInfo('')(() => (
-    <ChatFooter
-      handleAttachment={() => {}}
-      sendMessage={() => {}}
-      handleVoice={() => {}}
     />
   )));
 

@@ -1,4 +1,16 @@
-.message-input input {
+.form {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+
+  padding: 3px 0 3px 6px;
+
+  border-top: 1px solid lightgray;
+}
+
+.input {
+  flex: 2;
+
   outline: none;
 
   box-sizing: border-box;
@@ -14,6 +26,6 @@
   border: 1px solid lightgray;
 }
 
-.message-input input::placeholder {
+.input::placeholder {
   opacity: 0.5;
 }
