@@ -13,7 +13,6 @@ import Header from '../components/Header/Header';
 import Bubble from '../components/Bubble/Bubble';
 import Bouncer from '../components/Bouncer/Bouncer';
 import Spinner from '../components/Spinner/Spinner';
-import Chat from '../components/Chat/Chat';
 import MessageForm from '../components/MessageForm/MessageForm';
 
 import Icon from '../components/Icon/Icon';
@@ -164,31 +163,6 @@ storiesOf('Bouncer', module)
       <Bouncer />,
     ]));
 
-
-storiesOf('Chat', module)
-  .addDecorator(withKnobs)
-  .add('Комната чата', withInfo(`
-        Чат
-    `)(() =>
-    [
-      <Chat
-        messages={[
-          {
-            _id: 1,
-            userId: 'pistch',
-            message: text('Текст первого сообщения', 'Привет'),
-            isRead: boolean('Первое сообщение прочитано', true),
-          },
-          {
-            _id: 2,
-            userId: 'somebody',
-            message: text('Текст второго сообщения', 'И тебе привет'),
-            isRead: boolean('Второе сообщение прочитано', false),
-          },
-        ]}
-        currentUserId="pistch"
-      />,
-    ]));
 
 storiesOf('MessageForm', module)
   .addDecorator(withKnobs)

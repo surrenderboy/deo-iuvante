@@ -1,0 +1,11 @@
+.reverseList {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.empty {
+    text-align: center;
+    color: #777777;
+    padding: 2rem;
+}
