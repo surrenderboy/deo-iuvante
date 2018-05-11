@@ -9,10 +9,10 @@ import { fetchCurrentUser } from '../actions/currentUser';
 import { fetchUsers } from '../actions/users';
 
 import subscribeOnMessage from '../helpers/subscribeOnMessage';
-import RootRoute from '../routes/RootRoute';
-import CreateChatRoute from '../routes/CreateChatRoute';
-import ChatRoute from '../routes/ChatRoute';
-import FirstTimeRoute from '../routes/FirstTimeRoute';
+import ChatsPage from './ChatsPage';
+import CreateChatPage from './CreateChatPage';
+import FirstTimePage from './FirstTimePage';
+import ChatPage from './ChatPage';
 
 class App extends React.Component {
   componentDidMount() {
@@ -27,10 +27,10 @@ class App extends React.Component {
 
     return (
       <Switch>
-        <Route exact path="/" component={RootRoute} />
-        <Route path="/create-chat" component={CreateChatRoute} />
-        <Route path="/chat/:id" component={ChatRoute} />
-        <Route path="/first-time" component={FirstTimeRoute} />
+        <Route exact path="/" component={ChatsPage} />
+        <Route path="/create-chat" component={CreateChatPage} />
+        <Route path="/chat/:id" component={ChatPage} />
+        <Route path="/first-time" component={FirstTimePage} />
       </Switch>
     );
   }
