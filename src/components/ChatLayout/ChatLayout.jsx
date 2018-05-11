@@ -5,44 +5,37 @@ import { Link } from 'react-router-dom';
 import AppLayout from '../AppLayout/AppLayout';
 import Avatar from '../Avatar/Avatar';
 import IconButton from '../IconButton/IconButton';
-import RoomMessages from '../../containers/RoomMessages';
+import SendMessageForm from '../../containers/SendMessageForm';
+import MessagesList from '../../containers/MessagesList';
 
-function renderAvatar(chatName) {
-  return <Avatar size="s" avatarName={chatName} />;
-}
+const renderAvatar = name => <Avatar size="s" avatarName={name} />;
 
-function renderGoBack() {
-  return (
-    <Link href="/" to="/" >
-      <IconButton icon={{ color: '#fff', glyph: 'arrow_back' }} />
-    </Link>
-  );
-}
+const renderGoBack = () => (
+  <Link href="/" to="/">
+    <IconButton
+      icon={{
+        color: '#fff',
+        glyph: 'arrow_back',
+      }}
+    />
+  </Link>
+);
 
-function ChatLayout({
-  chatName, roomId, chatNameAvatar, roomIsFetching,
-}) {
-  return (
-    <AppLayout
-      headerText={chatName}
-      headerLeft={renderGoBack()}
-      headerRight={renderAvatar(chatNameAvatar)}
-    >
-      { !roomIsFetching && <RoomMessages roomId={roomId} /> }
-    </AppLayout>
-  );
-}
+const renderFooter = roomId => roomId && <SendMessageForm roomId={roomId} />;
 
+const ChatLayout = ({ roomId, name }) => (
+  <AppLayout
+    headerText={name || 'Loading...'}
+    headerLeft={renderGoBack()}
+    headerRight={renderAvatar(name)}
+    footer={renderFooter(roomId)}
+  >
+    { roomId && <MessagesList roomId={roomId} /> }
+  </AppLayout>
+);
 ChatLayout.propTypes = {
-  chatName: PropTypes.string,
-  chatNameAvatar: PropTypes.string,
+  name: PropTypes.string.isRequired,
   roomId: PropTypes.string.isRequired,
-  roomIsFetching: PropTypes.bool,
-};
-ChatLayout.defaultProps = {
-  chatName: '',
-  chatNameAvatar: ' ',
-  roomIsFetching: false,
 };
 
 export default ChatLayout;
