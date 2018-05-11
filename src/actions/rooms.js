@@ -32,6 +32,16 @@ export const fetchRoom = roomId => (
   }
 );
 
+export const fetchRoomIfNeeded = roomId => (
+  (dispatch, getState) => {
+    const { rooms, isFetching } = getState();
+
+    if (isFetching.room || rooms.byId[roomId]) return;
+
+    dispatch(fetchRoom(roomId));
+  }
+);
+
 export const markAllUnreadMessages = roomId => (
   async () => {
     await api.markAllUnreadMessages(roomId);
