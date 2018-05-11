@@ -8,9 +8,11 @@ class ReverseList extends React.Component {
   static propTypes = {
     children: PropTypes.arrayOf(PropTypes.node).isRequired,
     isFetching: PropTypes.bool,
+    emptyMessage: PropTypes.string,
   };
   static defaultProps = {
     isFetching: false,
+    emptyMessage: 'No items',
   };
 
   constructor(props) {
@@ -24,8 +26,8 @@ class ReverseList extends React.Component {
     this.scrollBottom();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.children.length !== this.props.children.length) this.scrollBottom();
+  componentDidUpdate() {
+    this.scrollBottom();
   }
 
   scrollBottom() {
@@ -37,10 +39,10 @@ class ReverseList extends React.Component {
   }
 
   renderChildren() {
-    const { children, isFetching } = this.props;
+    const { children, isFetching, emptyMessage } = this.props;
 
     if (isFetching) return <ViewportSpinner size="l" />;
-    if (children.length === 0) return <div className={styles.empty}>No items</div>;
+    if (children.length === 0) return <div className={styles.empty}>{ emptyMessage }</div>;
 
     return children;
   }

@@ -21,21 +21,25 @@ const renderGoBack = () => (
   </Link>
 );
 
-const renderFooter = roomId => roomId && <SendMessageForm roomId={roomId} />;
+const renderFooter = roomId => roomId.length > 0 && <SendMessageForm roomId={roomId} />;
 
 const ChatLayout = ({ roomId, name }) => (
   <AppLayout
-    headerText={name || 'Loading...'}
+    headerText={(name.length > 0 && name) || 'Loading...'}
     headerLeft={renderGoBack()}
     headerRight={renderAvatar(name)}
     footer={renderFooter(roomId)}
   >
-    { roomId && <MessagesList roomId={roomId} /> }
+    { roomId.length > 0 && <MessagesList roomId={roomId} /> }
   </AppLayout>
 );
 ChatLayout.propTypes = {
-  name: PropTypes.string.isRequired,
-  roomId: PropTypes.string.isRequired,
+  roomId: PropTypes.string,
+  name: PropTypes.string,
+};
+ChatLayout.defaultProps = {
+  roomId: '',
+  name: '',
 };
 
 export default ChatLayout;

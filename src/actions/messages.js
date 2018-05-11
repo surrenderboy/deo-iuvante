@@ -1,5 +1,5 @@
 import * as ActionTypes from './types';
-import api from '../api';
+import api from '../apiV2';
 
 export const fetchMessages = roomId => (
   async (dispatch) => {
@@ -8,22 +8,19 @@ export const fetchMessages = roomId => (
     });
 
     try {
-      // const state = getState();
-      // const offset = state.rooms.byId[roomId].messages.length - 1;
-
-      const payload = await api.getMessages({ roomId, limit: 500 });
+      const { messages } = await api.fetchMessages(roomId);
 
       dispatch({
         type: ActionTypes.FETCH_MESSAGES_SUCCESS,
         payload: {
           roomId,
-          messages: payload,
+          messages,
         },
       });
     } catch (e) {
       dispatch({
         type: ActionTypes.FETCH_MESSAGES_FAILURE,
-        payload: e.message,
+        payload: e,
       });
     } finally {
       dispatch({

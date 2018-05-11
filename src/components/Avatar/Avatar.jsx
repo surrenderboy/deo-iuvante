@@ -18,17 +18,18 @@ function Avatar({
   size, src, alt, className, avatarName, count,
 }) {
   const normalizedCount = count > 100 ? 99 : count;
+  const normalizedName = avatarName.length === 0 ? ' ' : avatarName;
 
   return (
     <div className={`${styles.avatar} ${className}`}>
-      {avatarName ?
+      {normalizedName ?
         <div
           className={classNameWithSize('avatarName', size)}
           style={{
-            backgroundColor: randomColor({ seed: avatarName }),
+            backgroundColor: randomColor({ seed: normalizedName }),
           }}
         >
-          { renderAvatarName(avatarName) }
+          { renderAvatarName(normalizedName) }
         </div> :
         <img src={src} className={classNameWithSize('image', size)} alt={alt} />
       }

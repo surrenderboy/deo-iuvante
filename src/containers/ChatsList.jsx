@@ -36,18 +36,21 @@ class ChatsList extends React.Component {
 }
 
 const mapStateToProps = ({ rooms, currentUser }) => ({
-  chats: rooms.allIds.map((id) => {
-    const room = rooms.byId[id];
-    const lastMessage = (room.last_message && room.last_message.body);
+  chats:
+  rooms.allIds
+    .map((id) => {
+      const room = rooms.byId[id];
+      const lastMessage = (room.last_message && room.last_message.body);
 
-    return {
-      id,
-      name: room.name,
-      lastMessage,
-      lastActivity: room.updated_at,
-      count: room.unread_count[currentUser.id],
-    };
-  }),
+      return {
+        id,
+        name: room.name,
+        lastMessage,
+        lastActivity: room.updated_at,
+        count: room.unread_count[currentUser.id],
+      };
+    })
+    .sort((a, b) => new Date(b.lastActivity) - new Date(a.lastActivity)),
   isFetching: (typeof rooms.cursor === 'undefined') || rooms.isFetching,
 });
 

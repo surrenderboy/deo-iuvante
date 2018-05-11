@@ -10,6 +10,15 @@ const room = (state = false, action) => {
   }
 };
 
+const messages = (state = false, action) => {
+  switch (action.type) {
+    case ActionTypes.FETCH_MESSAGES_START: return true;
+    case ActionTypes.FETCH_MESSAGES_END: return false;
+    default: return state;
+  }
+};
+
 export default combineReducers({
   room,
+  messages,
 });

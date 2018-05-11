@@ -29,9 +29,9 @@ export const fetchRooms = () => (
 
 export const fetchRoomsIfNeeded = () => (
   (dispatch, getState) => {
-    const { cursor } = getState().rooms;
+    const { cursor, isFetching } = getState().rooms;
 
-    if (typeof cursor === 'undefined') {
+    if (typeof cursor === 'undefined' && !isFetching) {
       dispatch(fetchRooms());
     }
   }
@@ -44,16 +44,16 @@ export const fetchRoom = roomId => (
     });
 
     try {
-      const payload = await api.getRoom(roomId);
+      const { room } = await api.fetchRoom(roomId);
 
       dispatch({
         type: ActionTypes.FETCH_ROOM_SUCCESS,
-        payload,
+        payload: room,
       });
     } catch (e) {
       dispatch({
         type: ActionTypes.FETCH_ROOM_ERROR,
-        payload: e.message,
+        payload: e,
       });
     } finally {
       dispatch({

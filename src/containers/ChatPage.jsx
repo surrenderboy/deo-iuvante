@@ -6,12 +6,19 @@ import { connect } from 'react-redux';
 import authorize, { SIGNED_IN_USERS_ONLY } from '../hocs/authorize';
 import ChatLayout from '../components/ChatLayout/ChatLayout';
 import { fetchRoomIfNeeded } from '../actions/rooms';
+import { Redirect } from 'react-router-dom';
 
 class ChatPage extends React.Component {
   static propTypes = {
     fetchRoomIfNeeded: PropTypes.func.isRequired,
-    roomId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    roomId: PropTypes.string,
+    name: PropTypes.string,
+    isFetching: PropTypes.bool,
+  };
+  static defaultProps = {
+    roomId: '',
+    name: '',
+    isFetching: false,
   };
 
   componentDidMount() {
@@ -19,18 +26,23 @@ class ChatPage extends React.Component {
   }
 
   render() {
-    const { roomId, name } = this.props;
+    const { roomId, name, isFetching } = this.props;
 
-    return <ChatLayout roomId={roomId} name={name} />;
+    return (
+      !isFetching && !roomId ?
+        <Redirect to="/" /> :
+        <ChatLayout roomId={roomId} name={name} />
+    );
   }
 }
 
-const mapStateToProps = ({ rooms }, { match }) => {
-  const { _id, name } = rooms.byId[match.params.id] || {};
+const mapStateToProps = ({ rooms, isFetching }, { match }) => {
+  const { id, name } = rooms.byId[match.params.id] || {};
 
   return ({
-    roomId: _id,
+    roomId: id,
     name,
+    isFetching: isFetching.room,
   });
 };
 

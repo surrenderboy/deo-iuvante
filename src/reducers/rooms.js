@@ -44,10 +44,11 @@ const rooms = (
       });
     }
     case types.FETCH_ROOM_SUCCESS: {
+      const { payload } = action;
       return ({
         ...state,
-        allIds: [...state.allIds, action.payload._id],
-        byId: { ...state.byId, [action.payload._id]: mapRoom(action.payload) },
+        allIds: [...state.allIds, payload.id],
+        byId: { ...state.byId, [action.payload.id]: mapRoom(action.payload) },
       });
     }
     case types.FETCH_MESSAGES_SUCCESS: {
@@ -57,7 +58,13 @@ const rooms = (
           ...state.byId,
           [action.payload.roomId]: {
             ...state.byId[action.payload.roomId],
-            messages: action.payload.messages.map(message => message._id),
+            messages: {
+              allIds: [
+                ...state.byId[action.payload.roomId].messages.allIds,
+                ...action.payload.messages.map(message => message.id),
+              ],
+              cursor: action.payload.messages.cursor,
+            },
           },
         },
       });

@@ -80,6 +80,26 @@ class Api {
       throw handleUnknownError(error);
     }
   }
+
+  async fetchRoom(id) {
+    try {
+      const response = await this.handle.get(`api/rooms/${id}`);
+
+      return response.data;
+    } catch (error) {
+      throw handleUnknownError(error);
+    }
+  }
+
+  async fetchMessages(roomId) {
+    try {
+      const response = await this.handle.get(`api/rooms/${roomId}/messages`);
+
+      return response.data;
+    } catch (error) {
+      throw handleUnknownError(error);
+    }
+  }
 }
 
 const api = new Api();

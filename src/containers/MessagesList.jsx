@@ -2,29 +2,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchMessages } from '../actions/messages';
-import { fetchUsers } from '../actions/users';
 import ReverseList from '../components/ReverseList/ReverseList';
 import Bubble from '../components/BubbleNew/Bubble';
-import { markAllUnreadMessages } from '../actions/rooms';
+// import { markAllUnreadMessages } from '../actions/rooms';
 
 class MessagesList extends React.Component {
   componentDidMount() {
     // eslint-disable-next-line no-shadow
-    const { fetchMessages, fetchUsers } = this.props;
+    const { messages, fetchMessages } = this.props;
 
-    fetchMessages();
-    fetchUsers();
+    if (messages.length === 0) fetchMessages();
   }
 
-  componentDidUpdate() {
-    this.props.readMessages();
-  }
+  // componentDidUpdate() {
+  //   this.props.readMessages();
+  // }
 
   render() {
     const { messages, isFetching } = this.props;
 
     return (
-      <ReverseList isFetching={isFetching}>
+      <ReverseList isFetching={isFetching} emptyMessage="You have no messages yet">
         { messages.map(message => <Bubble key={message.id} {...message} />) }
       </ReverseList>
     );
@@ -32,34 +30,34 @@ class MessagesList extends React.Component {
 }
 
 const mapStateToProps = ({
-  rooms, messages, currentUser, users,
+  rooms, messages, currentUser, users, isFetching,
 }, { roomId }) => {
   const room = rooms.byId[roomId] || {};
-  const roomMessages = room.messages || [];
+  const roomMessages = (room.messages && room.messages.allIds) || [];
 
   return {
     messages:
       roomMessages
         .map(messageId => messages.byId[messageId])
-        .filter(message => typeof message !== 'undefined')
-        .map(({
-          _id, userId, text, read, time,
-        }) => ({
-          id: _id,
-          isOwner: userId === currentUser.data._id,
-          message: text,
-          viewState: read ? 'read' : 'delivered',
-          time,
-          username: (users.byId[userId] || {}).name,
-        })),
-    isFetching: false,
+        .map((message) => {
+          const user = users.byId[message.user_id] || {};
+
+          return ({
+            id: message.id,
+            isOwner: message.user_id === currentUser.id,
+            message: message.body,
+            viewState: message.read ? 'read' : 'delivered',
+            time: message.created_at,
+            username: user.name || user.username,
+          });
+        }),
+    isFetching: isFetching.messages,
   };
 };
 
 const mapDispatchToProps = (dispatch, { roomId }) => ({
-  fetchMessages: () => dispatch(fetchMessages(roomId)),
-  readMessages: () => dispatch(markAllUnreadMessages(roomId)),
-  fetchUsers: () => dispatch(fetchUsers()),
+  fetchMessages: () => roomId && dispatch(fetchMessages(roomId)),
+  // readMessages: () => dispatch(markAllUnreadMessages(roomId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesList);

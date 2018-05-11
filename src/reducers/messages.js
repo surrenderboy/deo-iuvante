@@ -12,7 +12,7 @@ export const normalizeMessages = messages => (
   messages.reduce(
     (byId, message) => ({
       ...byId,
-      [message._id]: message,
+      [message.id]: message,
     }),
     {},
   )

@@ -24,7 +24,7 @@ const AppLayout = ({
 );
 AppLayout.propTypes = {
   headerText: PropTypes.node.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   headerLeft: PropTypes.node,
   headerRight: PropTypes.node,
   footer: PropTypes.node,
