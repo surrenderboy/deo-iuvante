@@ -13,7 +13,7 @@ const handleUnknownError = (error) => {
 
 class Api {
   handle = axios.create({
-    baseURL: 'http://localhost:3001',
+    baseURL: 'https://deoiuvante.online',
     headers: {
       common: {
         Authorization: authorizationHeader(cookiesGetToken()),
