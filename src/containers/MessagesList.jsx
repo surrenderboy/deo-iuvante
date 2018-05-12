@@ -1,19 +1,17 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchMessages, readMessages } from '../actions/messages';
+import { fetchMessagesIfNeeded, readMessages } from '../actions/messages';
 import ReverseList from '../components/ReverseList/ReverseList';
 import Bubble from '../components/BubbleNew/Bubble';
 import cable from '../cable';
 
 class MessagesList extends React.Component {
   componentDidMount() {
-    const {
-      // eslint-disable-next-line no-shadow
-      messages, fetchMessages, readMessages, roomId,
-    } = this.props;
+    // eslint-disable-next-line no-shadow
+    const { fetchMessages, readMessages, roomId, } = this.props;
 
-    if (messages.length === 0) fetchMessages();
+    fetchMessages();
 
     cable.subscribeToRoom(readMessages, { id: roomId });
     cable.visitRoom({ id: roomId });
@@ -66,7 +64,7 @@ const mapStateToProps = ({
 };
 
 const mapDispatchToProps = (dispatch, { roomId }) => ({
-  fetchMessages: () => roomId && dispatch(fetchMessages(roomId)),
+  fetchMessages: () => roomId && dispatch(fetchMessagesIfNeeded(roomId)),
   readMessages: ({ message_ids: ids }) => {
     dispatch(readMessages(ids));
   },

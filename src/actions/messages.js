@@ -8,13 +8,14 @@ export const fetchMessages = roomId => (
     });
 
     try {
-      const { messages } = await api.fetchMessages(roomId);
+      const { messages, cursor } = await api.fetchMessages(roomId);
 
       dispatch({
         type: ActionTypes.FETCH_MESSAGES_SUCCESS,
         payload: {
           roomId,
           messages,
+          cursor,
         },
       });
     } catch (e) {
@@ -27,6 +28,18 @@ export const fetchMessages = roomId => (
         type: ActionTypes.FETCH_MESSAGES_END,
       });
     }
+  }
+);
+
+export const fetchMessagesIfNeeded = roomId => (
+  async (dispatch, getState) => {
+    const { rooms, isFetching } = getState();
+    const { messages } = rooms.byId[roomId];
+    const cursor = messages && messages.cursor;
+
+    if (typeof cursor !== 'undefined' || isFetching.messages) return;
+
+    dispatch(fetchMessages(roomId));
   }
 );
 

@@ -63,7 +63,7 @@ const rooms = (
                 ...state.byId[action.payload.roomId].messages.allIds,
                 ...action.payload.messages.map(message => message.id),
               ],
-              cursor: action.payload.messages.cursor,
+              cursor: action.payload.cursor,
             },
           },
         },
