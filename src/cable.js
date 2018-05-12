@@ -1,7 +1,7 @@
 import ActionCable from 'actioncable';
 
 class Cable {
-  consumer = ActionCable.createConsumer('ws://localhost:3001/cable');
+  consumer = ActionCable.createConsumer('wss://deoiuvante.online/cable');
 
   constructor() {
     this.unsubscribeOfMessages = this.unsubscribeOfChannel.bind(this, 'messages');
