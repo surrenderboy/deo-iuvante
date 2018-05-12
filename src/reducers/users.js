@@ -60,6 +60,18 @@ export default (
           }), state.byId),
       };
     }
+    case types.FETCH_ROOM_SUCCESS: {
+      const { users } = action.payload;
+
+      return {
+        ...state,
+        byId:
+          users.reduce((byId, user) => ({
+            ...byId,
+            [user.id]: user,
+          }), state.byId),
+      };
+    }
     default: return state;
   }
 };

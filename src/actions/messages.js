@@ -35,22 +35,7 @@ export const addMessage = payload => ({
   payload,
 });
 
-export const sendMessage = (roomId, message) => (
-  async (dispatch) => {
-    const payload = await api.sendMessage({ roomId, text: message });
-
-    dispatch(addMessage(payload));
-  }
-);
-
-export const readMessages = roomId => (
-  (dispatch, getState) => {
-    const { rooms } = getState();
-    const room = rooms.byId[roomId];
-
-    dispatch({
-      type: ActionTypes.READ_MESSAGES,
-      payload: room.messages,
-    });
-  }
-);
+export const readMessages = messageIds => ({
+  type: ActionTypes.READ_MESSAGES,
+  payload: messageIds,
+});

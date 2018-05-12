@@ -45,7 +45,7 @@ class CreateChat extends Component {
   roomName() {
     const users = this.state.selectedUsers;
 
-    return users.map((id) => {
+    return [...users, this.props.currentUserId].map((id) => {
       const user = this.props.usersById[id];
 
       return user.name || user.username;
@@ -111,6 +111,7 @@ function mapStateToProps(state) {
   return ({
     users,
     usersById: state.users.byId,
+    currentUserId,
   });
 }
 
@@ -119,6 +120,7 @@ CreateChat.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   usersById: PropTypes.object,
+  currentUserId: PropTypes.string.isRequired,
 };
 CreateChat.defaultProps = {
   usersById: {},

@@ -41,4 +41,6 @@ export const SIGN_IN_END = 'SIGN_IN_END';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 
 export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const ADD_ROOM = 'ADD_ROOM';
+export const UPDATE_ROOM = 'UPDATE_ROOM';
 export const READ_MESSAGES = 'READ_MESSAGES';

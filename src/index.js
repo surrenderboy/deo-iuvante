@@ -10,7 +10,7 @@ import reducer from './reducers';
 import './index.css';
 import App from './containers/App';
 
-import './actioncable';
+import './cable';
 import './apiV2';
 
 const store = createStore(

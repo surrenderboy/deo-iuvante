@@ -73,6 +73,27 @@ export const fetchRoomIfNeeded = roomId => (
   }
 );
 
+export const addRoom = payload => ({
+  type: ActionTypes.ADD_ROOM,
+  payload,
+});
+
+export const updateRoom = payload => (
+  (dispatch, getState) => {
+    const { rooms } = getState();
+
+    if (!rooms.byId[payload.id]) {
+      dispatch(addRoom(payload));
+      return;
+    }
+
+    dispatch({
+      type: ActionTypes.UPDATE_ROOM,
+      payload,
+    });
+  }
+);
+
 export const markAllUnreadMessages = roomId => (
   async () => {
     await api.markAllUnreadMessages(roomId);

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
-import { sendMessage } from '../actions/messages';
+import cable from '../cable';
 import MessageForm from '../components/MessageForm/MessageForm';
 
-const mapDispatchToProps = (dispatch, { roomId }) => ({
-  onSubmit: message => dispatch(sendMessage(roomId, message)),
+const mapDispatchToProps = (_, { roomId }) => ({
+  onSubmit: message => cable.sendMessage({ body: message, room_id: roomId }),
 });
 
 export default connect(null, mapDispatchToProps)(MessageForm);

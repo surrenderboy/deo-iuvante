@@ -25,7 +25,7 @@ export const addMessagesFromRooms = (state, action) => ({
 
 export const addMessage = (state, action) => ({
   ...state,
-  [action.payload._id]: action.payload,
+  [action.payload.id]: action.payload,
 });
 
 export const addMessages = (state, action) => ({

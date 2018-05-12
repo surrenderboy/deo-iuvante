@@ -44,7 +44,11 @@ const mapStateToProps = ({ rooms, currentUser }) => ({
 
       return {
         id,
-        name: room.name,
+        name:
+          room.users
+            .filter(user => user.id !== currentUser.id)
+            .map(user => user.name || user.username)
+            .join(', '),
         lastMessage,
         lastActivity: room.updated_at,
         count: room.unread_count[currentUser.id],

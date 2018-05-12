@@ -29,12 +29,16 @@ class ChatPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ rooms }, { match }) => {
-  const { id, name } = rooms.byId[match.params.id] || {};
+const mapStateToProps = ({ rooms, currentUser }, { match }) => {
+  const { id, users } = rooms.byId[match.params.id] || {};
 
   return ({
     roomId: id,
-    name,
+    name:
+      (users || [])
+        .filter(user => user.id !== currentUser.id)
+        .map(user => user.name || user.username)
+        .join(', '),
   });
 };
 

@@ -74,11 +74,49 @@ const rooms = (
         ...state,
         byId: {
           ...state.byId,
-          [action.payload.roomId]: {
-            ...state.byId[action.payload.roomId],
-            messages: [...state.byId[action.payload.roomId].messages, action.payload._id],
+          [action.payload.room_id]: {
+            ...state.byId[action.payload.room_id],
+            messages: {
+              ...state.byId[action.payload.room_id].messages,
+              allIds: [
+                ...state.byId[action.payload.room_id].messages.allIds,
+                action.payload.id,
+              ],
+            },
           },
         },
+      });
+    }
+    case types.UPDATE_ROOM: {
+      return ({
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload.id]: {
+            ...state.byId[action.payload.id],
+            unread_count: action.payload.unread_count,
+            last_message: action.payload.last_message,
+            updated_at: action.payload.updated_at,
+          },
+        },
+      });
+    }
+    case types.ADD_ROOM: {
+      return ({
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload.id]: {
+            ...action.payload,
+            messages: {
+              allIds: [],
+            },
+          },
+        },
+        allIds: [
+          ...state.allIds,
+          action.payload.id,
+        ],
       });
     }
     default: return state;
